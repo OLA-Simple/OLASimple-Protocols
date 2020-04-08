@@ -1,12 +1,12 @@
-# OLA Simple Workflow, version 0.0.1
+# OLA Simple Workflow, version 0.0.2
 
-Aquarium workflow enabling rapid HIV diagnosis using the OLA simple technique [[Download](OLASimple-Protocols.aq)] [[Github Repo](https://github.com/Gamemackerel/OLASimple-Protocols)]
+Aquarium workflow enabling rapid HIV diagnosis using the OLA simple technique [[Download](OLASimple-Protocols.aq)] [[Github Repo](https://github.com/gamemackerel/OLASimple-Protocols)]
 
 &copy; Lutz Lab
 
 
 ### Maintainer
-- Abe Miller, <Abraham.r.m@gmail.com>
+- Abe Miller, <abraham.r.m@gmail.com>
 
 ### Authors
 
