@@ -19,7 +19,7 @@ module OLAConstants
   # KIT SELECTION
   ##########################################
 
-  KIT_SELECTION = OLAKits.uw_kit()
+  KIT_SELECTION = OLAKits.kenya_kit()
   KIT_NAME = KIT_SELECTION["name"]
   SAMPLE_PREP_UNIT = KIT_SELECTION["sample prep"]
   PCR_UNIT = KIT_SELECTION["pcr"]
@@ -80,6 +80,10 @@ module OLAConstants
   ##########################################
   # TERMINOLOGY
   ##########################################
+  
+  # areas
+  PRE_PCR = "pre-PCR"
+  POST_PCR = "post-PCR"
 
   # kit samples
   CELL_LYSATE = "cell lysate" # what to call the input samples (cell lysates)
@@ -88,10 +92,12 @@ module OLAConstants
 
   # equipment
   THERMOCYCLER = "thermocycler" # what to call the thermocycler
-  CENTRIFUGE = "centrifuge"
-  PCR_RACK = "PCR rack" # what to call the racks the PCR tubes go in
+  CENTRIFUGE_PRE = "centrifuge 1 (in the #{PRE_PCR} area)"
+  CENTRIFUGE_POST = "centrifuge 2 (in the #{POST_PCR} area)"
+  PCR_RACK_PRE = "PCR rack 1 (in the #{PRE_PCR} area)" # what to call the racks the PCR tubes go in
+  PCR_RACK_POST = "PCR rack 2 (in the #{POST_PCR} area)" # what to call the racks the PCR tubes go in
   PHOTOCOPIER = "scanner"
-  BASIC_MATERIALS = [
+  BASIC_MATERIALS_PRE = [
       "200uL pipette and filtered tips",
       "20uL pipette and filtered tips",
       "a spray bottle of 10% v/v bleach",
@@ -99,22 +105,35 @@ module OLAConstants
       "a timer",
       "latex gloves"
   ]
-  TRASH = "trash"
-  WASTE = "biohazard waste (red bag)" # what to call the biohazard waste
-  BENCH = "bench"
-  PACKAGE = "package"
-  FRIDGE = "fridge"
-  P20 = "P20"
-  P200 = "P200"
-  P1000 = "P1000"
-  WIPE = "KimWipe"
+  BASIC_MATERIALS_POST = [
+      "200uL pipette and filtered tips",
+      "20uL pipette and filtered tips",
+      "a spray bottle of 10% v/v bleach",
+      "a spray bottle of 70% v/v ethanol",
+      "a timer",
+      "latex gloves"
+  ]
+  TRASH_PRE = "trash 1 (in the #{PRE_PCR} area)"
+  TRASH_POST = "trash 2 (in the #{POST_PCR} area)"
+  WASTE_PRE = "biohazard waste 1 (red bag in the #{PRE_PCR} area)"
+  WASTE_POST = "biohazard waste 2 (red bag in the #{POST_PCR} area)"
+  BENCH_PRE = "bench 1 (in the #{PRE_PCR} area)"
+  BENCH_POST = "bench 2 (in the #{POST_PCR} area)"
+  PACKAGE_PRE = "package (#{PRE_PCR})"
+  PACKAGE_POST = "package (#{POST_PCR})"
+  FRIDGE_PRE = "fridge 1 (in the #{PRE_PCR} area)"
+  FRIDGE_POST = "fridge 2 (in the #{POST_PCR} area)"
+  P20_PRE = "#{PRE_PCR} P20"
+  P20_POST = "#{POST_PCR} P20"
+  P200_PRE = "#{PRE_PCR} P200"
+  P200_POST = "#{POST_PCR} P200"
+  P1000_PRE = "#{PRE_PCR} P1000"
+  P1000_POST = "#{POST_PCR} P1000"
+  WIPE_PRE = "KimWipe (from the #{PRE_PCR} area)"
+  WIPE_POST = "KimWipe (from the #{POST_PCR} area)"
 
   # verbs
   CENTRIFUGE_VERB = "centrifuge" # or spin?
-
-  # areas
-  PRE_PCR = "pre-PCR"
-  POST_PCR = "post-PCR"
 
   PCR_CYCLE = "OSPCR"
   LIG_CYCLE = "OSLIG"
