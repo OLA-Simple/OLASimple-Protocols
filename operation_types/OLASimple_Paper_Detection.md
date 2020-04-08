@@ -193,11 +193,11 @@ class Protocol
   def get_detection_packages(myops)
     gops = group_packages(myops)
     show do
-      title "Get #{DET_PKG_NAME.pluralize(gops.length)} from the #{FRIDGE}"
+      title "Get #{DET_PKG_NAME.pluralize(gops.length)} from the #{FRIDGE_POST}"
       gops.each do |unit, ops|
         check "package #{unit.bold}"
       end
-      check "Place #{pluralizer(PACKAGE, gops.length)} on the bench in the #{AREA.bold} area."
+      check "Place #{pluralizer('package', gops.length)} on the bench in the #{AREA.bold} area."
     end
   end
 
@@ -250,10 +250,10 @@ class Protocol
       show do
         raw transfer_title_proc(STOP_VOLUME, from, to)
         check "Centrifuge tube #{to} for 5 seconds to pull down powder."
-        check "Set a #{P200} pipette to [0 3 6]. Add #{STOP_VOLUME}uL from #{from.bold} into tube #{to.bold}"
+        check "Set a #{P200_POST} pipette to [0 3 6]. Add #{STOP_VOLUME}uL from #{from.bold} into tube #{to.bold}"
         tubeA = make_tube(opentube, DILUENT_A, ops.first.tube_label("diluent A"), "medium")
         tubeS = make_tube(opentube, STOP_MIX, ops.first.tube_label("stop"), "powder")
-        img = make_transfer(tubeA, tubeS, 200, "#{STOP_VOLUME}uL", "(#{P200} pipette)")
+        img = make_transfer(tubeA, tubeS, 200, "#{STOP_VOLUME}uL", "(#{P200_POST} pipette)")
         img.translate!(20)
         note display_svg(img, 0.75)
       end
@@ -261,7 +261,7 @@ class Protocol
       vortex_and_centrifuge_helper("tube",
                                    [to],
                                    VORTEX_TIME, CENTRIFUGE_TIME,
-                                   "to mix.", "to pull down liquid", mynote = nil)
+                                   "to mix.", "to pull down liquid", AREA, mynote = nil)
     end
   end
 
@@ -320,12 +320,12 @@ class Protocol
           show do
             raw transfer_title_proc(STOP_TO_SAMPLE_VOLUME, from, label)
             # title "Add #{STOP_TO_SAMPLE_VOLUME}uL #{STOP_MIX} #{from.bold} to #{LIGATION_SAMPLE} #{label}"
-            note "Set a #{P20} pipette to [0 2 4]. Add #{STOP_TO_SAMPLE_VOLUME}uL from #{from.bold} into tube #{label.bold}"
+            note "Set a #{P20_POST} pipette to [0 2 4]. Add #{STOP_TO_SAMPLE_VOLUME}uL from #{from.bold} into tube #{label.bold}"
             note "Close tube #{label}."
             note "Discard pipette tip."
             tubeS = make_tube(opentube, STOP_MIX, op.tube_label("stop"), "medium")
             transfer_image = transfer_to_ligation_tubes_with_highlight(
-                tubeS, i, *op.input_tokens(INPUT), COLORS, STOP_TO_SAMPLE_VOLUME, "(#{P20} pipette)")
+                tubeS, i, *op.input_tokens(INPUT), COLORS, STOP_TO_SAMPLE_VOLUME, "(#{P20_POST} pipette)")
             note display_svg(transfer_image, 0.75)
           end
         end
@@ -398,7 +398,7 @@ class Protocol
           warning "<h2>Add the rest of ligation samples to the rest of strips and then immediately click OK</h2>"
           timer_set = true
           #   check "Set a 5 minute timer" unless set_timer
-          check "Set a #{P200} pipette to [0 2 4]. Add #{SAMPLE_TO_STRIP_VOLUME}uL of <b>each</b> #{LIGATION_SAMPLE} to the corresponding #{STRIP}."
+          check "Set a #{P200_POST} pipette to [0 2 4]. Add #{SAMPLE_TO_STRIP_VOLUME}uL of <b>each</b> #{LIGATION_SAMPLE} to the corresponding #{STRIP}."
           note "Match the sample tube color with the #{STRIP} color. For example, match #{op.input_refs(INPUT)[0].bold} to #{op.output_refs(OUTPUT)[0].bold}"
         #   note "After adding the first sample, set the timer for 5 minutes"
           warning "Dispose of pipette tip and close tube after each strip."
@@ -430,14 +430,14 @@ class Protocol
       show do
         raw transfer_title_proc(GOLD_VOLUME, from, to)
         # title "Add #{GOLD_VOLUME}uL of #{DILUENT_A} #{from.bold} to #{GOLD_MIX} #{to.bold}"
-        raw centrifuge_proc(GOLD_MIX, [to], CENTRIFUGE_TIME, "to pull down dried powder.")
-        note "Set a #{P1000} pipette to [ 0 6 0]. Add #{GOLD_VOLUME}uL from #{from.bold} into tube #{to.bold}."
+        raw centrifuge_proc(GOLD_MIX, [to], CENTRIFUGE_TIME, "to pull down dried powder.", AREA)
+        note "Set a #{P1000_POST} pipette to [ 0 6 0]. Add #{GOLD_VOLUME}uL from #{from.bold} into tube #{to.bold}."
         raw vortex_proc(GOLD_MIX, [to], "10 seconds", "to mix well.")
         warning "Make sure #{GOLD_MIX} is fully dissolved."
         warning "Do not centrifuge #{to.bold} after vortexing."
         tubeA = make_tube(opentube, DILUENT_A, ops.first.tube_label("diluent A"), "medium")
         tubeG = make_tube(opentube, GOLD_MIX, ops.first.tube_label("gold"), "powder", fluidclass: "pinkfluid")
-        img = make_transfer(tubeA, tubeG, 200, "#{GOLD_VOLUME}uL", "(#{P1000} pipette)")
+        img = make_transfer(tubeA, tubeG, 200, "#{GOLD_VOLUME}uL", "(#{P1000_POST} pipette)")
         img.translate!(20)
         note display_svg(img, 0.75)
       end
@@ -460,7 +460,7 @@ class Protocol
             warning "<h2>Set a 10 minute timer after adding gold to <b>FIRST A1</b> strip at the SAMPLE PORT.</h2>"
             warning "<h2> Add gold to the rest of strips and then immediately click OK."
             warning "<h2> DO NOT add gold solution onto the reading window."
-            check "Set a #{P200} pipette to [0 4 0]. Transfer #{GOLD_TO_STRIP_VOLUME}uL of #{GOLD_MIX} #{ops.first.ref("gold").bold} to #{pluralizer(STRIP, PREV_COMPONENTS.length * ops.length)}."
+            check "Set a #{P200_POST} pipette to [0 4 0]. Transfer #{GOLD_TO_STRIP_VOLUME}uL of #{GOLD_MIX} #{ops.first.ref("gold").bold} to #{pluralizer(STRIP, PREV_COMPONENTS.length * ops.length)}."
             grid = SVGGrid.new(ops.length,  ops.length, 50, 50)
             ops.each.with_index do |op, i|
                 _tokens = op.output_tokens(OUTPUT)
@@ -659,10 +659,10 @@ class Protocol
     all_refs = myops.map {|op| discard_refs_from_op(op)}.flatten.uniq
 
     show do
-      title "Throw items into the #{WASTE}"
+      title "Throw items into the #{WASTE_POST}"
 
       #warning "Do not throw away the #{STRIPS}"
-      note "Throw the following items into the #{WASTE} in the #{AREA.bold} area:"
+      note "Throw the following items into the #{WASTE_POST} in the #{AREA.bold} area:"
       t = Table.new
       t.add_column("Item to throw away", all_refs)
       table t
