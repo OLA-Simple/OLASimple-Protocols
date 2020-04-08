@@ -255,7 +255,7 @@ class Protocol
     end
   end
   
-  def kenya_introduction ops
+  def kenya_kit_introduction ops
     username = get_technician_name(self.jid).color("darkblue")
     kit_nums = ops.map {|op| op.input(INPUT).item.get(KIT_KEY)}.uniq
     samples = "#{ops.length} #{"sample".pluralize(ops.length)}"
@@ -273,12 +273,12 @@ class Protocol
     # TODO: remove all references to 4C fridge and replace with refridgerator
     gops = group_packages(myops)
     show do
-      title "Take #{PCR_PKG_NAME.pluralize(gops.length)} from the #{FRIDGE} R1 and place on the #{BENCH} in the #{AREA}"
+      title "Take #{PCR_PKG_NAME.pluralize(gops.length)} from the #{FRIDGE_PRE} and place on the #{BENCH_PRE} in the #{AREA}"
       # check "Take the following from the #{FRIDGE} and place #{pluralizer(PACKAGE, gops.length)} on the #{BENCH}"
       gops.each do |unit, ops|
-        check "Take " "#{PACKAGE} #{unit.bold}" " from R1 fridge."
-        check "Place " "#{PACKAGE} #{unit.bold}" " on the bench." 
-        check "Put on a new pair of gloves. R1 fridge is located in the post-PCR area so your gloves might have picked up some DNA that could contaminate your assay."
+        check "Take " "#{PACKAGE_PRE} #{unit.bold}" " from fridge."
+        check "Place " "#{PACKAGE_PRE} #{unit.bold}" " on the bench." 
+        check "Put on a new pair of gloves. Your gloves might have picked up some DNA that could contaminate your assay."
       end
     end
   end
@@ -369,13 +369,13 @@ class Protocol
         to = ref(to_item)
         tubeA = make_tube(opentube, [DILUENT_A, from], "", fluid = "medium")
         tubeP = make_tube(opentube, [PCR_SAMPLE, to], "", fluid = "powder").scale!(0.75)
-        img = make_transfer(tubeA, tubeP, 250, "#{PCR_MIX_VOLUME}uL", "(#{P200} pipette)")
+        img = make_transfer(tubeA, tubeP, 250, "#{PCR_MIX_VOLUME}uL", "(#{P200_PRE} pipette)")
         img.translate!(25)
         show do
           raw transfer_title_proc(PCR_MIX_VOLUME, from, to)
           # title "Add #{PCR_MIX_VOLUME}uL from #{DILUENT_A} #{from.bold} to #{PCR_SAMPLE} #{to.bold}"
           note "#{DILUENT_A} will be used to dissolve the powder in the #{PCR_SAMPLE}."
-          note "Use a #{P200} pipette and set it to [0 4 0]."
+          note "Use a #{P200_PRE} pipette and set it to [0 4 0]."
           note "Avoid touching the inside of the lid, as this could cause contamination. "
           note "Dispose of pipette tip."
           note display_svg(img, 0.75)
@@ -390,7 +390,7 @@ class Protocol
     vortex_and_centrifuge_helper("sample",
                                  labels,
                                  VORTEX_TIME, CENTRIFUGE_TIME,
-                                 "to mix.", "to pull down liquid", mynote = nil)
+                                 "to mix.", "to pull down liquid", AREA, mynote = nil)
 
   end
 
@@ -418,11 +418,11 @@ class Protocol
           raw transfer_title_proc(SAMPLE_VOLUME, "#{SAMPLE_ALIAS} #{from}", "#{PCR_SAMPLE} #{to}")
           warning "<h1>Labels look very similar. Read the label three times before proceeding.<h1\>"
           note "Carefully open tube #{from.bold} and tube #{to.bold}"
-          note "Use a #{P20} pipette and set it to [1 0 0]."
+          note "Use a #{P20_PRE} pipette and set it to [1 0 0]."
           warning "Close both tubes and dispose of pipette tip."
           tubeS = make_tube(opentube, [SAMPLE_ALIAS, from], "", fluid = "medium")
           tubeP = make_tube(opentube, [PCR_SAMPLE, to], "", fluid = "medium").scale!(0.75)
-          img = make_transfer(tubeS, tubeP, 250, "#{SAMPLE_VOLUME}uL", "(#{P20} pipette)")
+          img = make_transfer(tubeS, tubeP, 250, "#{SAMPLE_VOLUME}uL", "(#{P20_PRE} pipette)")
           img.translate!(25)
           note display_svg(img, 0.75)
 
@@ -457,7 +457,7 @@ class Protocol
     vortex_and_centrifuge_helper(PCR_SAMPLE,
                                  ops.map {|op| ref(op.output(OUTPUT).item)},
                                  VORTEX_TIME, CENTRIFUGE_TIME,
-                                 "to mix.", "to pull down liquid", mynote = nil)
+                                 "to mix.", "to pull down liquid", AREA, mynote = nil)
 
 
     # show do
@@ -510,9 +510,9 @@ class Protocol
     all_refs = temp_items + item_refs
 
     show do
-      title "Throw items into the #{WASTE}"
+      title "Throw items into the #{WASTE_PRE}"
 
-      note "Throw the following items into the #{WASTE} in the #{AREA} area"
+      note "Throw the following items into the #{WASTE_PRE}"
       t = Table.new
       t.add_column("Tube".bold, all_refs)
       table t
