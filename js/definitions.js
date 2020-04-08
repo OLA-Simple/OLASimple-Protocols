@@ -11,7 +11,7 @@ var config = {
         { name: "Introduction", type: "local-md", path: "README.md" },
         { name: "About this Workflow", type: "local-md", path: "ABOUT.md" },
         { name: "License", type: "local-md", path: "LICENSE.md" },
-        { name: "Issues", type: "external-link", path: 'https://github.com/Gamemackerel/OLASimple-Protocols/issues' }
+        { name: "Issues", type: "external-link", path: 'https://github.com/gamemackerel/OLASimple-Protocols/issues' }
       ]
     },
 
