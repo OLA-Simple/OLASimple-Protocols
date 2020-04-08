@@ -186,11 +186,11 @@ class Protocol
   def get_ligation_packages myops
     gops = myops.group_by { |op| op.temporary[:output_kit_and_unit] }
     show do
-      title "Take #{LIG_PKG_NAME.pluralize(gops.length)} from the R1 #{FRIDGE} "
+      title "Take #{LIG_PKG_NAME.pluralize(gops.length)} from the R1 #{FRIDGE_POST} "
       gops.each do |unit, ops|
-        check "#{PACKAGE} #{unit.bold}"
+        check "#{PACKAGE_POST} #{unit.bold}"
       end
-      check "Place #{pluralizer(PACKAGE, gops.length)} on the #{BENCH} in the #{AREA.bold}."
+      check "Place #{pluralizer(PACKAGE_POST, gops.length)} on the #{BENCH_POST} in the #{AREA.bold}."
       check "Put on a new pair of gloves"
     end
   end
@@ -260,7 +260,7 @@ class Protocol
   def vortex_and_centrifuge_samples ops
          labels = ops.map {|op| op.temporary[:label_string] }
          vortex_and_centrifuge_helper("tube set", labels, CENTRIFUGE_TIME, VORTEX_TIME,
-                      "to mix.", "to pull down the fluid.")
+                      "to mix.", "to pull down the fluid.", AREA)
     show do
         title "Check your tubes." 
         check "Dried powder of reagents should be dissolved at this point. Look on the side of the tubes to check if you see any remaining powder. If you notice any powder remains on the side, rotate the tubes while vortexing for 5 seconds and centrifuge for 5 seconds."
@@ -328,12 +328,12 @@ class Protocol
             raw transfer_title_proc(LIGATION_VOLUME, from, label)
             # title "Add #{LIGATION_VOLUME}uL #{DILUENT_A} #{from.bold} to #{LIGATION_SAMPLE} #{label}
             warning "Change pipette tip between tubes"
-            note "Set a #{P200} pipette to [0 2 4]." 
+            note "Set a #{P200_POST} pipette to [0 2 4]." 
             note "Add #{LIGATION_VOLUME}uL from #{from.bold} into tube #{label.bold}"
             note "Close tube #{label.bold}"
             tubeA = make_tube(opentube, [DILUENT_A, from], "", "medium")
             transfer_image = transfer_to_ligation_tubes_with_highlight(
-                tubeA, i, *op.output_tokens(OUTPUT), COLORS, LIGATION_VOLUME, "(#{P200} pipette)")
+                tubeA, i, *op.output_tokens(OUTPUT), COLORS, LIGATION_VOLUME, "(#{P200_POST} pipette)")
             note display_svg(transfer_image, 0.6)
           end
         end
@@ -372,8 +372,8 @@ class Protocol
       title "Get #{PCR_SAMPLE.pluralize(myops.length)} from #{THERMOCYCLER}"
       note "If thermocycler run is complete (infinite hold at 4C), hit cancel followed by yes. Take #{PCR_SAMPLE.pluralize(myops.length)} #{myops.map { |op| ref(op.input(INPUT).item).bold}.join(', ')} from the #{THERMOCYCLER}"
       note "If they have been stored, retrieve PCR samples from M20 4th shelf down red box and thaw"
-      check "Position #{PCR_SAMPLE.pluralize(myops.length)} on #{BENCH} in front of you."
-      centrifuge_proc(PCR_SAMPLE, myops.map { |op| ref(op.input(INPUT).item) }, "3 seconds", "to pull down liquid.", balance = false)
+      check "Position #{PCR_SAMPLE.pluralize(myops.length)} on #{BENCH_POST} in front of you."
+      centrifuge_proc(PCR_SAMPLE, myops.map { |op| ref(op.input(INPUT).item) }, "3 seconds", "to pull down liquid.", AREA, balance = false)
     end
 
     gops = myops.group_by {|op| op.temporary[:input_kit_and_unit]}
@@ -401,7 +401,7 @@ class Protocol
             note "Using a #{"P10"} pipette set to [0 1 2], add #{SAMPLE_VOLUME}uL from #{from.bold} into tube #{label.bold}"
             note "Close tube #{label.bold}"
             tube = make_tube(opentube, ["PCR Sample"], op.input_tube_label(INPUT), "small").scale(0.75)
-            img = transfer_to_ligation_tubes_with_highlight(tube, i, *op.output_tokens(OUTPUT), COLORS, SAMPLE_VOLUME, "(#{P20} pipette)")
+            img = transfer_to_ligation_tubes_with_highlight(tube, i, *op.output_tokens(OUTPUT), COLORS, SAMPLE_VOLUME, "(#{P20_POST} pipette)")
             note display_svg(img, 0.6)
           end
         end
@@ -469,9 +469,9 @@ class Protocol
     all_refs = temp_items + item_refs
 
     show do
-      title "Throw items into the #{WASTE}"
+      title "Throw items into the #{WASTE_POST}"
 
-      note "Throw the following items into the #{WASTE} in the #{AREA}"
+      note "Throw the following items into the #{WASTE_POST} in the #{AREA}"
       t = Table.new
       t.add_column("Tube", all_refs)
       table t
