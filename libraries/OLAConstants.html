@@ -967,7 +967,7 @@ $(document).ready(function() {
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='const'>OLAKits</span><span class='period'>.</span><span class='id identifier rubyid_uw_kit'>uw_kit</span><span class='lparen'>(</span><span class='rparen'>)</span></pre></dd>
+        <dd><pre class="code"><span class='const'>OLAKits</span><span class='period'>.</span><span class='id identifier rubyid_kenya_kit'>kenya_kit</span><span class='lparen'>(</span><span class='rparen'>)</span></pre></dd>
       
         <dt id="KIT_NAME-constant" class="">KIT_NAME =
           
@@ -1205,6 +1205,27 @@ $(document).ready(function() {
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Components</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
+        <dt id="PRE_PCR-constant" class="">PRE_PCR =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>areas</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pre-PCR</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="POST_PCR-constant" class="">POST_PCR =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>post-PCR</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
         <dt id="CELL_LYSATE-constant" class="">CELL_LYSATE =
           <div class="docstring">
   <div class="discussion">
@@ -1269,7 +1290,7 @@ $(document).ready(function() {
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>thermocycler</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
-        <dt id="CENTRIFUGE-constant" class="">CENTRIFUGE =
+        <dt id="CENTRIFUGE_PRE-constant" class="">CENTRIFUGE_PRE =
           <div class="docstring">
   <div class="discussion">
     
@@ -1283,9 +1304,14 @@ $(document).ready(function() {
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>centrifuge</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>centrifuge 1 (in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PRE_PCR-constant" title="OLAConstants::PRE_PCR (constant)">PRE_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
-        <dt id="PCR_RACK-constant" class="">PCR_RACK =
+        <dt id="CENTRIFUGE_POST-constant" class="">CENTRIFUGE_POST =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>centrifuge 2 (in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="PCR_RACK_PRE-constant" class="">PCR_RACK_PRE =
           <div class="docstring">
   <div class="discussion">
     
@@ -1299,14 +1325,30 @@ $(document).ready(function() {
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PCR rack</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PCR rack 1 (in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PRE_PCR-constant" title="OLAConstants::PRE_PCR (constant)">PRE_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="PCR_RACK_POST-constant" class="">PCR_RACK_POST =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>what to call the racks the PCR tubes go in</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PCR rack 2 (in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
         <dt id="PHOTOCOPIER-constant" class="">PHOTOCOPIER =
           
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>scanner</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
-        <dt id="BASIC_MATERIALS-constant" class="">BASIC_MATERIALS =
+        <dt id="BASIC_MATERIALS_PRE-constant" class="">BASIC_MATERIALS_PRE =
           
         </dt>
         <dd><pre class="code"><span class='lbracket'>[</span>
@@ -1318,61 +1360,107 @@ $(document).ready(function() {
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>latex gloves</span><span class='tstring_end'>&quot;</span></span>
 <span class='rbracket'>]</span></pre></dd>
       
-        <dt id="TRASH-constant" class="">TRASH =
+        <dt id="BASIC_MATERIALS_POST-constant" class="">BASIC_MATERIALS_POST =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>trash</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='lbracket'>[</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>200uL pipette and filtered tips</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>20uL pipette and filtered tips</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a spray bottle of 10% v/v bleach</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a spray bottle of 70% v/v ethanol</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a timer</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>latex gloves</span><span class='tstring_end'>&quot;</span></span>
+<span class='rbracket'>]</span></pre></dd>
       
-        <dt id="WASTE-constant" class="">WASTE =
-          <div class="docstring">
-  <div class="discussion">
-    
-<p>what to call the biohazard waste</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div>
-        </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>biohazard waste (red bag)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
-      
-        <dt id="BENCH-constant" class="">BENCH =
+        <dt id="TRASH_PRE-constant" class="">TRASH_PRE =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bench</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>trash 1 (in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PRE_PCR-constant" title="OLAConstants::PRE_PCR (constant)">PRE_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
-        <dt id="PACKAGE-constant" class="">PACKAGE =
+        <dt id="TRASH_POST-constant" class="">TRASH_POST =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>package</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>trash 2 (in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
-        <dt id="FRIDGE-constant" class="">FRIDGE =
+        <dt id="WASTE_PRE-constant" class="">WASTE_PRE =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fridge</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>biohazard waste 1 (red bag in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PRE_PCR-constant" title="OLAConstants::PRE_PCR (constant)">PRE_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
-        <dt id="P20-constant" class="">P20 =
+        <dt id="WASTE_POST-constant" class="">WASTE_POST =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>P20</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>biohazard waste 2 (red bag in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
-        <dt id="P200-constant" class="">P200 =
+        <dt id="BENCH_PRE-constant" class="">BENCH_PRE =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>P200</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bench 1 (in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PRE_PCR-constant" title="OLAConstants::PRE_PCR (constant)">PRE_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
-        <dt id="P1000-constant" class="">P1000 =
+        <dt id="BENCH_POST-constant" class="">BENCH_POST =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>P1000</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bench 2 (in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
-        <dt id="WIPE-constant" class="">WIPE =
+        <dt id="PACKAGE_PRE-constant" class="">PACKAGE_PRE =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>KimWipe</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>package (</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PRE_PCR-constant" title="OLAConstants::PRE_PCR (constant)">PRE_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="PACKAGE_POST-constant" class="">PACKAGE_POST =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>package (</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="FRIDGE_PRE-constant" class="">FRIDGE_PRE =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fridge 1 (in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PRE_PCR-constant" title="OLAConstants::PRE_PCR (constant)">PRE_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="FRIDGE_POST-constant" class="">FRIDGE_POST =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fridge 2 (in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="P20_PRE-constant" class="">P20_PRE =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PRE_PCR-constant" title="OLAConstants::PRE_PCR (constant)">PRE_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> P20</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="P20_POST-constant" class="">P20_POST =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> P20</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="P200_PRE-constant" class="">P200_PRE =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PRE_PCR-constant" title="OLAConstants::PRE_PCR (constant)">PRE_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> P200</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="P200_POST-constant" class="">P200_POST =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> P200</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="P1000_PRE-constant" class="">P1000_PRE =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PRE_PCR-constant" title="OLAConstants::PRE_PCR (constant)">PRE_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> P1000</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="P1000_POST-constant" class="">P1000_POST =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> P1000</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="WIPE_PRE-constant" class="">WIPE_PRE =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>KimWipe (from the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PRE_PCR-constant" title="OLAConstants::PRE_PCR (constant)">PRE_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="WIPE_POST-constant" class="">WIPE_POST =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>KimWipe (from the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
         <dt id="CENTRIFUGE_VERB-constant" class="">CENTRIFUGE_VERB =
           <div class="docstring">
@@ -1390,11 +1478,11 @@ $(document).ready(function() {
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>centrifuge</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
-        <dt id="PRE_PCR-constant" class="">PRE_PCR =
+        <dt id="PCR_CYCLE-constant" class="">PCR_CYCLE =
           <div class="docstring">
   <div class="discussion">
     
-<p>areas</p>
+<p>or spin?</p>
 
 
   </div>
@@ -1403,16 +1491,6 @@ $(document).ready(function() {
   
 
 </div>
-        </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pre-PCR</span><span class='tstring_end'>&quot;</span></span></pre></dd>
-      
-        <dt id="POST_PCR-constant" class="">POST_PCR =
-          
-        </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>post-PCR</span><span class='tstring_end'>&quot;</span></span></pre></dd>
-      
-        <dt id="PCR_CYCLE-constant" class="">PCR_CYCLE =
-          
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>OSPCR</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
@@ -1512,23 +1590,23 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149</pre>
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_explicit_retrieve'>explicit_retrieve</span>
   <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_retrieve'>retrieve</span> <span class='label'>interactive:</span> <span class='kw'>false</span>
@@ -1564,21 +1642,21 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134</pre>
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_map_temporary_from_input'>map_temporary_from_input</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_outputs'>outputs</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_outputs'>outputs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_outputs'>outputs</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
