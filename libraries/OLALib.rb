@@ -515,7 +515,7 @@ module OLALib
 
   def show_open_package(kit, unit, num_sub_packages)
     show do
-      title "Tear open #{PACKAGE} #{kit.bold}#{unit.bold}"
+      title "Tear open #{kit.bold}#{unit.bold}"
       if num_sub_packages > 0
         note "Tear open all smaller packages."
       end
@@ -524,13 +524,20 @@ module OLALib
     end
   end
 
-  def centrifuge_proc(sample_identifier, sample_labels, time, reason, balance = false)
+  def centrifuge_proc(sample_identifier, sample_labels, time, reason, area, balance = false)
+    if area == PRE_PCR
+        centrifuge = CENTRIFUGE_PRE
+    elsif area == POST_PCR
+        centrifuge = CENTRIFUGE_POST
+    else
+        raise "Invalid Area"
+    end
     p = Proc.new {
-      check "Place #{sample_identifier.pluralize(sample_labels.length)} #{sample_labels.join(', ').bold} in the #{CENTRIFUGE}"
+      check "Place #{sample_identifier.pluralize(sample_labels.length)} #{sample_labels.join(', ').bold} in the #{centrifuge}"
       check "#{CENTRIFUGE_VERB.cap} #{pluralizer(sample_identifier, sample_labels.length)} for #{time} #{reason}"
       if balance
         if num.even?
-          warning "Balance tubes in the #{CENTRIFUGE} by placing #{num / 2} #{sample_identifier.pluralize(num / 2)} on each side."
+          warning "Balance tubes in the #{centrifuge} by placing #{num / 2} #{sample_identifier.pluralize(num / 2)} on each side."
         else
           warning "Use a spare tube to balance #{sample_identifier.pluralize(num)}."
         end
@@ -548,7 +555,7 @@ module OLALib
     ShowBlock.new(self).run(&p)
   end
 
-  def centrifuge_helper(sample_identifier, sample_labels, time, reason, mynote = nil)
+  def centrifuge_helper(sample_identifier, sample_labels, time, reason, area, mynote = nil)
     sample_labels = sample_labels.uniq
     show do
       title "#{CENTRIFUGE_VERB.cap} #{sample_identifier.pluralize(sample_labels.length)} for #{time}"
@@ -556,7 +563,7 @@ module OLALib
         note mynote
       end
       warning "Close #{pluralizer("tube cap", sample_labels.length)}."
-      raw centrifuge_proc(sample_identifier, sample_labels, time, reason)
+      raw centrifuge_proc(sample_identifier, sample_labels, time, reason, area)
     end
   end
 
@@ -578,7 +585,7 @@ module OLALib
   def vortex_and_centrifuge_helper(sample_identifier,
                                    sample_labels,
                                    vortex_time, spin_time,
-                                   vortex_reason, spin_reason, mynote = nil)
+                                   vortex_reason, spin_reason, area, mynote = nil)
     num = sample_labels.length
     show do
       title "Vortex and #{CENTRIFUGE_VERB} #{sample_identifier.pluralize(num)}"
@@ -588,7 +595,7 @@ module OLALib
       warning "Close #{pluralizer("tube cap", sample_labels.length)}."
       # note "Using #{sample_identifier.pluralize(num)} #{sample_labels.join(', ').bold}:"
       raw vortex_proc(sample_identifier, sample_labels, vortex_time, vortex_reason)
-      raw centrifuge_proc(sample_identifier, sample_labels, spin_time, spin_reason)
+      raw centrifuge_proc(sample_identifier, sample_labels, spin_time, spin_reason, area)
       check "Place the tubes back on rack"
     end
   end
