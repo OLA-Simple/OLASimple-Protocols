@@ -92,7 +92,10 @@ class Protocol
       "a timer",
       "nitrile gloves"
   ]
-
+  
+  POSITIVE = "positive"
+  NEGATIVE = "negative"
+  DEBUG_UPLOAD_ID = 1
 
 ##########################################
 # ##
@@ -123,9 +126,9 @@ class Protocol
     add_ligation_product_to_strips sorted_ops.running
     add_gold_solution sorted_ops.running
     read_from_scanner sorted_ops.running
-    # if KIT_NAME == "uw kit"
-    #     run_image_analysis operations.running 
-    # end
+    
+    analysis operations.running 
+    
     cleanup sorted_ops
     conclusion sorted_ops
     return {"Ok" => 1}
@@ -541,7 +544,11 @@ class Protocol
               note "Click the button below to upload file <b>#{op.temporary[:filename]}</b>"
               note "Navigate to the desktop. Click on file <b>#{op.temporary[:filename]}</b>"
             end
-
+            
+            if debug # false upload if debug
+                op.temporary[SCANNED_IMAGE_UPLOAD_KEY] = Upload.find(DEBUG_UPLOAD_ID)
+            end
+            
             confirmed = show do
               title "Confirm image labels say #{op.temporary[:label_string].bold}"
               select [ "yes", "no"], var: "confirmed", label: "Do the image labels and your image match?", default: 0
@@ -567,82 +574,6 @@ class Protocol
       end
     end
   end
-  
-  def run_image_analysis ops
-    image_result = nil
-    warning_msg = nil
-    5.times.each do |i|
-        if image_result.nil?
-            result = show do
-                title "Run <b>OLA Image Processing</b>"
-                warning warning_msg unless warning_msg.nil?
-                note "Find the icon on the desktop labeled \"OLA IP\""
-                image "Actions/OLA/ola_ip_logo.png" 
-                note "Double click the icon."
-                note "#{ops.first.temporary[SCANNED_IMAGE_UPLOAD_KEY].name}"
-                joined_file_names = ops.map { |op| op.temporary[SCANNED_IMAGE_UPLOAD_KEY][:name] }.join(', ')
-                note "Copy-and-paste the following into the text box: <b>#{joined_file_names}</b>"
-                note "Click \"PROCESS\""
-                note "Return here and press \"CONTROL+V\" to paste the text to the field below."
-                get "text", var: :image_analysis_result, label: "Press CONTROL+V here to paste", default: ""
-            end
-            
-            image_result = result[:image_analysis_result]
-            if image_result == ""
-                image_result = nil
-                warning_msg = "Result was empty! Try again!"
-            end
-            
-            if i >= 1
-                image_result = "[]"
-            end
-        end
-    end
-    
-    if image_result.nil?
-        ops.each do |op|
-            op.error(:image_result_failed, "Image processing has failed.") 
-        end
-    end
-    
-    ops.each do |op|
-        op.associate(:image_processing_result, image_result)
-        op.plan.associate(:image_processing_result, image_result)
-    end
-    
-    show do
-        title "Result has been sent!"
-        note "You image processing result has been saved and emailed to the supervisor. Congrats! Below is the message that was sent."
-        user = User.find_by_name("Nuttada Panpradist")
-    
-        tech = get_technician_name(self.jid)
-        tech = User.find(66) unless tech.is_a?(User)
-        kits = ops.map { |op| op.temporary[:input_kit] }
-        samples = ops.map { |op| op.temporary[:input_sample] }
-        subject = "Image processing result for #{tech.name}"
-        message = "<p>Tech: #{tech.name} (#{tech.id})</p> " \
-                "<p>Operations: #{ops.map { |op| op.id }}</p> " \
-                "<p>Job: #{self.jid}</p>" \
-                "<p>Kits: #{kits}</p> " \
-                "<p>Samples: #{samples}</p> " \
-                "<p>#{image_result}</p>"
-        note "<b>#{subject}</b>"
-        note message
-        user.send_email(subject, message) unless debug
-    end
-  end
- 
-# def cleanup myops
-#   show do
-#     title "Cleanup"
-#
-#     check "After imaging #{pluralizer("strip", myops.length * MUTATIONS.length)}, you may discard strips and tubes " \
-#             "into the biohazard waste."
-#     check "Change gloves."
-#   end
-#   #   clean_area AREA
-# end
-#
 
   def cleanup myops
     def discard_refs_from_op(op)
@@ -661,13 +592,33 @@ class Protocol
     show do
       title "Throw items into the #{WASTE_POST}"
 
-      #warning "Do not throw away the #{STRIPS}"
       note "Throw the following items into the #{WASTE_POST} in the #{AREA.bold} area:"
       t = Table.new
       t.add_column("Item to throw away", all_refs)
       table t
     end
-    # clean_area AREA
+
+    show do
+      disinfectant = "10% bleach"
+      title "Wipe down #{AREA.bold} with #{disinfectant.bold}."
+      note "Now you will wipe down your #{BENCH_POST} and equipment with #{disinfectant.bold}."
+      check "Spray #{disinfectant.bold} onto a #{WIPE_POST} and clean off pipettes and pipette tip boxes."
+      check "Spray a small amount of #{disinfectant.bold} on the bench surface. Clean bench with #{WIPE_POST}."
+      # check "Spray some #{disinfectant.bold} on a #{WIPE}, gently wipe down keyboard and mouse of this computer/tablet."
+      warning "Do not spray #{disinfectant.bold} onto tablet or computer!"
+      check "Finally, spray outside of gloves with #{disinfectant.bold}."
+    end
+
+    show do
+      disinfectant = "70% ethanol"
+      title "Wipe down #{AREA.bold} with #{disinfectant.bold}."
+      note "Now you will wipe down your #{BENCH_POST} and equipment with #{disinfectant.bold}."
+      check "Spray #{disinfectant.bold} onto a #{WIPE_POST} and clean off pipettes and pipette tip boxes."
+      check "Spray a small amount of #{disinfectant.bold} on the bench surface. Clean bench with #{WIPE_POST}."
+    #   check "Spray a #{"small".bold} amount of #{disinfectant.bold} on a #{WIPE}. Gently wipe down keyboard and mouse of this computer/tablet."
+      warning "Do not spray #{disinfectant.bold} onto tablet or computer!"
+      check "Finally, dispose of gloves in garbage bin."
+    end
   end
 
   def filename(op)
@@ -677,22 +628,158 @@ class Protocol
   end
 
   def conclusion myops
-    #   if KIT_NAME == "uw kit"
-    #      show do
-    #         title "Please return ligation products"
-    #         note "Please return the following to <b>M20 \"STORE USED 1C - 21C\"</b>"
-    #         myops.each do |op|
-    #             check "tubes #{op.temporary[:label_string].bold}" 
-    #         end
-    #         image "Actions/OLA/map_Klavins.svg"
-    #      end
-    #   end
     show do
       title "Thank you!"
       warning "<h2>You must click #{"OK".quote.bold} to complete the protocol</h2>"
-      note "Please continue on to the next protocol. You will be ask to make visual calls for the detection strips."
+      note "Thank you for all your hard work."
+    end
+  end
+  
+  def analysis ops
+    band_choices = {
+        "M": {bands: [mut_band], description: "-CTRL -WT +MUT"},
+        "N": {bands: [control_band, wt_band, mut_band], description: "+CTRL +WT +MUT"},
+        "O": {bands: [control_band, mut_band], description: "+CTRL -WT +MUT"},
+        "P": {bands: [control_band, wt_band], description: "+CTRL +WT -MUT"},
+        "Q": {bands: [control_band], description: "+CTRL -WT -MUT"},
+        "R": {bands: [], description: "-CTRL -WT -MUT"}
+    }
+
+    categories = {
+        "M": POSITIVE,
+        "N": POSITIVE,
+        "O": POSITIVE,
+        "P": NEGATIVE,
+        "Q": "ligation failure",
+        "R": "detection failure"
+    }
+    
+    run_image_analysis ops.running, band_choices, categories
+    show_calls ops.running, band_choices
+    show_summary ops.running
+  end
+  
+  def run_image_analysis ops, band_choices, category_hash
+    ops.each do |op|
+      image_result = nil
+      5.times.each do |i|
+          break if image_result
+          upload = op.temporary[SCANNED_IMAGE_UPLOAD_KEY]
+          image_result = make_calls_from_image(upload)
+      end
+      
+      if image_result.nil?
+        op.error(:image_result_failed, "Image processing has failed. Check that the OLA IP service is running and connected correctly, and that the file is in a normal image format.") 
+        next
+      end
+        
+      this_kit = op.temporary[:output_kit]
+      this_unit = op.temporary[:output_unit]
+      this_sample = op.temporary[:output_sample]
+      
+      
+      prev_components = ANALYSIS_UNIT["Components"]["strips"]
+      prev_components.each.with_index do |this_component, i|
+        alias_label = op.output_refs(OUTPUT)[i]
+        the_choice = image_result[i]
+        op.output(OUTPUT).item.associate(make_call_key(alias_label), the_choice)
+        op.output(OUTPUT).item.associate(make_call_category_key(alias_label), category_hash[the_choice.to_sym])
+        op.associate(make_call_key(alias_label), the_choice)
+        op.associate(make_call_category_key(alias_label), category_hash[the_choice.to_sym])
+      end
     end
   end
 
+  def make_call_key alias_label
+    "#{alias_label}_call".to_sym
+  end
+
+  def make_call_description_key alias_label
+    "#{alias_label}_call_description".to_sym
+  end
+
+  def make_call_category_key alias_label
+    "#{alias_label}_call_category".to_sym
+  end
+  
+  def show_calls myops, band_choices
+    mutations_labels = ANALYSIS_UNIT["Mutation Labels"]
+    myops.each do |op|
+      kit_summary = {}
+
+      this_kit = op.temporary[:input_kit]
+      this_item = op.output(OUTPUT).item
+      this_unit = op.temporary[:output_unit]
+      this_sample = op.temporary[:output_sample]
+
+      grid = SVGGrid.new(mutations_labels.length, 1, 90, 10)
+      categories = []
+      
+      prev_components = ANALYSIS_UNIT["Components"]["strips"]
+      prev_components.each.with_index do |this_component, i|
+        alias_label = op.output_refs(OUTPUT)[i]
+        strip_label = self.tube_label(this_kit, this_unit, this_component, this_sample)
+        strip = make_strip(strip_label, COLORS[i] + "strip")
+        band_choice = this_item.get(make_call_key(alias_label))
+        codon_label = label(mutations_labels[i], "font-size".to_sym => 25)
+        codon_label.align_with(strip, 'center-bottom')
+        codon_label.align!('center-top').translate!(0, 30)
+        category = this_item.get(make_call_category_key(alias_label))
+        kit_summary[mutations_labels[i]] = {:alias => alias_label, :category => category.to_s, :call => band_choice.to_s}
+        tokens = category.split(' ')
+        tokens.push("") if tokens.length == 1
+        category_label = two_labels(*tokens)
+        category_label.scale!(0.75)
+        category_label.align!('center-top')
+        category_label.align_with(codon_label, 'center-bottom')
+        category_label.translate!(0, 10)
+        bands = band_choices[band_choice.to_sym][:bands]
+        grid.add(strip, i, 0)
+        grid.add(codon_label, i, 0)
+        grid.add(category_label, i, 0)
+        bands.each do |band|
+          grid.add(band, i, 0)
+        end
+      end
+
+      op.associate(:results, kit_summary)
+      op.output(OUTPUT).item.associate(:results, kit_summary)
+      op.temporary[:results] = kit_summary
+
+      img = SVGElement.new(children: [grid], boundx: 600, boundy: 350)
+      img.translate!(15)
+      show do
+        refs = op.output_refs(OUTPUT)
+        title "Here is the summary of your results for <b>#{refs[0]}-#{refs[-1]}</b>"
+        note display_svg(img)
+      end
+    end
+  end
+
+  def show_summary ops
+    mutations_labels = ANALYSIS_UNIT["Mutation Labels"]
+    ops.each do |op|
+      hits = op.temporary[:results].select {|k, v| v == POSITIVE}
+    end
+    show do
+      title "Sample summary"
+      note "You analyzed #{ops.length} #{"kit".pluralize(ops.length)}. Below is the summarized data."
+
+      results_hash = {}
+      kits = ops.map {|op| op.output(OUTPUT).item.get(KIT_KEY)}
+      samples = ops.map {|op| op.output(OUTPUT).item.get(SAMPLE_KEY)}
+      t = Table.new
+      t.add_column("Kit", kits)
+      t.add_column("Sample", samples)
+      mutations_labels.each do |label|
+        col = ops.map {|op| op.temporary[:results][label][:category]}
+        t.add_column(label, col)
+        results_hash[label] = col
+      end
+      results_hash["kits"] = kits
+      results_hash["samples"] = samples
+      table t
+    end
+  end
 end
 ```
