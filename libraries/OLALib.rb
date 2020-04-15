@@ -3,6 +3,7 @@
 # needs "#{category}/TissueCulture"
 needs "OLASimple/OLAConstants"
 needs "OLASimple/OLAGraphics"
+needs "OLASimple/NetworkRequests"
 
 module TextExtension
   include ActionView::Helpers::TagHelper
@@ -218,6 +219,7 @@ end
 
 module OLALib
   include OLAConstants
+  include NetworkRequests
 
   String.send(:prepend, TextExtension)
   Integer.send(:prepend, TextExtension)
@@ -225,6 +227,15 @@ module OLALib
   Operation.send(:prepend, RefExtension)
 #   include TissueCulture
 
+#######################################
+# OLA image processing API
+#######################################
+
+  # TODO add error handling to this function, since function could fail if api service disconnected
+  def make_calls_from_image(image_upload)
+    res = post_file(OLA_IP_API_URL, 'file', image_upload)
+    return JSON.parse(res.body)['results']
+  end
 
 #######################################
 # Utilities
