@@ -2,7 +2,7 @@ var config = {
 
   tagline: "The Laboratory</br>Operating System",
   documentation_url: "http://localhost:4000/aquarium",
-  title: "OLA Simple Workflow",
+  title: "OLASimple workflow",
   navigation: [
 
     {
@@ -79,12 +79,6 @@ var config = {
             },
           
             {
-              name: 'OLASimple Visual Call',
-              path: 'operation_types/OLASimple_Visual_Call' + '.md',
-              type: "local-md"
-            },
-          
-            {
               name: 'Pipette Training',
               path: 'operation_types/Pipette_Training' + '.md',
               type: "local-md"
@@ -111,6 +105,12 @@ var config = {
 
         contents: [
 
+          
+            {
+              name: 'NetworkRequests',
+              path: 'libraries/NetworkRequests' + '.html',
+              type: "local-webpage"
+            },
           
             {
               name: 'OLAConstants',
