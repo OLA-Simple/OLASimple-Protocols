@@ -2,6 +2,12 @@ needs "OLASimple/OLAKits"
 
 module OLAConstants
   include OLAKits
+  
+  ##########################################
+  # TECHNICAL (SHOULD NOT NEED TO CHANGE)
+  ##########################################
+
+  OLA_IP_API_URL = "http://ola_image_processing:5000/api/processimage" # URL of OLASimple strip image processing service 
 
   ##########################################
   # DATA ASSOCIATION KEYS (DO NOT CHANGE)
