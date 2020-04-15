@@ -907,6 +907,22 @@ $(document).ready(function() {
 
     <dl class="constants">
       
+        <dt id="OLA_IP_API_URL-constant" class="">OLA_IP_API_URL =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>TECHNICAL (SHOULD NOT NEED TO CHANGE)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://ola_image_processing:5000/api/processimage</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
         <dt id="ALIAS_KEY-constant" class="">ALIAS_KEY =
           <div class="docstring">
   <div class="discussion">
@@ -1590,12 +1606,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-155
-156
-157
-158
-159
-160
 161
 162
 163
@@ -1603,10 +1613,16 @@ $(document).ready(function() {
 165
 166
 167
-168</pre>
+168
+169
+170
+171
+172
+173
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 161</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_explicit_retrieve'>explicit_retrieve</span>
   <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_retrieve'>retrieve</span> <span class='label'>interactive:</span> <span class='kw'>false</span>
@@ -1642,21 +1658,21 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-142
-143
-144
-145
-146
-147
 148
 149
 150
 151
 152
-153</pre>
+153
+154
+155
+156
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 148</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_map_temporary_from_input'>map_temporary_from_input</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_outputs'>outputs</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_outputs'>outputs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_outputs'>outputs</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
