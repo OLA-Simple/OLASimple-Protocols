@@ -923,7 +923,7 @@ $(document).ready(function() {
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://ola_image_processing:5000/api/processimage</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
-        <dt id="ALIAS_KEY-constant" class="">ALIAS_KEY =
+        <dt id="PATIENT_ID_KEY-constant" class="">PATIENT_ID_KEY =
           <div class="docstring">
   <div class="discussion">
     
@@ -936,6 +936,11 @@ $(document).ready(function() {
   
 
 </div>
+        </dt>
+        <dd><pre class="code"><span class='symbol'>:patient</span></pre></dd>
+      
+        <dt id="ALIAS_KEY-constant" class="">ALIAS_KEY =
+          
         </dt>
         <dd><pre class="code"><span class='symbol'>:alias</span></pre></dd>
       
@@ -1606,7 +1611,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-161
 162
 163
 164
@@ -1619,10 +1623,11 @@ $(document).ready(function() {
 171
 172
 173
-174</pre>
+174
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 161</span>
+      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_explicit_retrieve'>explicit_retrieve</span>
   <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_retrieve'>retrieve</span> <span class='label'>interactive:</span> <span class='kw'>false</span>
@@ -1658,7 +1663,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-148
 149
 150
 151
@@ -1669,10 +1673,11 @@ $(document).ready(function() {
 156
 157
 158
-159</pre>
+159
+160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_map_temporary_from_input'>map_temporary_from_input</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_outputs'>outputs</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_outputs'>outputs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_outputs'>outputs</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
