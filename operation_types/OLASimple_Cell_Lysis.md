@@ -7,9 +7,7 @@ Documentation here. Start with a paragraph, not a heading or title, as in most v
 - **Whole Blood** [C]  
   - <a href='#' onclick='easy_select("Sample Types", "OLASimple Sample")'>OLASimple Sample</a> / <a href='#' onclick='easy_select("Containers", "OLA Whole Blood")'>OLA Whole Blood</a>
 
-### Parameters
 
-- **Kit Number** 
 
 ### Outputs
 
@@ -96,17 +94,18 @@ class Protocol
     end
     operations.retrieve interactive: false
     save_user operations
-    
-        
-    if debug
-        kit_num = rand(1..30)
-        operations.each do |op|
-            op.set_input(KIT_NUM, kit_num)
-        end
-    end
 
     operations.each.with_index do |op, i|
-      op.temporary[:input_kit] = op.input(KIT_NUM).val.to_int
+      if debug
+        kit_num = rand(1..30)
+        patient_id = rand(1..30)
+      else
+        kit_num = op.input(INPUT).item.get(KIT_KEY)
+        patient_id = op.input(INPUT).item.get(PATIENT_ID_KEY)
+      end
+      op.temporary[:input_kit] = kit_num
+      op.temporary[:patient] = patient_id
+
       if op.temporary[:input_kit].nil?
         raise "Input kit number cannot be nil"
       end
@@ -132,7 +131,7 @@ class Protocol
     additional_supplies
 
     show do
-      title "Take package #{this_package.bold} from the #{FRIDGE} and place on the #{BENCH} in the #{BSC}"
+      title "Take package #{this_package.bold} from the #{FRIDGE_PRE} and place on the #{BENCH_PRE} in the #{BSC}"
     end
 
     show do
@@ -153,7 +152,7 @@ class Protocol
     end
 
     operations.running.each do |op|
-      op.temporary[:blood_ref] = "#{op.temporary[:input_sample]}"
+      op.temporary[:blood_ref] = "#{op.temporary[:patient]}"
     end
 
     operations.running.each do |op|
@@ -164,7 +163,7 @@ class Protocol
         note "Close both tubes after adding."
         tubeB = make_tube(opentube, "Blood", "#{from}", fluid = "medium", fluidclass: "redfluid")
         tubeE = make_tube(opentube, ["Empty", "tube"], op.tube_label("sample tube 1", true))
-        img = make_transfer(tubeB, tubeE, 250, "#{vol}uL", "(#{P1000} pipette)")
+        img = make_transfer(tubeB, tubeE, 250, "#{vol}uL", "(#{P1000_PRE} pipette)")
         img.translate!(25)
         note display_svg(img, 0.75)
       end
@@ -183,7 +182,7 @@ class Protocol
         note "Close both tubes after adding."
         tubeA = make_tube(opentube, "Antibodies", op.tube_label("antibodies"), fluid = "medium")
         tubeS = make_tube(opentube, ["Sample", "tube"], op.tube_label("sample tube 1", true), fluid = "medium", fluidclass: "redfluid")
-        img = make_transfer(tubeA, tubeS, 250, "#{vol}uL", "(#{P200} pipette)")
+        img = make_transfer(tubeA, tubeS, 250, "#{vol}uL", "(#{P200_PRE} pipette)")
         img.translate!(25)
         note display_svg(img, 0.75)
       end
@@ -200,7 +199,7 @@ class Protocol
         note "Close both tubes after adding."
         tubeB = make_tube(opentube, ["Magnetic", "beads"], op.tube_label("magnetic beads"), fluid = "small", fluidclass: "brownfluid")
         tubeS = make_tube(opentube, ["Sample", "tube"], op.tube_label("sample tube 1", true), fluid = "medium", fluidclass: "redfluid")
-        img = make_transfer(tubeB, tubeS, 250, "#{vol}uL", "(#{P200} pipette)")
+        img = make_transfer(tubeB, tubeS, 250, "#{vol}uL", "(#{P200_PRE} pipette)")
         img.translate!(25)
         note display_svg(img, 0.75)
       end
@@ -226,7 +225,7 @@ class Protocol
         note "Close both tubes after adding."
         tubeP = make_tube(opentube, "1X PBS", op.tube_label("1X PBS 1", true), fluid = "medium")
         tubeS = make_tube(opentube, ["Sample", "tube"], op.tube_label("sample tube 1", true), fluid = "medium", fluidclass: "redfluid")
-        img = make_transfer(tubeP, tubeS, 250, "#{vol}uL", "(#{P1000} pipette)")
+        img = make_transfer(tubeP, tubeS, 250, "#{vol}uL", "(#{P1000_PRE} pipette)")
         img.translate!(25)
         note display_svg(img, 0.75)
         # transfer image
@@ -257,7 +256,7 @@ class Protocol
     tubes = operations.running.map {|op| op.ref("sample tube 2", true)}
 
     show do
-      title "Setup empty tubes #{tubes.join(', ').bold} on rack"
+      title "Setup empty #{"tubes".pluralize(tubes)} #{tubes.join(', ').bold} on rack"
       note "Open tubes"
     end
 
@@ -277,7 +276,7 @@ class Protocol
         note "Point tip away from the dark portion and pipette up slowly."
         warning "Do not tilt the magnetic rack."
         tube = make_tube(opentube, ["empty", "tube"], op.tube_label("sample tube 2", true))
-        img = make_transfer(sep_1_diagram, tube, 250, "900uL", "(P1000 pipette)")
+        img = make_transfer(sep_1_diagram, tube, 250, "900uL", P200_PRE)
         img.translate!(0, -100)
         note display_svg(img, 0.75)
         # warning "VIDEO HERE"
@@ -313,7 +312,7 @@ class Protocol
         note "Pulse vortex at low speed for 3 seconds to mix."
         tubeB = make_tube(opentube, ["Magnetic", "beads"], op.tube_label("magnetic beads"), fluid = "small", fluidclass: "brownfluid")
         tubeS = make_tube(opentube, ["Sample", "tube"], op.tube_label("sample tube 2", true), fluid = "large", fluidclass: "palefluid")
-        img = make_transfer(tubeB, tubeS, 250, "#{vol}uL", "(#{P200} pipette)")
+        img = make_transfer(tubeB, tubeS, 250, "#{vol}uL", "(#{P200_PRE} pipette)")
         img.translate!(25)
         note display_svg(img, 0.75)
       end
@@ -344,7 +343,7 @@ class Protocol
         note "Point tip away from the dark portion and pipette up slowly."
         warning "Do not tilt the magnetic rack."
         tube = make_tube(opentube, ["empty", "tube"], op.tube_label("sample tube 3", true))
-        img = make_transfer(sep_2_diagram, tube, 250, "900uL", "(P1000 pipette)")
+        img = make_transfer(sep_2_diagram, tube, 250, "900uL", P1000_PRE)
         img.translate!(0, -100)
         note display_svg(img, 0.75)
         # warning "VIDEO HERE"
@@ -373,7 +372,7 @@ class Protocol
         note "Pulse vortex at low speed for 3 seconds to mix."
         tubeB = make_tube(opentube, ["Magnetic", "beads"], op.tube_label("magnetic beads"), fluid = "small", fluidclass: "brownfluid")
         tubeS = make_tube(opentube, ["Sample", "tube"], op.tube_label("sample tube 3", true), fluid = "large", fluidclass: "palefluid")
-        img = make_transfer(tubeB, tubeS, 250, "#{vol}uL", "(#{P200} pipette)")
+        img = make_transfer(tubeB, tubeS, 250, "#{vol}uL", "(#{P200_PRE} pipette)")
         img.translate!(25)
         note display_svg(img, 0.75)
       end
@@ -452,7 +451,7 @@ class Protocol
         note "Gently pulse vortex at low speed to resuspend the cell pellet."
         tubeA = make_tube(opentube, ["Lysis", "buffer"], op.tube_label("RBC lysis buffer", true), fluid = "medium")
         tubeS = make_tube(opentube, ["Red blood", "cell pellet"], op.output_tube_label(OUTPUT), fluid = "powder", fluidclass: "palefluid")
-        img = make_transfer(tubeA, tubeS, 250, "#{vol}uL", "(#{P1000} pipette)")
+        img = make_transfer(tubeA, tubeS, 250, "#{vol}uL", "(#{P1000_PRE} pipette)")
         img.translate!(25)
         note display_svg(img, 0.75)
       end
@@ -475,7 +474,7 @@ class Protocol
     
     show do
         title "Return samples to BSC and remove fluid"
-        note "Using #{P1000} pipette set to 900uL, remove fluid from cell pellet."
+        note "Using #{P1000_PRE} pipette set to 900uL, remove fluid from cell pellet."
         note "Discard fluid into bleach"
         warning "Change pipette tip between samples."
     end
@@ -489,7 +488,7 @@ class Protocol
         note "Gently pulse vortex at low speed to resuspend cells."
         tubeP = make_tube(opentube, "1X PBS", op.tube_label("1X PBS 2", true), fluid = "medium")
         tubeS = make_tube(opentube, ["Sample", "tube"], op.output_tube_label(OUTPUT), fluid = "powder", fluidclass: "palefluid")
-        img = make_transfer(tubeP, tubeS, 250, "#{vol}uL", "(#{P1000} pipette)")
+        img = make_transfer(tubeP, tubeS, 250, "#{vol}uL", "(#{P1000_PRE} pipette)")
         img.translate!(25)
         note display_svg(img, 0.75)
         # transfer image
