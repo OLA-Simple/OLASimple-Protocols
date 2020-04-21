@@ -11,7 +11,7 @@ var config = {
         { name: "Introduction", type: "local-md", path: "README.md" },
         { name: "About this Workflow", type: "local-md", path: "ABOUT.md" },
         { name: "License", type: "local-md", path: "LICENSE.md" },
-        { name: "Issues", type: "external-link", path: 'https://github.com/gamemackerel/OLASimple-Protocols/issues' }
+        { name: "Issues", type: "external-link", path: 'https://github.com/Gamemackerel/OLASimple-protocols/issues' }
       ]
     },
 
@@ -23,12 +23,6 @@ var config = {
 
         contents: [
 
-          
-            {
-              name: 'Assign Synthetic DNA for Kit',
-              path: 'operation_types/Assign_Synthetic_DNA_for_Kit' + '.md',
-              type: "local-md"
-            },
           
             {
               name: 'Make Upload',
@@ -51,6 +45,12 @@ var config = {
             {
               name: 'OLASimple Interactive Survey',
               path: 'operation_types/OLASimple_Interactive_Survey' + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: 'OLASimple Job Submission',
+              path: 'operation_types/OLASimple_Job_Submission' + '.md',
               type: "local-md"
             },
           
@@ -81,12 +81,6 @@ var config = {
             {
               name: 'Pipette Training',
               path: 'operation_types/Pipette_Training' + '.md',
-              type: "local-md"
-            },
-          
-            {
-              name: 'Sample Setup',
-              path: 'operation_types/Sample_Setup' + '.md',
               type: "local-md"
             },
           
