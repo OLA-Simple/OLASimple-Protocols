@@ -182,16 +182,19 @@ module RefExtension
     unit = self.temporary[:output_unit]
     component = self.component(package_name)
     sample = self.temporary[:output_sample]
+    patient = self.temporary[:patient]
 
     raise "Kit is nil" if kit.nil?
     raise "Unit is nil" if unit.nil?
     raise "Component is nil" if component.nil?
     raise "Sample is nil" if sample.nil?
+    raise "Patient ID is nil" if sample.nil?
 
     output_item.associate(KIT_KEY, kit)
     output_item.associate(UNIT_KEY, unit)
     output_item.associate(COMPONENT_KEY, component)
     output_item.associate(SAMPLE_KEY, sample)
+    output_item.associate(PATIENT_ID_KEY, patient)
     output_item.associate(ALIAS_KEY, self.ref_helper(output_item))
 
     # from associations
@@ -285,7 +288,7 @@ module OLALib
   end
 
   def get_alias_array(item)
-    [item.get(KIT_KEY), item.get(UNIT_KEY), item.get(COMPONENT_KEY), item.get(SAMPLE_KEY)]
+    [item.get(KIT_KEY), item.get(UNIT_KEY), item.get(COMPONENT_KEY), item.get(SAMPLE_KEY), item.get(PATIENT_ID_KEY)]
   end
 
   def ref(item)
@@ -295,7 +298,8 @@ module OLALib
   def save_temporary_input_values(ops, input)
     # get the aliases from the inputs
     ops.each do |op|
-      kit, unit, component, sample = get_alias_array(op.input(input).item)
+      kit, unit, component, sample, patient = get_alias_array(op.input(input).item)
+      op.temporary[:patient] = patient
       op.temporary[:input_kit] = kit
       op.temporary[:input_unit] = unit
       op.temporary[:input_component] = component
