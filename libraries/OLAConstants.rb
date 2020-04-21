@@ -13,6 +13,7 @@ module OLAConstants
   # DATA ASSOCIATION KEYS (DO NOT CHANGE)
   ##########################################
   #
+  PATIENT_ID_KEY = :patient
   ALIAS_KEY = :alias
   KIT_KEY = :kit
   UNIT_KEY = :unit
