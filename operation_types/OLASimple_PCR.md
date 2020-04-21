@@ -7,6 +7,7 @@ New Documentation
 
 - **Patient Sample** [P]  
   - <a href='#' onclick='easy_select("Sample Types", "OLASimple Sample")'>OLASimple Sample</a> / <a href='#' onclick='easy_select("Containers", "OLASimple Synthetic DNA")'>OLASimple Synthetic DNA</a>
+  - <a href='#' onclick='easy_select("Sample Types", "OLASimple Sample")'>OLASimple Sample</a> / <a href='#' onclick='easy_select("Containers", "OLA lysed blood")'>OLA lysed blood</a>
 
 
 
