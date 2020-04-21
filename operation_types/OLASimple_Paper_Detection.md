@@ -95,7 +95,7 @@ class Protocol
   
   POSITIVE = "positive"
   NEGATIVE = "negative"
-  DEBUG_UPLOAD_ID = 1
+  DEBUG_UPLOAD_ID = 3
 
 ##########################################
 # ##
@@ -374,7 +374,7 @@ class Protocol
     show do
       title "Wait for stop cycle to finish (5 minutes)."
       check "Wait for the #{THERMOCYCLER} containing your samples to finish. "
-      bullet "If the {THERMOCYCLER} beeps, it is done. If not, continue waiting."
+      bullet "If the #{THERMOCYCLER} beeps, it is done. If not, continue waiting."
       check "Once the #{THERMOCYCLER} finishes, IMMEDIATELY continue to the next step."
       check "Take all #{pluralizer("sample", myops.length * PREV_COMPONENTS.length)} from the #{THERMOCYCLER}."
       check "Vortex #{"sample".pluralize(PREV_COMPONENTS.length)} for 5 seconds to mix."
