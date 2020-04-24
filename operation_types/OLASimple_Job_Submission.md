@@ -1,6 +1,6 @@
 # OLASimple Job Submission
 
-Documentation here. Start with a paragraph, not a heading or title, as in most views, the title will be supplied by the view.
+Initializes an OLASimple workflow using the IDs of a whole blood sample and an OLASimple kit.
 
 
 ### Parameters
