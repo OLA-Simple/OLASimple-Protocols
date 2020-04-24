@@ -1,3 +1,3 @@
 # About this workflow
 
-Please describe how to use your workflow here.
+Aquarium workflow enabling rapid HIV diagnosis using the OLA simple technique.
