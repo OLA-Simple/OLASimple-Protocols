@@ -1,6 +1,6 @@
 # OLASimple Ligation
 
-Documentation here. Start with a paragraph, not a heading or title, as in most views, the title will be supplied by the view.
+Add small pieces of DNA to the PCR product from OLASimple PCR that allow detection of HIV mutations.
 ### Inputs
 
 
