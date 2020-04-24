@@ -2,7 +2,7 @@ var config = {
 
   tagline: "The Laboratory</br>Operating System",
   documentation_url: "http://localhost:4000/aquarium",
-  title: "OLASimple workflow",
+  title: "OLASimple Workflow",
   navigation: [
 
     {
@@ -11,7 +11,7 @@ var config = {
         { name: "Introduction", type: "local-md", path: "README.md" },
         { name: "About this Workflow", type: "local-md", path: "ABOUT.md" },
         { name: "License", type: "local-md", path: "LICENSE.md" },
-        { name: "Issues", type: "external-link", path: 'https://github.com/Gamemackerel/OLASimple-protocols/issues' }
+        { name: "Issues", type: "external-link", path: 'https://github.com/gamemackerel/OLASimple-Protocols/issues' }
       ]
     },
 
@@ -25,26 +25,8 @@ var config = {
 
           
             {
-              name: 'Make Upload',
-              path: 'operation_types/Make_Upload' + '.md',
-              type: "local-md"
-            },
-          
-            {
               name: 'OLASimple Cell Lysis',
               path: 'operation_types/OLASimple_Cell_Lysis' + '.md',
-              type: "local-md"
-            },
-          
-            {
-              name: 'OLASimple Graphics Test',
-              path: 'operation_types/OLASimple_Graphics_Test' + '.md',
-              type: "local-md"
-            },
-          
-            {
-              name: 'OLASimple Interactive Survey',
-              path: 'operation_types/OLASimple_Interactive_Survey' + '.md',
               type: "local-md"
             },
           
@@ -73,14 +55,14 @@ var config = {
             },
           
             {
-              name: 'OLASimple Tests',
-              path: 'operation_types/OLASimple_Tests' + '.md',
+              name: 'OLASimple Paper Detection (Manual)',
+              path: 'operation_types/OLASimple_Paper_Detection_Manual_' + '.md',
               type: "local-md"
             },
           
             {
-              name: 'Pipette Training',
-              path: 'operation_types/Pipette_Training' + '.md',
+              name: 'OLASimple Visual Call (Manual)',
+              path: 'operation_types/OLASimple_Visual_Call_Manual_' + '.md',
               type: "local-md"
             },
           
