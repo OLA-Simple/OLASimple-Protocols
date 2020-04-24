@@ -1,6 +1,6 @@
 # OLASimple Cell Lysis
 
-Documentation here. Start with a paragraph, not a heading or title, as in most views, the title will be supplied by the view.
+Blood CD4+ cells are negatively selected and lysed. Magnetic beads and antibodies are used to separate unwanted cells.
 ### Inputs
 
 
