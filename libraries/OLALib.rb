@@ -196,7 +196,7 @@ module RefExtension
     output_item.associate(SAMPLE_KEY, sample)
     output_item.associate(PATIENT_ID_KEY, patient)
     output_item.associate(ALIAS_KEY, self.ref_helper(output_item))
-
+    
     # from associations
     output_item.associate(:from, self.input(from_item).item.id)
     output_item.associate(:fromref, self.input_ref(from_item))
@@ -277,7 +277,7 @@ module OLALib
     "#{kit}#{unit}#{component}#{sample}"
   end
 
-  def make_alias(item, kit, unit, component, sample = nil)
+  def make_alias(item, kit, unit, component, patient, sample = nil)
     sample = sample || ""
     label = alias_helper(kit, unit, component, sample)
     item.associate(ALIAS_KEY, label)
@@ -285,6 +285,7 @@ module OLALib
     item.associate(UNIT_KEY, unit)
     item.associate(COMPONENT_KEY, component)
     item.associate(SAMPLE_KEY, sample)
+    item.associate(PATIENT_ID_KEY, patient)
   end
 
   def get_alias_array(item)
