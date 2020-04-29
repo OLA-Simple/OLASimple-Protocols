@@ -145,7 +145,7 @@ module OLAConstants
   PCR_CYCLE = "OSPCR"
   LIG_CYCLE = "OSLIG"
   STOP_CYCLE = "OSSTOP"
-
+  
   def map_temporary_from_input(input, outputs, keys)
     outputs = [outputs].flatten
     keys = [keys].flatten
