@@ -14,7 +14,12 @@ Visually inspecting the strips, a call is made for the results of the strips.
 
 ### Precondition <a href='#' id='precondition'>[hide]</a>
 ```ruby
-def precondition(_op)
+eval Library.find_by_name("OLAScheduling").code("source").content
+extend OLAScheduling
+
+BATCH_SIZE = 2
+def precondition(op)
+  schedule_same_kit_ops(op)
   true
 end
 ```
