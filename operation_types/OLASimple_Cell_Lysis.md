@@ -17,7 +17,12 @@ Blood CD4+ cells are negatively selected and lysed. Magnetic beads and antibodie
 
 ### Precondition <a href='#' id='precondition'>[hide]</a>
 ```ruby
+eval Library.find_by_name("OLAScheduling").code("source").content
+extend OLAScheduling
+
+BATCH_SIZE = 2
 def precondition(op)
+  schedule_same_kit_ops(op)
   true
 end
 ```
@@ -96,12 +101,11 @@ class Protocol
     save_user operations
 
     operations.each.with_index do |op, i|
-      if debug
+      kit_num = op.input(INPUT).item.get(KIT_KEY)
+      patient_id = op.input(INPUT).item.get(PATIENT_ID_KEY)
+      if debug && kit_num.nil? && patient_id.nil?
         kit_num = rand(1..30)
-        patient_id = rand(1..30)
-      else
-        kit_num = op.input(INPUT).item.get(KIT_KEY)
-        patient_id = op.input(INPUT).item.get(PATIENT_ID_KEY)
+        patient_id = rand(1..30)      
       end
       op.temporary[:input_kit] = kit_num
       op.temporary[:patient] = patient_id
