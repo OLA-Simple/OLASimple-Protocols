@@ -25,6 +25,12 @@ var config = {
 
           
             {
+              name: 'Assign Synthetic DNA for Kit',
+              path: 'operation_types/Assign_Synthetic_DNA_for_Kit' + '.md',
+              type: "local-md"
+            },
+          
+            {
               name: 'OLASimple Cell Lysis',
               path: 'operation_types/OLASimple_Cell_Lysis' + '.md',
               type: "local-md"
@@ -63,6 +69,12 @@ var config = {
             {
               name: 'OLASimple Visual Call (Manual)',
               path: 'operation_types/OLASimple_Visual_Call_Manual_' + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: 'Pipette Training',
+              path: 'operation_types/Pipette_Training' + '.md',
               type: "local-md"
             },
           
@@ -109,6 +121,12 @@ var config = {
             {
               name: 'OLALib',
               path: 'libraries/OLALib' + '.html',
+              type: "local-webpage"
+            },
+          
+            {
+              name: 'OLAScheduling',
+              path: 'libraries/OLAScheduling' + '.html',
               type: "local-webpage"
             },
           
