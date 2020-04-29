@@ -42,6 +42,10 @@ class Protocol
       kit_id = op.input(KIT_ID_INPUT).value.to_i
       op.output(OUTPUT).item.associate(PATIENT_ID_KEY, patient)
       op.output(OUTPUT).item.associate(KIT_KEY, kit_id)
+      op.recurse_up  do |op|
+        op.associate(PATIENT_ID_KEY, patient)
+        op.associate(KIT_KEY, kit_id)
+      end
     end
 
     {}
