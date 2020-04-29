@@ -17,7 +17,11 @@ Add small pieces of DNA to the PCR product from OLASimple PCR that allow detecti
 
 ### Precondition <a href='#' id='precondition'>[hide]</a>
 ```ruby
+eval Library.find_by_name("OLAScheduling").code("source").content
+extend OLAScheduling
+
 def precondition(op)
+  schedule_same_kit_ops(op)
   true
 end
 ```
