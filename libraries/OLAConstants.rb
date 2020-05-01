@@ -58,6 +58,8 @@ module OLAConstants
   BANDS = "bands"
   PANEL = "panel"
   AQUARIUM = "Aquarium"
+  
+  BATCH_SIZE = 2 # Changing batch size must be done in OLAScheduling as well as here
 
   ##########################################
   # CODONS
