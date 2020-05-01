@@ -42,11 +42,13 @@ end
 needs "OLASimple/OLAConstants"
 needs "OLASimple/OLALib"
 needs "OLASimple/OLAGraphics"
+needs "OLASimple/JobComments"
 
 class Protocol
   include OLALib
   include OLAGraphics
   include OLAConstants
+  include JobComments
 
   ##########################################
   # INPUT/OUTPUT
@@ -122,6 +124,7 @@ class Protocol
     cleanup sorted_ops
     start_ligation sorted_ops.running
     conclusion sorted_ops
+    accept_comments
     return {}
   end
  
