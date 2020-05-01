@@ -89,6 +89,12 @@ var config = {
 
           
             {
+              name: 'JobComments',
+              path: 'libraries/JobComments' + '.html',
+              type: "local-webpage"
+            },
+          
+            {
               name: 'NetworkRequests',
               path: 'libraries/NetworkRequests' + '.html',
               type: "local-webpage"
