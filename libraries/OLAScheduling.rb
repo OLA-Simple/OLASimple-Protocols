@@ -10,6 +10,9 @@ module OLAScheduling
   # sets operation to pending
   # then, if there is enough fellow pending operations, batches them into a job and schedule.
   def schedule_ops_of_type_if_enough(op, batch_size)
+    if op.plan.nil? # don't perform computation in testing mode with no plan
+      return
+    end
     operations = Operation.where({operation_type_id: op.operation_type_id, status: ["pending"]})
     op.status = "pending"
     op.save
@@ -33,8 +36,11 @@ module OLAScheduling
   # and schedules them together if they are all ready
   # looks at op.get(KIT_KEY) to decide what kit an op belongs
   def schedule_same_kit_ops(this_op)
-    kit = this_op.get(KIT_KEY)
-    if kit.nil?
+    if this_op.plan.nil? # don't perform computation in testing mode with no plan
+      return
+    end
+    kit_id = this_op.get(KIT_KEY)
+    if kit_id.nil?
       this_op.error(:no_kit, "This operation did not have an associated kit id and couldn't be batched")
       exit
     end
@@ -43,7 +49,7 @@ module OLAScheduling
     this_op.save
     operations << this_op
     operations = operations.to_a.uniq
-    operations = operations.select { |op| op.get(KIT_KEY) == kit }
+    operations = operations.select { |op| op.get(KIT_KEY) == kit_id }
     if operations.length == BATCH_SIZE
       Job.schedule(
         operations: operations,
@@ -51,7 +57,10 @@ module OLAScheduling
       )
     elsif operations.length > BATCH_SIZE
       operations.each do |op|
-        op.error(:batch_too_big, "There are too many samples being run with kit #{kit}. The Batch size is set to #{BATCH_SIZE}, but there are #{operations.length} operations in the batch.")
+        op.error(:batch_too_big, "There are too many samples being run with kit #{kit_id}. The Batch size is set to #{BATCH_SIZE}, but there are #{operations.length} operations which list #{kit_id} as their kit association.")
+        op.save
+        op.plan.error("There are too many samples being run with kit #{kit_id}. The Batch size is set to #{BATCH_SIZE}, but there are #{operations.length} operations which list #{kit_id} as their kit association.", :batch_too_big)
+        op.plan.save
       end
     end
     exit
