@@ -42,6 +42,7 @@ end
 needs "OLASimple/OLAConstants"
 needs "OLASimple/OLALib"
 needs "OLASimple/OLAGraphics"
+needs "OLASimple/JobComments"
 
 # TODO: There should be NO calculations in the show blocks
 
@@ -49,6 +50,7 @@ class Protocol
   include OLAConstants
   include OLALib
   include OLAGraphics
+  include JobComments
 
   ##########################################
   # INPUT/OUTPUT
@@ -182,6 +184,7 @@ class Protocol
     cleanup sorted_ops
     start_thermocycler sorted_ops.running
     conclusion sorted_ops
+    accept_comments
     return {}
   end # main
 
