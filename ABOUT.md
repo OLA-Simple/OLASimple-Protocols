@@ -1,4 +1,4 @@
-# OLASimple Workflow, version 0.0.7
+# OLASimple Workflow, version 0.0.8
 
 Aquarium workflow enabling rapid HIV diagnosis using the OLA simple technique. [[Download](OLASimple-Protocols.aq)] [[Github Repo](https://github.com/gamemackerel/OLASimple-Protocols)]
 
