@@ -25,12 +25,6 @@ var config = {
 
           
             {
-              name: 'Assign Synthetic DNA for Kit',
-              path: 'operation_types/Assign_Synthetic_DNA_for_Kit' + '.md',
-              type: "local-md"
-            },
-          
-            {
               name: 'OLASimple Cell Lysis',
               path: 'operation_types/OLASimple_Cell_Lysis' + '.md',
               type: "local-md"
