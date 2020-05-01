@@ -42,6 +42,7 @@ end
 needs "OLASimple/OLAConstants"
 needs "OLASimple/OLALib"
 needs "OLASimple/OLAGraphics"
+needs "OLASimple/JobComments"
 
 # TODO: There should be NO calculations in the show blocks
 
@@ -49,6 +50,7 @@ class Protocol
   include OLAConstants
   include OLALib
   include OLAGraphics
+  include JobComments
 
   ##########################################
   # INPUT/OUTPUT
@@ -565,6 +567,8 @@ class Protocol
 
     # put down clean_area method here
     # after cleaning dispose of gloves into biohazard
+    
+    accept_comments
     return {}
 
   end
