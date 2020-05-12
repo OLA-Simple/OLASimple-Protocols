@@ -94,6 +94,97 @@ module OLAKits
     }
   end
 
+  def self.rtpcr_kit
+    {
+        "name" => "RT-PCR kit",
+        "Sample Labeling" => {
+            "Unit Name" => "S",
+            "Components" => {
+                
+            },
+            "Number of Samples" => 2,
+        },
+
+        "RNA Extraction" => {
+            "Unit Name" => "E",
+            "Components" => {
+                "DTT/tRNA" => "E0",
+                "Lysis buffer" => "E1",
+                "Wash 1" => "E2",
+                "Wash 2" => "E3",
+                "sodium azide water" => "E4",
+                "Sample column" => "E5",
+                "Extract tube" => "E6"
+            },
+            "Number of Samples" => 2,
+        },
+
+        "ligation" => {
+            "Unit Name" => "C",
+            "Components" => {
+                "sample tubes" => [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E"
+                ],
+                "diluent A" => "F"
+            },
+            "PCR to Ligation Mix Volume" => 2.4,
+            "Ligation Mix Rehydration Volume" => 24,
+            "Number of Samples" => 2,
+            "Number of Sub Packages" => 2
+        },
+
+        "detection" => {
+            "Unit Name" => "D",
+            "Components" => {
+                "strips" => [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E"
+                ],
+                "stop" => "F",
+                "gold" => "G",
+                "diluent A" => "H"
+            },
+            "Number of Samples" => 2,
+            "Number of Sub Packages" => 4,
+            "Stop Rehydration Volume" => 40,
+            "Gold Rehydration Volume" => 480,
+            "Gold to Strip Volume" => 40,
+            "Sample to Strip Volume" => 24,
+            "Stop to Sample Volume" => 2.4,
+        },
+
+        "analysis" => {
+            "Components" => {
+                "strips" => [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E"
+                ],
+            },
+            "Mutation Labels" => [
+                "K65R",
+                "K103N",
+                "Y181C",
+                "M184V",
+                "G190A"
+            ],
+            "Mutation Colors" => ["red", "yellow", "green", "blue", "purple"]
+        }
+
+    }
+  end
+
+
+
   def self.uw_kit()
     {
         "name" => "uw kit",
