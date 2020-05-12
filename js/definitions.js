@@ -2,7 +2,7 @@ var config = {
 
   tagline: "The Laboratory</br>Operating System",
   documentation_url: "http://localhost:4000/aquarium",
-  title: "OLASimple Workflow",
+  title: "OLA Simple Workflow",
   navigation: [
 
     {
@@ -37,6 +37,12 @@ var config = {
             },
           
             {
+              name: 'OLASimple Job Submission (RT-PCR)',
+              path: 'operation_types/OLASimple_Job_Submission_RT-PCR_' + '.md',
+              type: "local-md"
+            },
+          
+            {
               name: 'OLASimple Ligation',
               path: 'operation_types/OLASimple_Ligation' + '.md',
               type: "local-md"
@@ -57,6 +63,18 @@ var config = {
             {
               name: 'OLASimple Paper Detection (Manual)',
               path: 'operation_types/OLASimple_Paper_Detection_Manual_' + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: 'OLASimple RNA Extraction',
+              path: 'operation_types/OLASimple_RNA_Extraction' + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: 'OLASimple Tests',
+              path: 'operation_types/OLASimple_Tests' + '.md',
               type: "local-md"
             },
           
@@ -97,6 +115,12 @@ var config = {
             {
               name: 'NetworkRequests',
               path: 'libraries/NetworkRequests' + '.html',
+              type: "local-webpage"
+            },
+          
+            {
+              name: 'New Library Code',
+              path: 'libraries/New_Library_Code' + '.html',
               type: "local-webpage"
             },
           
@@ -183,8 +207,26 @@ var config = {
             },
           
             {
+              name: 'OLA intention',
+              path: 'object_types/OLA_intention'  + '.md',
+              type: "local-md"
+            },
+          
+            {
               name: 'OLA lysed blood',
               path: 'object_types/OLA_lysed_blood'  + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: 'OLA plasma',
+              path: 'object_types/OLA_plasma'  + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: 'OLA viral RNA',
+              path: 'object_types/OLA_viral_RNA'  + '.md',
               type: "local-md"
             },
           
