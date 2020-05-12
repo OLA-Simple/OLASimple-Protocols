@@ -933,6 +933,28 @@ $(document).ready(function() {
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#rtpcr_kit-class_method" title="rtpcr_kit (class method)">.<strong>rtpcr_kit</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#uw_kit-class_method" title="uw_kit (class method)">.<strong>uw_kit</strong>  &#x21d2; Object </a>
     
 
@@ -1174,9 +1196,9 @@ $(document).ready(function() {
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="uw_kit-class_method">
+  <h3 class="signature " id="rtpcr_kit-class_method">
   
-    .<strong>uw_kit</strong>  &#x21d2; <tt>Object</tt> 
+    .<strong>rtpcr_kit</strong>  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1275,13 +1297,213 @@ $(document).ready(function() {
 181
 182
 183
-184
-185
-186
-187</pre>
+184</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'OLAKits.rb', line 97</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_rtpcr_kit'>rtpcr_kit</span>
+  <span class='lbrace'>{</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RT-PCR kit</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sample Labeling</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unit Name</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>S</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Components</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+              
+          <span class='rbrace'>}</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Number of Samples</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>2</span><span class='comma'>,</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RNA Extraction</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unit Name</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>E</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Components</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DTT/tRNA</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>E0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Lysis buffer</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>E1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Wash 1</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>E2</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Wash 2</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>E3</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sodium azide water</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>E4</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sample column</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>E5</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Extract tube</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>E6</span><span class='tstring_end'>&quot;</span></span>
+          <span class='rbrace'>}</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Number of Samples</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>2</span><span class='comma'>,</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ligation</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unit Name</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>C</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Components</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sample tubes</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>B</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>C</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>D</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>E</span><span class='tstring_end'>&quot;</span></span>
+              <span class='rbracket'>]</span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diluent A</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>F</span><span class='tstring_end'>&quot;</span></span>
+          <span class='rbrace'>}</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PCR to Ligation Mix Volume</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='float'>2.4</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ligation Mix Rehydration Volume</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>24</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Number of Samples</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>2</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Number of Sub Packages</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>2</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>detection</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unit Name</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>D</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Components</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>strips</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>B</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>C</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>D</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>E</span><span class='tstring_end'>&quot;</span></span>
+              <span class='rbracket'>]</span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>stop</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>F</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>gold</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>G</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diluent A</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>H</span><span class='tstring_end'>&quot;</span></span>
+          <span class='rbrace'>}</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Number of Samples</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>2</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Number of Sub Packages</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>4</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Stop Rehydration Volume</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>40</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Gold Rehydration Volume</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>480</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Gold to Strip Volume</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>40</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sample to Strip Volume</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>24</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Stop to Sample Volume</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='float'>2.4</span><span class='comma'>,</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>analysis</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Components</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>strips</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>B</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>C</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>D</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>E</span><span class='tstring_end'>&quot;</span></span>
+              <span class='rbracket'>]</span><span class='comma'>,</span>
+          <span class='rbrace'>}</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Mutation Labels</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>K65R</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>K103N</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Y181C</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>M184V</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>G190A</span><span class='tstring_end'>&quot;</span></span>
+          <span class='rbracket'>]</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Mutation Colors</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>red</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>yellow</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>green</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>blue</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>purple</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+      <span class='rbrace'>}</span>
+
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="uw_kit-class_method">
+  
+    .<strong>uw_kit</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'OLAKits.rb', line 188</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_uw_kit'>uw_kit</span><span class='lparen'>(</span><span class='rparen'>)</span>
   <span class='lbrace'>{</span>
