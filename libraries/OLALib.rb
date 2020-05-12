@@ -188,7 +188,7 @@ module RefExtension
     raise "Unit is nil" if unit.nil?
     raise "Component is nil" if component.nil?
     raise "Sample is nil" if sample.nil?
-    raise "Patient ID is nil" if sample.nil?
+    raise "Patient ID is nil" if patient.nil?
 
     output_item.associate(KIT_KEY, kit)
     output_item.associate(UNIT_KEY, unit)
@@ -305,7 +305,7 @@ module OLALib
       op.temporary[:input_unit] = unit
       op.temporary[:input_component] = component
       op.temporary[:input_sample] = sample
-      op.temporary[:input_kit_and_unit] = [kit, unit].join('')
+      op.temporary[:input_kit_and_unit] = [unit, kit].join('')
     end
   end
 
@@ -320,7 +320,7 @@ module OLALib
       op.temporary[:output_kit] = op.temporary[:input_kit]
       op.temporary[:output_unit] = op.temporary[:pack_hash][UNIT_NAME_FIELD_VALUE]
       op.temporary[:output_sample] = op.temporary[:input_sample]
-      op.temporary[:output_kit_and_unit] = [op.temporary[:output_kit], op.temporary[:output_unit]].join('')
+      op.temporary[:output_kit_and_unit] = [op.temporary[:output_unit], op.temporary[:output_kit]].join('')
       op.temporary[:output_number_of_samples] = op.temporary[:pack_hash][NUM_SAMPLES_FIELD_VALUE]
     end
   end
