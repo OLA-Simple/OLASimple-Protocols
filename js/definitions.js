@@ -25,18 +25,6 @@ var config = {
 
           
             {
-              name: 'OLASimple Cell Lysis',
-              path: 'operation_types/OLASimple_Cell_Lysis' + '.md',
-              type: "local-md"
-            },
-          
-            {
-              name: 'OLASimple Job Submission',
-              path: 'operation_types/OLASimple_Job_Submission' + '.md',
-              type: "local-md"
-            },
-          
-            {
               name: 'OLASimple Job Submission (RT-PCR)',
               path: 'operation_types/OLASimple_Job_Submission_RT-PCR_' + '.md',
               type: "local-md"
@@ -61,32 +49,8 @@ var config = {
             },
           
             {
-              name: 'OLASimple Paper Detection (Manual)',
-              path: 'operation_types/OLASimple_Paper_Detection_Manual_' + '.md',
-              type: "local-md"
-            },
-          
-            {
               name: 'OLASimple RNA Extraction',
               path: 'operation_types/OLASimple_RNA_Extraction' + '.md',
-              type: "local-md"
-            },
-          
-            {
-              name: 'OLASimple Tests',
-              path: 'operation_types/OLASimple_Tests' + '.md',
-              type: "local-md"
-            },
-          
-            {
-              name: 'OLASimple Visual Call (Manual)',
-              path: 'operation_types/OLASimple_Visual_Call_Manual_' + '.md',
-              type: "local-md"
-            },
-          
-            {
-              name: 'Pipette Training',
-              path: 'operation_types/Pipette_Training' + '.md',
               type: "local-md"
             },
           
@@ -119,12 +83,6 @@ var config = {
             },
           
             {
-              name: 'New Library Code',
-              path: 'libraries/New_Library_Code' + '.html',
-              type: "local-webpage"
-            },
-          
-            {
               name: 'OLAConstants',
               path: 'libraries/OLAConstants' + '.html',
               type: "local-webpage"
@@ -133,6 +91,12 @@ var config = {
             {
               name: 'OLAGraphics',
               path: 'libraries/OLAGraphics' + '.html',
+              type: "local-webpage"
+            },
+          
+            {
+              name: 'OLAKitIDs',
+              path: 'libraries/OLAKitIDs' + '.html',
               type: "local-webpage"
             },
           
@@ -197,12 +161,6 @@ var config = {
             {
               name: 'OLA PCR',
               path: 'object_types/OLA_PCR'  + '.md',
-              type: "local-md"
-            },
-          
-            {
-              name: 'OLA Whole Blood',
-              path: 'object_types/OLA_Whole_Blood'  + '.md',
               type: "local-md"
             },
           
