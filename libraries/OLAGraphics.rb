@@ -216,35 +216,36 @@ EOF
   # LIGATIONS
   #####################################
 
-  def display_ligation_tubes(kit, unit, components, sample, colors, open_tubes = nil, hide = nil, spacing = 70)
-    def stripwell(kit, unit, components, sample, open_tubes, apply_classes, hide, spacing)
-      open_tubes = open_tubes || []
-      hide = hide || []
-      apply_classes = apply_classes || []
-      num = components.length
-      grid = SVGGrid.new(num, 1, spacing, opentube.boundy)
-      grid.each_pos do |r, c|
+  def stripwell(kit, unit, components, sample, open_tubes, apply_classes, hide, spacing)
+    open_tubes = open_tubes || []
+    hide = hide || []
+    apply_classes = apply_classes || []
+    num = components.length
+    grid = SVGGrid.new(num, 1, spacing, opentube.boundy)
+    grid.each_pos do |r, c|
 
-        # add label
-        tube_label = self.tube_label(kit, unit, components[r], sample)
-        tube_type = closedtube
-        if open_tubes.include?(r)
-          tube_type = opentube
-        end
-        tube = make_tube(tube_type,
-                         "",
-                         ["#{kit}#{unit}", "#{components[r]}#{sample}"],
-                         nil,
-                         false)
-        tube.new_class!(apply_classes[r])
-        if hide.include?(r)
-          tube = tube.g(classname: 'hidden')
-        end
-        grid.add(tube, r, c)
+      # add label
+      tube_label = self.tube_label(kit, unit, components[r], sample)
+      tube_type = closedtube
+      if open_tubes.include?(r)
+        tube_type = opentube
       end
-      grid
+      tube = make_tube(tube_type,
+                       "",
+                       ["#{kit}#{unit}", "#{components[r]}#{sample}"],
+                       nil,
+                       false)
+      tube.new_class!(apply_classes[r])
+      if hide.include?(r)
+        tube = tube.g(classname: 'hidden')
+      end
+      grid.add(tube, r, c)
     end
+    grid
+  end
 
+  def display_ligation_tubes(kit, unit, components, sample, colors, open_tubes = nil, hide = nil, spacing = 70)
+    
     mystripwell = stripwell(kit, unit, components, sample, open_tubes, colors, hide, spacing).scale!(0.75)
     myimage = SVGElement.new(boundx: 500, boundy: 190)
     myimage.add_child(mystripwell)
