@@ -531,7 +531,7 @@ module OLALib
 
   def show_open_package(kit, unit, num_sub_packages)
     show do
-      title "Tear open #{kit.bold}#{unit.bold}"
+      title "Tear open #{unit.bold}#{kit.bold}"
       if num_sub_packages > 0
         note "Tear open all smaller packages."
       end
