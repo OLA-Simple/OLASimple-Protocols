@@ -35,8 +35,6 @@ needs "OLASimple/OLAGraphics"
 needs "OLASimple/JobComments"
 needs "OLASimple/OLAKitIDs"
 
-# TODO: There should be NO calculations in the show blocks
-
 class Protocol
   include OLAConstants
   include OLALib
@@ -85,6 +83,8 @@ class Protocol
   SAMPLE_COLUMN = PACK_HASH["Components"]["Sample column"]
   RNA_EXTRACT = PACK_HASH["Components"]["Extract tube"]
   
+  GuSCN_WASTE = "Discard flow into GuSCN waste container"
+  
   SHARED_COMPONENTS = [DTT, WASH1, WASH2, SA_WATER]
   PER_SAMPLE_COMPONENTS = [LYSIS_BUFFER, SAMPLE_COLUMN, RNA_EXTRACT]
 
@@ -103,34 +103,35 @@ class Protocol
     introduction
     safety_warning
     required_equipment
-    retrieve_and_open_package(this_package, kit_svgs)
-    retrieve_inputs
     
+    retrieve_inputs
     kit_num = extract_kit_number(this_package)
     sample_validation_with_multiple_tries(kit_num)
-
+    
+    retrieve_and_open_package(this_package, kit_svgs)
+    
     prepare_buffers
     lyse_samples
     add_ethanol
 
     3.times do
       operations.each { |op| add_sample_to_column(op) }
-      centrifuge_columns
+      centrifuge_columns(GuSCN_WASTE)
     end
     change_collection_tubes
 
     add_buffer_e2
-    centrifuge_columns
+    centrifuge_columns(GuSCN_WASTE)
     change_collection_tubes
     
     add_buffer_e3
-    centrifuge_columns
+    centrifuge_columns(GuSCN_WASTE)
     change_collection_tubes
 
-    transfer_column_to_e6    
+    transfer_column_to_e6
     elute
     incubate(sample_labels.map { |s| "#{SAMPLE_COLUMN}-#{s}" }, "1 minute")
-    centrifuge_columns
+    centrifuge_columns("<b>DO NOT DISCARD FLOW</b>")
 
     finish_up
     disinfect
@@ -204,9 +205,8 @@ class Protocol
     operations.each do |op|
       sample_num = op.temporary[:input_sample]
       PER_SAMPLE_COMPONENTS.each_with_index do |component|
-        raise component if base_svg_representations[component].nil?
         svg = label_object(
-                base_svg_representations[component],
+                SVGElement.load(base_svg_representations[component].dump),
                 "#{component}\n#{sample_num}"
               )
         svgs["#{component}-#{sample_num}"] = svg
@@ -306,8 +306,9 @@ class Protocol
     # end
     show_open_package(this_package, "", 0) do
       img = kit_image(kit_svgs)
-      note "Check that the following tubes are in the pack:"
+      check "Check that the following tubes are in the pack:"
       note display_svg(img, 0.75)
+      note "Arrange tubes on plastic rack for later use."
     end
   end
   
@@ -347,6 +348,7 @@ class Protocol
       warning warning if warning
       check 'Discard pipette tip.'
       check "Vortex <b>#{to}</b> for <b>2 seconds, twice</b>."
+      check "Centrifuge <b>#{to}</b> for <b>5 seconds</b>."
     end
   end
 
@@ -359,9 +361,15 @@ class Protocol
     end
   end
 
-  def centrifuge_columns
+  def centrifuge_columns(flow_instructions)
     columns = sample_labels.map { |s| "#{SAMPLE_COLUMN}-#{s}"}
-    centrifuge_helper("Column", columns, CENTRIFUGE_TIME, "", AREA, CENTRIFUGE_EXTRA_INSTRUCTIONS)
+    
+    show do
+      title " Centrifuge Columns for #{CENTRIFUGE_TIME}"
+      warning "Ensure both tube caps are closed"
+      raw centrifuge_proc("Column", columns, CENTRIFUGE_TIME, "", AREA)
+      check flow_instructions
+    end
   end
 
   def prepare_buffers
@@ -371,8 +379,8 @@ class Protocol
       note 'In the next few instructions, we will prepare the buffers used for the extraction.'      
       check "Transfer <b>25ul</b> of <b>#{SA_WATER}</b> into <b>#{DTT}</b>."
       check 'Discard pipette tip.'
-      check "Pulse vortex #{DTT}."
-      check "Pulse centrifuge #{DTT}"
+      check "Vortex <b>#{DTT}</b> for <b>2 seconds twice</b>."
+      check "Centrifuge <b>#{DTT}</b> for <b>5 seconds</b>."
     end
 
     # add dtt solution to lysis buffer
@@ -425,9 +433,9 @@ class Protocol
   def add_sample_to_column(op)
     show do
       title 'Add Sample to Column'
-      check "Open lid of <b>#{SAMPLE_COLUMN}-#{op.temporary[:input_sample]}</b>"
+      check "<b>Carefully</b> open lid of <b>#{SAMPLE_COLUMN}-#{op.temporary[:input_sample]}</b>"
       check "Carefully apply <b>800uL</b> of <b>#{LYSIS_BUFFER}-#{op.temporary[:input_sample]}</b> onto the column <b>#{SAMPLE_COLUMN}-#{op.temporary[:input_sample]}</b>"
-      check "Close lid of <b>#{SAMPLE_COLUMN}-#{op.temporary[:input_sample]}</b>"
+      check "<b>Slowly</b> close lid of <b>#{SAMPLE_COLUMN}-#{op.temporary[:input_sample]}</b>"
     end
   end
 
@@ -447,9 +455,10 @@ class Protocol
     show do 
       title "Add Buffer #{WASH1}"
       sample_columns.each do |column|
-        note "Carefully open column <b>#{column}</b> lid."
-        check "Add <b>500uL</b> of buffer <b>#{WASH1}</b> to <b>#{column}</b>, and close the lid."
+        note "<b>Carefully</b> open column <b>#{column}</b> lid."
+        check "<b>Carefully</b> Add <b>500uL</b> of buffer <b>#{WASH1}</b> to <b>#{column}</b>, and close the lid."
         check 'Discard pipette tip.'
+        note "<b>Slowly</b> close lid of <b>#{column}</b>"
       end
     end
   end
@@ -459,9 +468,10 @@ class Protocol
     show do 
       title "Add Buffer #{WASH2}"
       sample_columns.each do |column|
-        note "Carefully open column <b>#{column}</b> lid."
-        check "Add <b>500uL</b> of buffer <b>#{WASH2}</b> to <b>#{column}</b>, and close the lid."
+        note "<b>Carefully</b> open column <b>#{column}</b> lid."
+        check "<b>Carefully</b> Add <b>500uL</b> of buffer <b>#{WASH2}</b> to <b>#{column}</b>, and close the lid."
         check 'Discard pipette tip.'
+        note "<b>Slowly</b> close lid of <b>#{column}</b>"
       end
     end
   end
@@ -480,7 +490,7 @@ class Protocol
 
   def elute
     show do 
-      title 'Elute Columns'
+      title 'Add Elution Buffer'
       operations.each do |op|
         column = "#{SAMPLE_COLUMN}-#{op.temporary[:input_sample]}"
         check "Add <b>60uL</b> from <b>#{SA_WATER}</b> to <b>#{column}</b>"
@@ -494,7 +504,7 @@ class Protocol
       operations.each do |op|
         column = "#{SAMPLE_COLUMN}-#{op.temporary[:input_sample]}"
         extract_tube = "#{RNA_EXTRACT}-#{op.temporary[:input_sample]}"
-        check "Remove <b>#{column}</b> from <b>#{extract_tube}</b>, and discard <b>#{column}</b>"
+        check "Remove column <b>#{column}</b> from <b>#{extract_tube}</b>, and discard <b>#{column} in #{WASTE_PRE}</b>"
       end
       extract_tubes = sample_labels.map { |s| "#{RNA_EXTRACT}-#{s}"}
       check "Place <b>#{extract_tubes.to_sentence}</b> on cold rack"
@@ -504,23 +514,24 @@ class Protocol
   def disinfect
     show do
       title 'Disinfect Items'
-      check 'Spray and wipe down all reagents and samples with bleach and ethanol.'
+      check 'Spray and wipe down all reagents and sample tubes with bleach and ethanol.'
     end
   end
 
   def cleanup
     show do
       title "Clean up Waste"
+      warning "Do not dispose of liquid waste and bleach in GuSCN waste, this can produce dangerous gas."
       bullet "Dispose of liquid waste in bleach down the sink with running water."
-      bullet "Dispose of remaining tubes into biohazard waste."
+      bullet "Dispose of remaining tubes into #{WASTE_PRE}."
     end
 
     show do
-      title "Clean Biosafety Cabinet"
+      title "Clean Biosafety Cabinet (BSC)"
       note "Place items in the BSC off to the side."
       note "Spray down surface of BSC with 10% bleach. Wipe clean using paper towel."
       note "Spray down surface of BSC with 70% ethanol. Wipe clean using paper towel."
-      note "After cleaning, dispose of gloves in biohazard waste."
+      note "After cleaning, dispose of gloves and paper towels in #{WASTE_PRE}."
     end
   end
 
@@ -530,7 +541,7 @@ class Protocol
       extract_tubes = sample_labels.map { |s| "#{RNA_EXTRACT}-#{s}"}
       note "Store <b>#{extract_tubes.to_sentence}</b> in the fridge on the cold rack in fridge if the amplification module will be proceeded immediately."
       
-      note "Store <b>#{extract_tubes.to_sentence}</b> in -20C freezer if the amplification module will be proceeded in 1 week."
+      note "Store <b>#{extract_tubes.to_sentence}</b> in -20C freezer if proceeding with the amplification module later."
     end
   end
   
@@ -539,7 +550,6 @@ class Protocol
   ####################################################################################
   def roundedtube()
     _roundedtube = SVGElement.new(boundx: 46.92, boundy: 132.74)
-    _roundedtube.new_class!("roundedtube")
     _roundedtube.add_child(
         '<svg><defs><style>.cls-1{fill:#26afe5;}.cls-2{fill:#fff;}.cls-2,.cls-3{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-3{fill:none;}</style></defs><title>Untitled-18</title><path class="cls-1" d="M412.76,285.62c-8.82,5.75-17.91,3.62-26.54.87l-10.47,3v45.4c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.67,2.67,0,0,0,0-.37Z" transform="translate(-372.39 -241.25)"/><path class="cls-1" d="M383.88,285.72a15.52,15.52,0,0,0-8.13-.66v4.44l10.47-3Z" transform="translate(-372.39 -241.25)"/><rect class="cls-2" x="5.5" y="2.53" width="33.11" height="9.82" rx="2.36" ry="2.36"/><rect class="cls-2" x="0.25" y="0.25" width="42.88" height="7.39" rx="2.36" ry="2.36"/><path class="cls-3" d="M412.06,252" transform="translate(-372.39 -241.25)"/><path class="cls-3" d="M412.67,253.6a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28" transform="translate(-372.39 -241.25)"/><path class="cls-3" d="M412.67,255.44a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7" transform="translate(-372.39 -241.25)"/><path class="cls-3" d="M375.39,257.57v77.6c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.66,2.66,0,0,0,0-.37l-.61-78.29a2.52,2.52,0,0,0-2.52-2.5H377.91A2.52,2.52,0,0,0,375.39,257.57Z" transform="translate(-372.39 -241.25)"/><rect class="cls-2" x="0.53" y="11.4" width="42.32" height="4.79" rx="2.4" ry="2.4"/></svg>'
         ).translate!(0,70)
@@ -547,7 +557,6 @@ class Protocol
   
   def screwbottle
     _screwbottle = SVGElement.new(boundx: 46.92, boundy: 132.74)
-    _screwbottle.new_class!("column")
     _screwbottle.add_child(
         '<svg><defs><style>.cls-1{fill:#26afe5;}.cls-2,.cls-3{fill:none;}.cls-3,.cls-4{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-4{fill:#fff;}</style></defs><path class="cls-1" d="M377.92,325.7c-4.23-1-8.46.27-11.89,2v31.86a8.73,8.73,0,0,0,8.71,8.71h41.68a8.73,8.73,0,0,0,8.71-8.71V328.25c-9.24.24-7.87,3.46-19.44,7.63S387.64,328,377.92,325.7Z" transform="translate(-365.78 -243.8)"/><path class="cls-2" d="M369,280.29" transform="translate(-365.78 -243.8)"/><rect class="cls-3" x="0.25" y="43.66" width="59.09" height="80.08" rx="8.6" ry="8.6"/><path class="cls-4" d="M395.58,244c-16.32,0-29.55,3.59-29.55,8V285.6c0,4.42,13.23,8,29.55,8s29.55-3.59,29.55-8V252.05C425.12,247.63,411.89,244,395.58,244Z" transform="translate(-365.78 -243.8)"/><ellipse class="cls-4" cx="29.8" cy="8.12" rx="22.86" ry="4.76"/><line class="cls-3" x1="5.46" y1="14.46" x2="5.46" y2="41.93"/><line class="cls-3" x1="30.86" y1="18.98" x2="30.86" y2="46.45"/><line class="cls-3" x1="55.9" y1="12.89" x2="55.9" y2="40.36"/><line class="cls-3" x1="44.1" y1="17.66" x2="44.1" y2="45.13"/><line class="cls-3" x1="17.63" y1="17.66" x2="17.63" y2="45.13"/></svg>'
         ).translate!(0, 70)
@@ -555,24 +564,9 @@ class Protocol
   
   def samplecolumn
     column =  SVGElement.new(boundx: 46.92, boundy: 132.74)
-    column.new_class!("column")
-    # if closed && collector
-    #   if full_collector
     column.add_child(
-      '<svg translate="(0, 70)"><defs><style>.cls-1{fill:#26afe5;}.cls-2{fill:none;}.cls-2,.cls-3{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-3{fill:#fff;}</style></defs><path class="cls-1" d="M412.82,335l0-3.43c-7.47-.37-13.8,4.31-18.61,9.22-1.94,2-3.63,4-5.06,5.73-2.81,3.43-7.38,4-11.39,3.72,2.67,10,8,22.27,17.67,20,0,0,12.62,4.63,17.42-30.86a2.66,2.66,0,0,0,0-.37Z" transform="translate(-372.24 -238)"/><path class="cls-2" d="M375.74,260.7v77.6c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.66,2.66,0,0,0,0-.37l-.61-78.29a2.52,2.52,0,0,0-2.52-2.5H378.27A2.52,2.52,0,0,0,375.74,260.7Z" transform="translate(-372.24 -238)"/><rect class="cls-3" x="5.5" y="2.53" width="33.11" height="9.82" rx="2.36" ry="2.36"/><rect class="cls-3" x="3.51" y="9.99" width="36.77" height="4.72" rx="1.19" ry="1.19"/><path class="cls-3" d="M377.74,252.71V304a1.65,1.65,0,0,0,.85,1.44l5.56,3.06a1.65,1.65,0,0,1,.85,1.44v7.3a1.65,1.65,0,0,0,1.65,1.65H401.2a1.65,1.65,0,0,0,1.65-1.65V310a1.65,1.65,0,0,1,.91-1.48l6.18-3.09a1.65,1.65,0,0,0,.91-1.48V252.71" transform="translate(-372.24 -238)"/><rect class="cls-3" x="14.16" y="70.95" width="15.06" height="6.09" rx="0.98" ry="0.98"/><rect class="cls-3" x="0.25" y="0.25" width="42.88" height="7.39" rx="2.36" ry="2.36"/><path class="cls-2" d="M416.62,248.23" transform="translate(-372.24 -238)"/><path class="cls-2" d="M411.9,248.78" transform="translate(-372.24 -238)"/><path class="cls-2" d="M412.51,250.35a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28" transform="translate(-372.24 -238)"/><path class="cls-2" d="M412.51,252.19a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7" transform="translate(-372.24 -238)"/><rect class="cls-3" x="1.05" y="17.78" width="42.32" height="4.79" rx="2.4" ry="2.4"/></svg>'
+      '<svg><defs><style>.cls-1{fill:#fff;}.cls-1,.cls-2{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2{fill:none;}</style></defs><path class="cls-1" d="M375.23,260.43V338c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.66,2.66,0,0,0,0-.37L412,260.41a2.52,2.52,0,0,0-2.52-2.5H377.75A2.52,2.52,0,0,0,375.23,260.43Z" transform="translate(-371.72 -237.72)"/><rect class="cls-1" x="5.5" y="2.53" width="33.11" height="9.82" rx="2.36" ry="2.36"/><rect class="cls-1" x="3.51" y="9.99" width="36.77" height="4.72" rx="1.19" ry="1.19"/><path class="cls-1" d="M377.22,252.44v51.26a1.65,1.65,0,0,0,.85,1.44l5.56,3.06a1.65,1.65,0,0,1,.85,1.44v7.3a1.65,1.65,0,0,0,1.65,1.65h14.54a1.65,1.65,0,0,0,1.65-1.65v-7.25a1.65,1.65,0,0,1,.91-1.48l6.18-3.09a1.65,1.65,0,0,0,.91-1.48V252.44" transform="translate(-371.72 -237.72)"/><rect class="cls-1" x="14.16" y="70.95" width="15.06" height="6.09" rx="0.98" ry="0.98"/><rect class="cls-1" x="0.25" y="0.25" width="42.88" height="7.39" rx="2.36" ry="2.36"/><path class="cls-2" d="M416.1,248" transform="translate(-371.72 -237.72)"/><path class="cls-2" d="M411.38,248.51" transform="translate(-371.72 -237.72)"/><path class="cls-2" d="M412,250.08a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28" transform="translate(-371.72 -237.72)"/><path class="cls-2" d="M412,251.91a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7" transform="translate(-371.72 -237.72)"/><rect class="cls-1" x="1.05" y="17.78" width="42.32" height="4.79" rx="2.4" ry="2.4"/></svg>'
       ).translate!(0,70)
-    #   else
-        
-    #   end
-    # elsif closed && !collector
-    # elsif !closed && collector
-    #   if full_collector
-        
-    #   else
-        
-    #   end
-    # elsif !closed && !collector
-    # end
   end
   
   def label_object(svg, _label, offsety = nil)
