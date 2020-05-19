@@ -578,7 +578,7 @@ module OLALib
       if not mynote.nil?
         note mynote
       end
-      warning "Close #{pluralizer("tube cap", sample_labels.length)}."
+      warning "Ensure #{pluralizer("tube cap", sample_labels.length)} are closed before centrifuging."
       raw centrifuge_proc(sample_identifier, sample_labels, time, reason, area)
     end
   end
