@@ -25,8 +25,7 @@ module OLAKitIDs
     sample_nums.reverse
   end
   
-  def validate_samples(kit_number)
-    expected_sample_nums = sample_nums_from_kit_num(kit_number)
+  def validate_samples(expected_sample_nums)
     resp = show do
       title "Scan Incoming Samples"
       
@@ -47,14 +46,16 @@ module OLAKitIDs
   end
   
   def sample_validation_with_multiple_tries(kit_number)
+    expected_sample_nums = sample_nums_from_kit_num(kit_number)
+    expected_sample_nums = expected_sample_nums[0,operations.size]
     5.times do
-      result = validate_samples(kit_number)
+      result = validate_samples(expected_sample_nums)
       return true if result || debug
       show do
         title "Wrong Samples"
         note "Ensure that you have the correct samples before continuing"
         note "You are processing kit <b>#{kit_number}</b>"
-        note "Incoming samples should be numbered #{sample_nums_from_kit_num(kit_number).to_sentence}."
+        note "Incoming samples should be numbered #{expected_sample_nums.to_sentence}."
         note "On the next step you will retry scanning in the samples."
       end
     end
