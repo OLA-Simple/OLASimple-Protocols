@@ -11,7 +11,7 @@ var config = {
         { name: "Introduction", type: "local-md", path: "README.md" },
         { name: "About this Workflow", type: "local-md", path: "ABOUT.md" },
         { name: "License", type: "local-md", path: "LICENSE.md" },
-        { name: "Issues", type: "external-link", path: 'https://github.com/gamemackerel/OLASimple-Protocols/issues' }
+        { name: "Issues", type: "external-link", path: 'https://github.com/OLA-Simple/OLASimple-Protocols/issues' }
       ]
     },
 
@@ -49,8 +49,26 @@ var config = {
             },
           
             {
+              name: 'OLASimple Paper Detection (Manual)',
+              path: 'operation_types/OLASimple_Paper_Detection_Manual_' + '.md',
+              type: "local-md"
+            },
+          
+            {
               name: 'OLASimple RNA Extraction',
               path: 'operation_types/OLASimple_RNA_Extraction' + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: 'OLASimple Visual Call (Manual)',
+              path: 'operation_types/OLASimple_Visual_Call_Manual_' + '.md',
+              type: "local-md"
+            },
+          
+            {
+              name: 'Pipette Training',
+              path: 'operation_types/Pipette_Training' + '.md',
               type: "local-md"
             },
           
