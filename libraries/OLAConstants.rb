@@ -14,6 +14,7 @@ module OLAConstants
   ##########################################
   #
   PATIENT_ID_KEY = :patient
+  TECH_ID = :technician
   ALIAS_KEY = :alias
   KIT_KEY = :kit
   UNIT_KEY = :unit
