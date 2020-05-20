@@ -26,10 +26,10 @@ module OLAKitIDs
   end
   
   def validate_samples(expected_sample_nums)
-    resp = show do
+    resp1 = show do
       title "Scan Incoming Samples"
       
-      note "Scan in the ids of all incoming samples in any order."
+      note "Scan in the IDs of all incoming samples in any order."
       note "There should not be more than #{expected_sample_nums.size} samples. "
       
       expected_sample_nums.size.times do |i|
@@ -38,7 +38,7 @@ module OLAKitIDs
     end
     
     expected_sample_nums.size.times do |i|
-      if !resp[i.to_s].blank? && !expected_sample_nums.delete(extract_sample_number(resp[i.to_s]))
+      if !resp1[i.to_s].blank? && !expected_sample_nums.delete(extract_sample_number(resp1[i.to_s]))
         return false
       end
     end
@@ -59,11 +59,25 @@ module OLAKitIDs
         note "On the next step you will retry scanning in the samples."
       end
     end
+    operations.each do |op|
+      op.error(:sample_problem, 'Incoming samples are wrong and could not be resolved')
+    end
     raise "Incoming samples are wrong and could not be resolved. Speak to a Lab manager."
   end
   
+  def record_technician_id
+    resp = show do
+      title 'Scan your technician ID'
+      note 'Scan or write in the technician ID on your badge'
+      get "text", var: :id, label: 'ID', default: ""
+    end
+    operations.each do |op|
+      op.associate(OLAConstants::TECH_ID, resp[:id])
+    end
+  end
+  
   # propogate kit id, sample alias, and original patient id (if available)
-  # to the next item and operation
+  # to the next item and operation, from the specified input item
   def propogate_kit_information_to_next(op, input, output)
   end
   
