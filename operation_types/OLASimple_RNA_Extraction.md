@@ -56,25 +56,10 @@ class Protocol
   AREA = PRE_PCR
   BSC = "BSC"
   ETHANOL = "molecular grade ethanol"
+  GuSCN_WASTE = "GuSCN waste container"
   
-
-
-  PACK_HASH = {
-            "Unit Name" => "E",
-            "Components" => {
-                "DTT/tRNA" => "E0",
-                "Lysis buffer" => "E1",
-                "Wash 1" => "E2",
-                "Wash 2" => "E3",
-                "sodium azide water" => "E4",
-                "Sample column" => "E5",
-                "Extract tube" => "E6"
-            },
-            "Number of Samples" => 2,
-        }
-
+  THIS_UNIT = "E"
   INCOMING_SAMPLE = "S"
-
   DTT = "E0"
   LYSIS_BUFFER = "E1"
   WASH1 = "E2"
@@ -82,8 +67,6 @@ class Protocol
   SA_WATER= "E4"
   SAMPLE_COLUMN = "E5"
   RNA_EXTRACT = "E6"
-  
-  GuSCN_WASTE = "GuSCN waste container"
   
   KIT_SVGs = {
     INCOMING_SAMPLE => :roundedtube,
@@ -99,7 +82,7 @@ class Protocol
   SHARED_COMPONENTS = [DTT, WASH1, WASH2, SA_WATER]
   PER_SAMPLE_COMPONENTS = [LYSIS_BUFFER, SAMPLE_COLUMN, RNA_EXTRACT]
 
-  THIS_UNIT = "E"
+  
 
   CENTRIFUGE_TIME = "1 minute"
 
@@ -128,11 +111,11 @@ class Protocol
     end
     change_collection_tubes
 
-    add_buffer_e2
+    add_wash_1
     centrifuge_columns(flow_instructions: "Discard flow through into " + GuSCN_WASTE)
     change_collection_tubes
     
-    add_buffer_e3
+    add_wash_2
     centrifuge_columns(flow_instructions: "Discard flow through into " + GuSCN_WASTE)
     change_collection_tubes
 
@@ -158,46 +141,24 @@ class Protocol
     if operations.length > BATCH_SIZE
       raise "Batch size > #{BATCH_SIZE} is not supported for this protocol. Please rebatch."
     end
+    
     operations.retrieve interactive: false
-    save_user operations
+    operations.make interactive: false
+    
+    populate_temporary_kit_info_from_input_associations(operations, INPUT)
+    propogate_kit_info_forward(operations, INPUT, OUTPUT)
 
-    operations.each.with_index do |op, i|
-      kit_num = op.input(INPUT).item.get(KIT_KEY)
-      patient_id = op.input(INPUT).item.get(PATIENT_ID_KEY)
-      sample_alias = op.input(INPUT).item.get(SAMPLE_KEY)
-      if debug && kit_num.nil? && patient_id.nil? && sample_alias.nil?
-        patient_id = rand(1..30)      
-        kit_num = 1.to_s.rjust(3, "0")
-        sample_alias = (i + 1).to_s.rjust(3, "0")
-      end
-      op.temporary[:input_kit] = kit_num
-      op.temporary[:patient] = patient_id
-      op.temporary[:input_sample] = sample_alias
-
-      if op.temporary[:input_kit].nil?
-        raise "Input kit number cannot be nil"
-      end
-    end
-
-    operations.each do |op|
-      op.temporary[:pack_hash] = PACK_HASH
-    end
-
-    save_temporary_output_values(operations.running)
-    packages = group_packages(operations.running)
+    packages = operations.running.group_by { |op| op.temporary[KIT_KEY]}
     this_package = packages.keys.first
     if packages.length > 1
         raise "More than one kit is not supported by this protocol. Please rebatch." 
     end
     
-    operations.running.each do |op|
-      op.make_item_and_alias(OUTPUT, "Extract tube", INPUT)
-    end
     this_package
   end
 
   def sample_labels
-    operations.map { |op| op.temporary[:input_sample] }
+    operations.map { |op| op.temporary[SAMPLE_KEY] }
   end
 
   def save_user ops
@@ -289,7 +250,7 @@ class Protocol
     end
 
     operations.each_with_index do |op, i|
-      sample_num = op.temporary[:input_sample]
+      sample_num = op.temporary[SAMPLE_KEY]
       PER_SAMPLE_COMPONENTS.each_with_index do |component, j|
         svg = draw_svg(KIT_SVGs[component], svg_label: "#{component}\n#{sample_num}", opened: false, contents: initial_contents[component])
         svg.translate!(30 * (i % 2), 0)
@@ -386,9 +347,9 @@ class Protocol
     # add dtt solution to lysis buffer
     operations.each do |op|
       transfer_and_vortex(
-        "Prepare #{LYSIS_BUFFER}-#{op.temporary[:input_sample]}", 
+        "Prepare #{LYSIS_BUFFER}-#{op.temporary[SAMPLE_KEY]}", 
         DTT, 
-        "#{LYSIS_BUFFER}-#{op.temporary[:input_sample]}", 
+        "#{LYSIS_BUFFER}-#{op.temporary[SAMPLE_KEY]}", 
         10,
         to_contents: 'full'
       )
@@ -411,14 +372,14 @@ class Protocol
     operations.each do |op|
       transfer_and_vortex(
         'Lyse Samples', 
-        "#{INCOMING_SAMPLE}-#{op.temporary[:input_sample]}",
-        "#{LYSIS_BUFFER}-#{op.temporary[:input_sample]}", 
+        "#{INCOMING_SAMPLE}-#{op.temporary[SAMPLE_KEY]}",
+        "#{LYSIS_BUFFER}-#{op.temporary[SAMPLE_KEY]}", 
         300,
         to_contents: 'full'
       )
     end
     
-    lysed_samples = operations.map { |op| "#{LYSIS_BUFFER}-#{op.temporary[:input_sample]}" }
+    lysed_samples = operations.map { |op| "#{LYSIS_BUFFER}-#{op.temporary[SAMPLE_KEY]}" }
     incubate(lysed_samples, "15 minutes")
   end
 
@@ -427,7 +388,7 @@ class Protocol
       transfer_and_vortex(
         'Add Buffer Ethanol', 
         ETHANOL, 
-        "#{LYSIS_BUFFER}-#{op.temporary[:input_sample]}", 
+        "#{LYSIS_BUFFER}-#{op.temporary[SAMPLE_KEY]}", 
         1200,
         to_contents: 'full'
       )
@@ -436,13 +397,13 @@ class Protocol
 
   SAMPLE_TRANSFER_VOLUME = 800#ul
   def add_sample_to_column(op)
-    from = "#{LYSIS_BUFFER}-#{op.temporary[:input_sample]}"
-    to = "#{SAMPLE_COLUMN}-#{op.temporary[:input_sample]}"
+    from = "#{LYSIS_BUFFER}-#{op.temporary[SAMPLE_KEY]}"
+    to = "#{SAMPLE_COLUMN}-#{op.temporary[SAMPLE_KEY]}"
     transfer_carefully(from, to, 500, from_type: 'sample', to_type: 'column', to_contents: 'empty')
   end
 
   def change_collection_tubes
-    sample_columns = operations.map { |op| "#{SAMPLE_COLUMN}-#{op.temporary[:input_sample]}"}
+    sample_columns = operations.map { |op| "#{SAMPLE_COLUMN}-#{op.temporary[SAMPLE_KEY]}"}
     show do
       title 'Change Collection Tubes'
       sample_columns.each do |column|
@@ -452,16 +413,16 @@ class Protocol
     end
   end
 
-  def add_buffer_e2
+  def add_wash_1
     sample_columns = operations.each do |op| 
-      column = "#{SAMPLE_COLUMN}-#{op.temporary[:input_sample]}"
-      transfer_carefully(WASH2, column, 500, from_type: 'buffer', to_type: 'column', to_contents: 'full')
+      column = "#{SAMPLE_COLUMN}-#{op.temporary[SAMPLE_KEY]}"
+      transfer_carefully(WASH1, column, 500, from_type: 'buffer', to_type: 'column', to_contents: 'full')
     end
   end
 
-  def add_buffer_e3
+  def add_wash_2
     sample_columns = operations.each do |op| 
-      column = "#{SAMPLE_COLUMN}-#{op.temporary[:input_sample]}"
+      column = "#{SAMPLE_COLUMN}-#{op.temporary[SAMPLE_KEY]}"
       transfer_carefully(WASH2, column, 500, from_type: 'buffer', to_type: 'column', to_contents: 'full')
     end
   end
@@ -493,8 +454,8 @@ class Protocol
       title 'Transfer Columns'
       warning "Make sure the bottom of the E5 and E6 columns  did not touch any fluid from the previous collection tubes. When in doubt, centrifuge for 1 more minute and replace collection tubes again."
       operations.each do |op|
-        column = "#{SAMPLE_COLUMN}-#{op.temporary[:input_sample]}"
-        extract_tube = "#{RNA_EXTRACT}-#{op.temporary[:input_sample]}"
+        column = "#{SAMPLE_COLUMN}-#{op.temporary[SAMPLE_KEY]}"
+        extract_tube = "#{RNA_EXTRACT}-#{op.temporary[SAMPLE_KEY]}"
         check "Transfer <b>#{column}</b> to <b>#{extract_tube}</b>"
       end
     end
@@ -504,7 +465,7 @@ class Protocol
     show do 
       title 'Add Elution Buffer'
       operations.each do |op|
-        column = "#{SAMPLE_COLUMN}-#{op.temporary[:input_sample]}"
+        column = "#{SAMPLE_COLUMN}-#{op.temporary[SAMPLE_KEY]}"
         check "Add <b>60uL</b> from <b>#{SA_WATER}</b> to <b>#{column}</b>"
       end
     end
@@ -514,8 +475,8 @@ class Protocol
     show do
       title "Prepare Samples for Storage"
       operations.each do |op|
-        column = "#{SAMPLE_COLUMN}-#{op.temporary[:input_sample]}"
-        extract_tube = "#{RNA_EXTRACT}-#{op.temporary[:input_sample]}"
+        column = "#{SAMPLE_COLUMN}-#{op.temporary[SAMPLE_KEY]}"
+        extract_tube = "#{RNA_EXTRACT}-#{op.temporary[SAMPLE_KEY]}"
         check "Remove column <b>#{column}</b> from <b>#{extract_tube}</b>, and discard <b>#{column} in #{WASTE_PRE}</b>"
       end
       extract_tubes = sample_labels.map { |s| "#{RNA_EXTRACT}-#{s}"}
