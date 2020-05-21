@@ -61,6 +61,12 @@ var config = {
             },
           
             {
+              name: 'OLASimple Sample Preparation',
+              path: 'operation_types/OLASimple_Sample_Preparation' + '.md',
+              type: "local-md"
+            },
+          
+            {
               name: 'OLASimple Visual Call (Manual)',
               path: 'operation_types/OLASimple_Visual_Call_Manual_' + '.md',
               type: "local-md"
