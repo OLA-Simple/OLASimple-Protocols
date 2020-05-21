@@ -911,7 +911,7 @@ $(document).ready(function() {
           <div class="docstring">
   <div class="discussion">
     
-<p>redundant definition from OLAConstants required to get around precondition limitations</p>
+<p>redundant definitions from OLAConstants required to get around precondition limitations</p>
 
 
   </div>
@@ -926,7 +926,7 @@ $(document).ready(function() {
         <dt id="KIT_KEY-constant" class="">KIT_KEY =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>kit</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='symbol'>:kit</span></pre></dd>
       
     </dl>
   
@@ -987,7 +987,7 @@ $(document).ready(function() {
 
   
     <span class="summary_desc"><div class='inline'>
-<p>used in place of returning true in precondition gathers together all the other ops with the same kit and schedules them together if they are all ready looks at op.get(KIT_KEY) to decide what kit an op belongs.</p>
+<p>used in place of returning true in precondition gathers together all the other ops with the same kit and schedules them together if they are all ready looks at <a href="0">this_op.inputs</a>.item.get(KIT_KEY) to decide what kit an op belongs.</p>
 </div></span>
   
 </li>
@@ -1091,7 +1091,7 @@ $(document).ready(function() {
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>used in place of returning true in precondition gathers together all the other ops with the same kit and schedules them together if they are all ready looks at op.get(KIT_KEY) to decide what kit an op belongs</p>
+<p>used in place of returning true in precondition gathers together all the other ops with the same kit and schedules them together if they are all ready looks at <a href="0">this_op.inputs</a>.item.get(KIT_KEY) to decide what kit an op belongs</p>
 
 
   </div>
@@ -1105,7 +1105,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-38
 39
 40
 41
@@ -1134,26 +1133,37 @@ $(document).ready(function() {
 64
 65
 66
-67</pre>
+67
+68
+69
+70
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAScheduling.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'OLAScheduling.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_schedule_same_kit_ops'>schedule_same_kit_ops</span><span class='lparen'>(</span><span class='id identifier rubyid_this_op'>this_op</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_this_op'>this_op</span><span class='period'>.</span><span class='id identifier rubyid_plan'>plan</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='comment'># don&#39;t perform computation in testing mode with no plan
 </span>    <span class='kw'>return</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_kit_id'>kit_id</span> <span class='op'>=</span> <span class='id identifier rubyid_this_op'>this_op</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#KIT_KEY-constant" title="OLAScheduling::KIT_KEY (constant)">KIT_KEY</a></span></span><span class='rparen'>)</span>
+  
+  <span class='id identifier rubyid_kit_id'>kit_id</span> <span class='op'>=</span> <span class='id identifier rubyid_this_op'>this_op</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#KIT_KEY-constant" title="OLAScheduling::KIT_KEY (constant)">KIT_KEY</a></span></span><span class='rparen'>)</span>
+  
   <span class='kw'>if</span> <span class='id identifier rubyid_kit_id'>kit_id</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-    <span class='id identifier rubyid_this_op'>this_op</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='symbol'>:no_kit</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This operation did not have an associated kit id and couldn&#39;t be batched</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_this_op'>this_op</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='symbol'>:no_kit</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This operation did not have an associated kit id in its input and so couldn&#39;t be batched</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_exit'>exit</span>
   <span class='kw'>end</span>
+  
   <span class='id identifier rubyid_operations'>operations</span> <span class='op'>=</span> <span class='const'>Operation</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='label'>operation_type_id:</span> <span class='id identifier rubyid_this_op'>this_op</span><span class='period'>.</span><span class='id identifier rubyid_operation_type_id'>operation_type_id</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pending</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_this_op'>this_op</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pending</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_this_op'>this_op</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
   <span class='id identifier rubyid_operations'>operations</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_this_op'>this_op</span>
   <span class='id identifier rubyid_operations'>operations</span> <span class='op'>=</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
-  <span class='id identifier rubyid_operations'>operations</span> <span class='op'>=</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#KIT_KEY-constant" title="OLAScheduling::KIT_KEY (constant)">KIT_KEY</a></span></span><span class='rparen'>)</span> <span class='op'>==</span> <span class='id identifier rubyid_kit_id'>kit_id</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_operations'>operations</span> <span class='op'>=</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span>
+    <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#KIT_KEY-constant" title="OLAScheduling::KIT_KEY (constant)">KIT_KEY</a></span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="#BATCH_SIZE-constant" title="OLAScheduling::BATCH_SIZE (constant)">BATCH_SIZE</a></span></span>
     <span class='const'>Job</span><span class='period'>.</span><span class='id identifier rubyid_schedule'>schedule</span><span class='lparen'>(</span>
       <span class='label'>operations:</span> <span class='id identifier rubyid_operations'>operations</span><span class='comma'>,</span>
