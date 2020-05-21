@@ -2,9 +2,9 @@ module OLAScheduling
   
   SCHEDULER_USER = User.first
   
-  # redundant definition from OLAConstants required to get around precondition limitations
+  # redundant definitions from OLAConstants required to get around precondition limitations
   BATCH_SIZE = 2
-  KIT_KEY = "kit" 
+  KIT_KEY = :kit
 
   # used in place of returning true in precondition
   # sets operation to pending
@@ -34,22 +34,28 @@ module OLAScheduling
   # used in place of returning true in precondition
   # gathers together all the other ops with the same kit
   # and schedules them together if they are all ready
-  # looks at op.get(KIT_KEY) to decide what kit an op belongs
+  # looks at this_op.inputs[0].item.get(KIT_KEY) to decide what kit an op belongs
+  # 
   def schedule_same_kit_ops(this_op)
     if this_op.plan.nil? # don't perform computation in testing mode with no plan
       return
     end
-    kit_id = this_op.get(KIT_KEY)
+    
+    kit_id = this_op.inputs[0].item.get(KIT_KEY)
+    
     if kit_id.nil?
-      this_op.error(:no_kit, "This operation did not have an associated kit id and couldn't be batched")
+          this_op.error(:no_kit, "This operation did not have an associated kit id in its input and so couldn't be batched")
       exit
     end
+    
     operations = Operation.where({operation_type_id: this_op.operation_type_id, status: ["pending"]})
     this_op.status = "pending"
     this_op.save
     operations << this_op
     operations = operations.to_a.uniq
-    operations = operations.select { |op| op.get(KIT_KEY) == kit_id }
+    operations = operations.select do |op|
+      op.inputs[0].item.get(KIT_KEY)
+    end
     if operations.length == BATCH_SIZE
       Job.schedule(
         operations: operations,
