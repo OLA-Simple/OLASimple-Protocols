@@ -7,17 +7,27 @@ module OLAKitIDs
   PROPOGATION_KEYS = [OLAConstants::KIT_KEY, OLAConstants::SAMPLE_KEY, OLAConstants::PATIENT_KEY] #which associations to propogate forward during an operation
   
   def extract_kit_number(id)
-    id.chars[-KIT_NUM_DIGITS, KIT_NUM_DIGITS].join.to_i
+    id.chars[-KIT_NUM_DIGITS, KIT_NUM_DIGITS].join.to_i if id.chars[-KIT_NUM_DIGITS, KIT_NUM_DIGITS]
   end
   
   def extract_sample_number(id)
-    id.chars[-SAMPLE_NUM_DIGITS, SAMPLE_NUM_DIGITS].join.to_i
+    id.chars[-SAMPLE_NUM_DIGITS, SAMPLE_NUM_DIGITS].join.to_i if id.chars[-SAMPLE_NUM_DIGITS, SAMPLE_NUM_DIGITS]
   end
   
+  def sample_num_to_id(num)
+    num.to_s.rjust(SAMPLE_NUM_DIGITS, "0")
+  end
+  
+  def kit_num_to_id(num)
+    num.to_s.rjust(KIT_NUM_DIGITS, "0")
+  end
+  
+  # requires and returns integer ids
   def kit_num_from_sample_num(sample_num)
     ((sample_num - 1) / BATCH_SIZE).floor + 1
   end
   
+  # requires and returns integer ids
   def sample_nums_from_kit_num(kit_num)
     sample_nums = []
     BATCH_SIZE.times do |i|
@@ -27,21 +37,20 @@ module OLAKitIDs
   end
   
   def validate_samples(expected_sample_nums)
-    resp1 = show do
+    resp = show do
       title "Scan Incoming Samples"
       
       note "Scan in the IDs of all incoming samples in any order."
       note "There should not be more than #{expected_sample_nums.size} samples. "
       
       expected_sample_nums.size.times do |i|
-        get "text", var: i.to_s, label: "", default: ""
+        get "text", var: i.to_s.to_sym, label: "", default: ""
       end
     end
     
     expected_sample_nums.size.times do |i|
-      if !resp1[i.to_s].blank? && !expected_sample_nums.delete(extract_sample_number(resp1[i.to_s]))
-        return false
-      end
+      found = expected_sample_nums.delete(extract_sample_number(resp[i.to_s.to_sym])) if extract_sample_number(resp[i.to_s.to_sym])
+      return false unless found
     end
     return true
   end
@@ -55,8 +64,8 @@ module OLAKitIDs
       show do
         title "Wrong Samples"
         note "Ensure that you have the correct samples before continuing"
-        note "You are processing kit <b>#{kit_number}</b>"
-        note "Incoming samples should be numbered #{expected_sample_nums.to_sentence}."
+        note "You are processing kit <b>#{kit_num_to_id(kit_number)}</b>"
+        note "Incoming samples should be numbered #{expected_sample_nums.map { |s| sample_num_to_id(s) }.to_sentence}."
         note "On the next step you will retry scanning in the samples."
       end
     end
@@ -87,8 +96,8 @@ module OLAKitIDs
       populate_temporary_values_from_input_associations(ops, input_name, PROPOGATION_KEYS)
     else # debug mode
       ops.each_with_index do |op, i|
-        op.temporary[OLAConstants::KIT_KEY] = 1.to_s.rjust(3, "0")
-        op.temporary[OLAConstants::SAMPLE_KEY] = (i + 1).to_s.rjust(3, "0")
+        op.temporary[OLAConstants::KIT_KEY] = kit_num_to_id(1)
+        op.temporary[OLAConstants::SAMPLE_KEY] = sample_num_to_id(i + 1)
         op.temporary[OLAConstants::PATIENT_KEY] = rand(1..30)
       end
     end
@@ -129,8 +138,8 @@ module OLAKitIDs
     from_das.map { |da| to.lazy_associate(da.key, da.value) }
   end
   
-  def set_output_components(ops, component)
-    set_many_associations(objects, COMPONENT_KEY, component)
+  def retrieve_input_components(ops)
+    das = get_many_associations(ops, COMPONENT_KEY)
   end
   
   def set_many_associations(objects, key, value, upload = nil)
@@ -154,11 +163,11 @@ module OLAKitIDs
   #
   # requires that "operations" input only contains operations from a single kit
   def assign_sample_aliases_from_kit_id(operations, kit_id)
-    operations.each { |op| op.temporary[:patient] = op.get(OLAConstants::PATIENT_ID_KEY) }
-    operations = operations.sort { |op| op.temporary[:patient] }
-    sample_aliases = sample_aliases_from_kit(kit_id)
+    operations.each { |op| op.temporary[OLAConstants::PATIENT_KEY] = op.get(OLAConstants::PATIENT_KEY) }
+    operations = operations.sort_by { |op| op.temporary[OLAConstants::PATIENT_KEY] }
+    sample_nums = sample_nums_from_kit_num(extract_kit_number(kit_id))
     operations.each_with_index do |op, i|
-      op.temporary[:sample_num] = sample_alias[i]
+      op.temporary[OLAConstants::SAMPLE_KEY] = sample_num_to_id(sample_nums[i])
     end
   end
   
