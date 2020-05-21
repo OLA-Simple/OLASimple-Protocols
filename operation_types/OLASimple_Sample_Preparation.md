@@ -24,8 +24,9 @@ end
 ### Protocol Code <a href='#' id='protocol'>[hide]</a>
 ```ruby
 needs 'OLASimple/OLAConstants'
-needs 'OLASimple/OLAKitIds'
+needs 'OLASimple/OLAKitIDs'
 class Protocol
+  include OLAKitIDs
   OUTPUT = 'Patient Sample'
   PATIENT_ID_INPUT = 'Patient Sample Identifier'
   KIT_ID_INPUT = 'Kit Identifier'
@@ -36,16 +37,19 @@ class Protocol
   def main
     operations.make
     operations.each do |op|
-      op.temporary[OLAConstants::PATIENT_KEY] = op.input(PATIENT_ID_INPUT).value.to_i
-      op.temporary[OLAConstants::KIT_KEY] = op.input(KIT_ID_INPUT).value.to_i
+      if debug
+        op.temporary[OLAConstants::PATIENT_KEY] = "a patient id"
+        op.temporary[OLAConstants::KIT_KEY] = "001"
+      else
+        op.temporary[OLAConstants::PATIENT_KEY] = op.input(PATIENT_ID_INPUT).value
+        op.temporary[OLAConstants::KIT_KEY] = op.input(KIT_ID_INPUT).value
+    end
     end
     
     kit_groups = operations.group_by { |op| op.temporary[OLAConstants::KIT_KEY] }
     
-    kit_groups.each do |ops|
-      kit_num = ops.first.temporary[OLAConstants::KIT_KEY]
+    kit_groups.each do |kit_num, ops|
       first_module_setup(ops, kit_num)
-      OLAKitIDs.set_output_components(ops, OUTPUT_COMPONENT)
     end
 
     show do
@@ -64,11 +68,11 @@ class Protocol
   # Makes the assumptions that all operations here are from the same kit
   # with output items made, and have a suitable batch size
   def first_module_setup(operations, kit_num)
-    OLAKitIDs::assign_sample_aliases_from_kit_id(operations, kit_num)
+    assign_sample_aliases_from_kit_id(operations, kit_num)
 
-    data_assocations = []
+    data_associations = []
     operations.each do |op|
-      new_das = OLAKitIds::set_kit_information_lazy(
+      new_das = set_kit_information_lazy(
         op.output(OUTPUT).item,
         kit_num: op.temporary[OLAConstants::KIT_KEY], 
         sample_num: op.temporary[OLAConstants::SAMPLE_KEY], 
@@ -77,7 +81,7 @@ class Protocol
       data_associations.concat(new_das)
     end
     
-    DataAssociation.import data_assocations, on_duplicate_key_update: [:object]
+    DataAssociation.import data_associations, on_duplicate_key_update: [:object]
   end
 
 end
