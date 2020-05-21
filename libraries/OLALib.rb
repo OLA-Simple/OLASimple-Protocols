@@ -194,7 +194,7 @@ module RefExtension
     output_item.associate(UNIT_KEY, unit)
     output_item.associate(COMPONENT_KEY, component)
     output_item.associate(SAMPLE_KEY, sample)
-    output_item.associate(PATIENT_ID_KEY, patient)
+    output_item.associate(PATIENT_KEY, patient)
     output_item.associate(ALIAS_KEY, self.ref_helper(output_item))
     
     # from associations
@@ -308,7 +308,7 @@ module OLALib
       op.temporary[:input_kit_and_unit] = [unit, kit].join('')
     end
   end
-
+  
   def save_pack_hash(ops, pack)
     ops.running.each do |op|
       op.temporary[:pack_hash] = get_pack_hash(op.input(pack).sample)
