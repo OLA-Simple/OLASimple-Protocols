@@ -148,9 +148,9 @@ class Protocol
     populate_temporary_kit_info_from_input_associations(operations, INPUT)
     propogate_kit_info_forward(operations, INPUT, OUTPUT)
 
-    packages = operations.running.group_by { |op| op.temporary[KIT_KEY]}
-    this_package = packages.keys.first
-    if packages.length > 1
+    kits = operations.running.group_by { |op| op.temporary[KIT_KEY]}
+    this_package = THIS_UNIT + kits.keys.first
+    if kits.length > 1
         raise "More than one kit is not supported by this protocol. Please rebatch." 
     end
     
@@ -294,7 +294,7 @@ class Protocol
     
     show do
       title title
-      check "Transfer <b>#{volume_ul}</b> of <b>#{from}</b> into <b>#{to}</b> using a #{pipette_decision(volume_ul)} pipette."
+      check "Transfer <b>#{volume_ul}uL</b> of <b>#{from}</b> into <b>#{to}</b> using a #{pipette_decision(volume_ul)} pipette."
       warning warning if warning
       note display_svg(img, 0.75) if img
       check 'Discard pipette tip.'
@@ -456,7 +456,7 @@ class Protocol
       operations.each do |op|
         column = "#{SAMPLE_COLUMN}-#{op.temporary[SAMPLE_KEY]}"
         extract_tube = "#{RNA_EXTRACT}-#{op.temporary[SAMPLE_KEY]}"
-        check "Transfer <b>#{column}</b> to <b>#{extract_tube}</b>"
+        check "Transfer column <b>#{column}</b> to <b>#{extract_tube}</b>"
       end
     end
   end
@@ -466,7 +466,7 @@ class Protocol
       title 'Add Elution Buffer'
       operations.each do |op|
         column = "#{SAMPLE_COLUMN}-#{op.temporary[SAMPLE_KEY]}"
-        check "Add <b>60uL</b> from <b>#{SA_WATER}</b> to <b>#{column}</b>"
+        check "Add <b>60uL</b> from <b>#{SA_WATER}</b> to column <b>#{column}</b>"
       end
     end
   end
