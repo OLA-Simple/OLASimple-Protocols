@@ -94,7 +94,7 @@ module OLAKitIDs
     unless debug
       # grab all data associations from inputs and place into temporary
       populate_temporary_values_from_input_associations(ops, input_name, PROPOGATION_KEYS)
-    else # debug mode
+    else
       ops.each_with_index do |op, i|
         op.temporary[OLAConstants::KIT_KEY] = kit_num_to_id(1)
         op.temporary[OLAConstants::SAMPLE_KEY] = sample_num_to_id(i + 1)
@@ -138,8 +138,16 @@ module OLAKitIDs
     from_das.map { |da| to.lazy_associate(da.key, da.value) }
   end
   
+  # populates op.temporary[:input_component] with the component from the input
   def retrieve_input_components(ops)
-    das = get_many_associations(ops, COMPONENT_KEY)
+    ops.each do |op|
+      op.temporary["input_#{COMPONENT_KEY}".to_sym] = op.get(COMPONENT_KEY)
+    end
+  end
+  
+  def set_output_components(ops, component)
+    items = ops.map { |op| op.outputs[0].item }
+    set_many_associations(items, COMPONENT_KEY, component)
   end
   
   def set_many_associations(objects, key, value, upload = nil)
@@ -181,7 +189,7 @@ module OLAKitIDs
   end
   
   # must run DataAssociation.import on returned array in order to complete association
-  def set_kit_information_lazy(obj, kit_num:, sample_num:, patient:)
+  def associate_kit_information_lazy(obj, kit_num:, sample_num:, patient:)
     das = []
     das << obj.lazy_associate(OLAConstants::KIT_KEY, kit_num)
     das << obj.lazy_associate(OLAConstants::SAMPLE_KEY, sample_num)
