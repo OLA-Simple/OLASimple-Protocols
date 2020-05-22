@@ -107,16 +107,16 @@ class Protocol
 
     3.times do
       operations.each { |op| add_sample_to_column(op) }
-      centrifuge_columns(flow_instructions: "Discard flow through into " + GuSCN_WASTE)
+      centrifuge_columns(flow_instructions: "Discard flow through into #{GuSCN_WASTE}")
     end
     change_collection_tubes
 
     add_wash_1
-    centrifuge_columns(flow_instructions: "Discard flow through into " + GuSCN_WASTE)
+    centrifuge_columns(flow_instructions: "Discard flow through into #{GuSCN_WASTE}")
     change_collection_tubes
     
     add_wash_2
-    centrifuge_columns(flow_instructions: "Discard flow through into " + GuSCN_WASTE)
+    centrifuge_columns(flow_instructions: "Discard flow through into #{GuSCN_WASTE}")
     change_collection_tubes
 
     transfer_column_to_e6
@@ -281,6 +281,8 @@ class Protocol
   
   # helper method for simple transfers in this protocol
   def transfer_and_vortex(title, from, to, volume_ul, warning: nil, to_contents: 'empty')
+    pipette, extra_note = pipette_decision(volume_ul)
+    
     from_component, from_sample_num = from.split('-')
     to_component, to_sample_num = to.split('-')
     
@@ -289,12 +291,13 @@ class Protocol
       from_svg = draw_svg(KIT_SVGs[from_component], svg_label: from_label, opened: true, contents: 'full')
       to_label = [to_component, to_sample_num].join("\n")
       to_svg = draw_svg(KIT_SVGs[to_component], svg_label: to_label, opened: true, contents: to_contents)
-      img = make_transfer(from_svg, to_svg, 250, "#{volume_ul}ul", "(#{pipette_decision(volume_ul)})")
+      img = make_transfer(from_svg, to_svg, 250, "#{volume_ul}ul", "(#{pipette})")
     end
     
     show do
       title title
-      check "Transfer <b>#{volume_ul}uL</b> of <b>#{from}</b> into <b>#{to}</b> using a #{pipette_decision(volume_ul)} pipette."
+      check "Transfer <b>#{volume_ul}uL</b> of <b>#{from}</b> into <b>#{to}</b> using a #{pipette} pipette."
+      note extra_note if extra_note
       warning warning if warning
       note display_svg(img, 0.75) if img
       check 'Discard pipette tip.'
@@ -308,8 +311,12 @@ class Protocol
       return P20_PRE
     elsif volume_ul <= 200
       return P200_PRE
-    else
+    elsif volume_ul <= 1000
       return P1000_PRE
+    else
+      factor = volume_ul.fdiv(1000).ceil
+      split_volume = volume_ul.fdiv(factor)
+      return P1000_PRE, "Split transfer into <b>#{factor}</b> seperate transfers of <b>#{split_volume}uL</b>."
     end
   end
 
@@ -335,14 +342,13 @@ class Protocol
 
   def prepare_buffers
     # add sa water to dtt/trna
-    show do
-      title "Prepare #{DTT}"
-      note 'In the next few instructions, we will prepare the buffers used for the extraction.'      
-      check "Transfer <b>25ul</b> of <b>#{SA_WATER}</b> into <b>#{DTT}</b>."
-      check 'Discard pipette tip.'
-      check "Vortex <b>#{DTT}</b> for <b>2 seconds twice</b>."
-      check "Centrifuge <b>#{DTT}</b> for <b>5 seconds</b>."
-    end
+    transfer_and_vortex(
+        "Prepare #{DTT}", 
+        SA_WATER, 
+        DTT, 
+        25,
+        to_contents: 'full'
+    )
 
     # add dtt solution to lysis buffer
     operations.each do |op|
@@ -366,12 +372,11 @@ class Protocol
     )
   end
   
-  SAMPLE_VOLUME = "300ul"
   # transfer plasma Samples into lysis buffer and incubate
   def lyse_samples
     operations.each do |op|
       transfer_and_vortex(
-        'Lyse Samples', 
+        "Lyse Sample #{INCOMING_SAMPLE}-#{op.temporary[SAMPLE_KEY]}", 
         "#{INCOMING_SAMPLE}-#{op.temporary[SAMPLE_KEY]}",
         "#{LYSIS_BUFFER}-#{op.temporary[SAMPLE_KEY]}", 
         300,
@@ -386,7 +391,7 @@ class Protocol
   def add_ethanol
     operations.each do |op|
       transfer_and_vortex(
-        'Add Buffer Ethanol', 
+        "Add Buffer Ethanol to #{LYSIS_BUFFER}-#{op.temporary[SAMPLE_KEY]}", 
         ETHANOL, 
         "#{LYSIS_BUFFER}-#{op.temporary[SAMPLE_KEY]}", 
         1200,
@@ -395,7 +400,6 @@ class Protocol
     end
   end
 
-  SAMPLE_TRANSFER_VOLUME = 800#ul
   def add_sample_to_column(op)
     from = "#{LYSIS_BUFFER}-#{op.temporary[SAMPLE_KEY]}"
     to = "#{SAMPLE_COLUMN}-#{op.temporary[SAMPLE_KEY]}"
@@ -428,6 +432,8 @@ class Protocol
   end
   
   def transfer_carefully(from, to, volume_ul, from_type: nil, to_type: nil, to_contents: nil)
+    pipette, extra_note = pipette_decision(volume_ul)
+      
     from_component = from.split('-')[0]
     to_component = to.split('-')[0]
     
@@ -437,12 +443,13 @@ class Protocol
       from_svg = draw_svg(KIT_SVGs[from_component], svg_label: from_label, opened: true, contents: 'full')
       to_label = to.split('-').join("\n")
       to_svg = draw_svg(KIT_SVGs[to_component], svg_label: to_label, opened: true, contents: to_contents)
-      img = make_transfer(from_svg, to_svg, 250, "#{volume_ul}ul", "(#{pipette_decision(volume_ul)})")
+      img = make_transfer(from_svg, to_svg, 250, "#{volume_ul}ul", "(#{pipette})")
     end
     show do 
       title "Add #{from_type || from} to #{to_type || to}"
       note "<b>Carefully</b> open #{to_type} <b>#{to}</b> lid."
-      check "<b>Carefully</b> Add <b>#{volume_ul}uL</b> of #{from_type} <b>#{from}</b> to <b>#{to}</b> using a #{pipette_decision(volume_ul)} pipette."
+      check "<b>Carefully</b> Add <b>#{volume_ul}uL</b> of #{from_type} <b>#{from}</b> to <b>#{to}</b> using a #{pipette} pipette."
+      note extra_note if extra_note
       note display_svg(img, 0.75) if img
       check 'Discard pipette tip.'
       note "<b>Slowly</b> close lid of <b>#{to}</b>"
@@ -464,6 +471,7 @@ class Protocol
   def elute
     show do 
       title 'Add Elution Buffer'
+      note "Add buffer to center of columns."
       operations.each do |op|
         column = "#{SAMPLE_COLUMN}-#{op.temporary[SAMPLE_KEY]}"
         check "Add <b>60uL</b> from <b>#{SA_WATER}</b> to column <b>#{column}</b>"
@@ -504,7 +512,7 @@ class Protocol
   def cleanup
     show do
       title "Clean up Waste"
-      warning "Do not dispose of liquid waste and bleach in GuSCN waste, this can produce dangerous gas."
+      warning "DO NOT dispose of liquid waste and bleach into #{GuSCN_WASTE}, this can produce dangerous gas."
       bullet "Dispose of liquid waste in bleach down the sink with running water."
       bullet "Dispose of remaining tubes into #{WASTE_PRE}."
     end
