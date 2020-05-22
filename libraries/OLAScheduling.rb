@@ -5,30 +5,18 @@ module OLAScheduling
   # redundant definitions from OLAConstants required to get around precondition limitations
   BATCH_SIZE = 2
   KIT_KEY = :kit
-
-  # used in place of returning true in precondition
-  # sets operation to pending
-  # then, if there is enough fellow pending operations, batches them into a job and schedule.
-  def schedule_ops_of_type_if_enough(op, batch_size)
-    if op.plan.nil? # don't perform computation in testing mode with no plan
-      return
-    end
-    operations = Operation.where({operation_type_id: op.operation_type_id, status: ["pending"]})
-    op.status = "pending"
-    op.save
-    operations << op
-    operations = operations.to_a.uniq
-    
-    op_batches = operations.each_slice(batch_size).to_a
-    op_batches.each do |ops|
-      if ops.length >= batch_size
-        Job.schedule(
-          operations: ops,
-          user: SCHEDULER_USER
-        )
-      end
-    end
-    exit
+  KIT_PARAMETER = "Kit Identifier"
+  
+  # retrieve kit id from first input's associations if avialable,
+  # also try to retrieve kit id from a kit input parameter if it is available.
+  # returns nil if no kit could be found
+  def get_kit_id(op)
+    op.inputs[0].item&.get(KIT_KEY) || op.input(KIT_PARAMETER)&.value
+  end
+  
+  # return if this protocol is being run in developer testing mode 
+  def testing_mode?(op)
+    op.plan.nil?
   end
   
   # used in place of returning true in precondition
@@ -37,14 +25,11 @@ module OLAScheduling
   # looks at this_op.inputs[0].item.get(KIT_KEY) to decide what kit an op belongs
   # 
   def schedule_same_kit_ops(this_op)
-    if this_op.plan.nil? # don't perform computation in testing mode with no plan
-      return
-    end
-    
-    kit_id = this_op.inputs[0].item.get(KIT_KEY)
-    
+    return true if testing_mode?(this_op)
+
+    kit_id = get_kit_id(this_op)
     if kit_id.nil?
-          this_op.error(:no_kit, "This operation did not have an associated kit id in its input and so couldn't be batched")
+      this_op.error(:no_kit, "This operation did not have an associated kit id in its input and so couldn't be batched")
       exit
     end
     
@@ -53,9 +38,7 @@ module OLAScheduling
     this_op.save
     operations << this_op
     operations = operations.to_a.uniq
-    operations = operations.select do |op|
-      op.inputs[0].item.get(KIT_KEY)
-    end
+    operations = operations.select { |op| get_kit_id(this_op) == kit_id }
     if operations.length == BATCH_SIZE
       Job.schedule(
         operations: operations,
