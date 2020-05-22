@@ -928,6 +928,11 @@ $(document).ready(function() {
         </dt>
         <dd><pre class="code"><span class='symbol'>:kit</span></pre></dd>
       
+        <dt id="KIT_PARAMETER-constant" class="">KIT_PARAMETER =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kit Identifier</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
     </dl>
   
 
@@ -948,7 +953,7 @@ $(document).ready(function() {
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#schedule_ops_of_type_if_enough-instance_method" title="#schedule_ops_of_type_if_enough (instance method)">#<strong>schedule_ops_of_type_if_enough</strong>(op, batch_size)  &#x21d2; Object </a>
+      <a href="#get_kit_id-instance_method" title="#get_kit_id (instance method)">#<strong>get_kit_id</strong>(op)  &#x21d2; Object </a>
     
 
     
@@ -963,7 +968,7 @@ $(document).ready(function() {
 
   
     <span class="summary_desc"><div class='inline'>
-<p>used in place of returning true in precondition sets operation to pending then, if there is enough fellow pending operations, batches them into a job and schedule.</p>
+<p>retrieve kit id from first input&#39;s associations if avialable, also try to retrieve kit id from a kit input parameter if it is available.</p>
 </div></span>
   
 </li>
@@ -993,6 +998,30 @@ $(document).ready(function() {
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#testing_mode%3F-instance_method" title="#testing_mode? (instance method)">#<strong>testing_mode?</strong>(op)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>return if this protocol is being run in developer testing mode.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -1003,9 +1032,9 @@ $(document).ready(function() {
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="schedule_ops_of_type_if_enough-instance_method">
+  <h3 class="signature first" id="get_kit_id-instance_method">
   
-    #<strong>schedule_ops_of_type_if_enough</strong>(op, batch_size)  &#x21d2; <tt>Object</tt> 
+    #<strong>get_kit_id</strong>(op)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1014,7 +1043,7 @@ $(document).ready(function() {
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>used in place of returning true in precondition sets operation to pending then, if there is enough fellow pending operations, batches them into a job and schedule.</p>
+<p>retrieve kit id from first input&#39;s associations if avialable, also try to retrieve kit id from a kit input parameter if it is available. returns nil if no kit could be found</p>
 
 
   </div>
@@ -1028,51 +1057,15 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-12
 13
 14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32</pre>
+15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAScheduling.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'OLAScheduling.rb', line 13</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_schedule_ops_of_type_if_enough'>schedule_ops_of_type_if_enough</span><span class='lparen'>(</span><span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_batch_size'>batch_size</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_plan'>plan</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='comment'># don&#39;t perform computation in testing mode with no plan
-</span>    <span class='kw'>return</span>
-  <span class='kw'>end</span>
-  <span class='id identifier rubyid_operations'>operations</span> <span class='op'>=</span> <span class='const'>Operation</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='label'>operation_type_id:</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_operation_type_id'>operation_type_id</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pending</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pending</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
-  <span class='id identifier rubyid_operations'>operations</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_op'>op</span>
-  <span class='id identifier rubyid_operations'>operations</span> <span class='op'>=</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
-  
-  <span class='id identifier rubyid_op_batches'>op_batches</span> <span class='op'>=</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_each_slice'>each_slice</span><span class='lparen'>(</span><span class='id identifier rubyid_batch_size'>batch_size</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
-  <span class='id identifier rubyid_op_batches'>op_batches</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ops'>ops</span><span class='op'>|</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_ops'>ops</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_batch_size'>batch_size</span>
-      <span class='const'>Job</span><span class='period'>.</span><span class='id identifier rubyid_schedule'>schedule</span><span class='lparen'>(</span>
-        <span class='label'>operations:</span> <span class='id identifier rubyid_ops'>ops</span><span class='comma'>,</span>
-        <span class='label'>user:</span> <span class='const'><span class='object_link'><a href="#SCHEDULER_USER-constant" title="OLAScheduling::SCHEDULER_USER (constant)">SCHEDULER_USER</a></span></span>
-      <span class='rparen'>)</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-  <span class='id identifier rubyid_exit'>exit</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_get_kit_id'>get_kit_id</span><span class='lparen'>(</span><span class='id identifier rubyid_op'>op</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_item'>item</span><span class='op'>&amp;.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#KIT_KEY-constant" title="OLAScheduling::KIT_KEY (constant)">KIT_KEY</a></span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_input'>input</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#KIT_PARAMETER-constant" title="OLAScheduling::KIT_PARAMETER (constant)">KIT_PARAMETER</a></span></span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_value'>value</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1105,6 +1098,18 @@ $(document).ready(function() {
       <pre class="lines">
 
 
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
 39
 40
 41
@@ -1122,37 +1127,17 @@ $(document).ready(function() {
 53
 54
 55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73</pre>
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAScheduling.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'OLAScheduling.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_schedule_same_kit_ops'>schedule_same_kit_ops</span><span class='lparen'>(</span><span class='id identifier rubyid_this_op'>this_op</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_this_op'>this_op</span><span class='period'>.</span><span class='id identifier rubyid_plan'>plan</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='comment'># don&#39;t perform computation in testing mode with no plan
-</span>    <span class='kw'>return</span>
-  <span class='kw'>end</span>
-  
-  <span class='id identifier rubyid_kit_id'>kit_id</span> <span class='op'>=</span> <span class='id identifier rubyid_this_op'>this_op</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#KIT_KEY-constant" title="OLAScheduling::KIT_KEY (constant)">KIT_KEY</a></span></span><span class='rparen'>)</span>
-  
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_testing_mode?'>testing_mode?</span><span class='lparen'>(</span><span class='id identifier rubyid_this_op'>this_op</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_kit_id'>kit_id</span> <span class='op'>=</span> <span class='id identifier rubyid_get_kit_id'>get_kit_id</span><span class='lparen'>(</span><span class='id identifier rubyid_this_op'>this_op</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_kit_id'>kit_id</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-        <span class='id identifier rubyid_this_op'>this_op</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='symbol'>:no_kit</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This operation did not have an associated kit id in its input and so couldn&#39;t be batched</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_this_op'>this_op</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='symbol'>:no_kit</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This operation did not have an associated kit id in its input and so couldn&#39;t be batched</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_exit'>exit</span>
   <span class='kw'>end</span>
   
@@ -1161,9 +1146,7 @@ $(document).ready(function() {
   <span class='id identifier rubyid_this_op'>this_op</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
   <span class='id identifier rubyid_operations'>operations</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_this_op'>this_op</span>
   <span class='id identifier rubyid_operations'>operations</span> <span class='op'>=</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
-  <span class='id identifier rubyid_operations'>operations</span> <span class='op'>=</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span>
-    <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#KIT_KEY-constant" title="OLAScheduling::KIT_KEY (constant)">KIT_KEY</a></span></span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_operations'>operations</span> <span class='op'>=</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_get_kit_id'>get_kit_id</span><span class='lparen'>(</span><span class='id identifier rubyid_this_op'>this_op</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='id identifier rubyid_kit_id'>kit_id</span> <span class='rbrace'>}</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="#BATCH_SIZE-constant" title="OLAScheduling::BATCH_SIZE (constant)">BATCH_SIZE</a></span></span>
     <span class='const'>Job</span><span class='period'>.</span><span class='id identifier rubyid_schedule'>schedule</span><span class='lparen'>(</span>
       <span class='label'>operations:</span> <span class='id identifier rubyid_operations'>operations</span><span class='comma'>,</span>
@@ -1178,6 +1161,60 @@ $(document).ready(function() {
     <span class='kw'>end</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_exit'>exit</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="testing_mode?-instance_method">
+  
+    #<strong>testing_mode?</strong>(op)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>return if this protocol is being run in developer testing mode</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+18
+19
+20</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'OLAScheduling.rb', line 18</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_testing_mode?'>testing_mode?</span><span class='lparen'>(</span><span class='id identifier rubyid_op'>op</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_plan'>plan</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
