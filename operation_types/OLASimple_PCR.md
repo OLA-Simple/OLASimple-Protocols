@@ -5,8 +5,7 @@ Generate PCR products from cell lysate which will be used later to detect HIV mu
 
 
 - **Patient Sample** [P]  
-  - <a href='#' onclick='easy_select("Sample Types", "OLASimple Sample")'>OLASimple Sample</a> / <a href='#' onclick='easy_select("Containers", "OLASimple Synthetic DNA")'>OLASimple Synthetic DNA</a>
-  - <a href='#' onclick='easy_select("Sample Types", "OLASimple Sample")'>OLASimple Sample</a> / <a href='#' onclick='easy_select("Containers", "OLA lysed blood")'>OLA lysed blood</a>
+  - <a href='#' onclick='easy_select("Sample Types", "OLASimple Sample")'>OLASimple Sample</a> / <a href='#' onclick='easy_select("Containers", "OLA viral RNA")'>OLA viral RNA</a>
 
 
 
