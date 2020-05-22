@@ -977,6 +977,30 @@ $(document).ready(function() {
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#associate_kit_information_lazy-instance_method" title="#associate_kit_information_lazy (instance method)">#<strong>associate_kit_information_lazy</strong>(obj, kit_num:, sample_num:, patient:)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>must run DataAssociation.import on returned array in order to complete association.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#extract_kit_number-instance_method" title="#extract_kit_number (instance method)">#<strong>extract_kit_number</strong>(id)  &#x21d2; Object </a>
     
 
@@ -1221,7 +1245,9 @@ $(document).ready(function() {
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>populates <a href=":input_component">op.temporary</a> with the component from the input.</p>
+</div></span>
   
 </li>
 
@@ -1297,7 +1323,7 @@ $(document).ready(function() {
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#set_kit_information_lazy-instance_method" title="#set_kit_information_lazy (instance method)">#<strong>set_kit_information_lazy</strong>(obj, kit_num:, sample_num:, patient:)  &#x21d2; Object </a>
+      <a href="#set_many_associations-instance_method" title="#set_many_associations (instance method)">#<strong>set_many_associations</strong>(objects, key, value, upload = nil)  &#x21d2; Object </a>
     
 
     
@@ -1311,9 +1337,7 @@ $(document).ready(function() {
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>must run DataAssociation.import on returned array in order to complete association.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -1321,7 +1345,7 @@ $(document).ready(function() {
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#set_many_associations-instance_method" title="#set_many_associations (instance method)">#<strong>set_many_associations</strong>(objects, key, value, upload = nil)  &#x21d2; Object </a>
+      <a href="#set_output_components-instance_method" title="#set_output_components (instance method)">#<strong>set_output_components</strong>(ops, component)  &#x21d2; Object </a>
     
 
     
@@ -1401,16 +1425,16 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-165
-166
-167
-168
-169
-170
-171</pre>
+173
+174
+175
+176
+177
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 173</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_assign_sample_aliases_from_kit_id'>assign_sample_aliases_from_kit_id</span><span class='lparen'>(</span><span class='id identifier rubyid_operations'>operations</span><span class='comma'>,</span> <span class='id identifier rubyid_kit_id'>kit_id</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_operations'>operations</span> <span class='op'>=</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_temporary'>temporary</span><span class='lbracket'>[</span><span class='const'>OLAConstants</span><span class='op'>::</span><span class='const'>PATIENT_KEY</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
@@ -1418,6 +1442,53 @@ $(document).ready(function() {
   <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
     <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_temporary'>temporary</span><span class='lbracket'>[</span><span class='const'>OLAConstants</span><span class='op'>::</span><span class='const'>SAMPLE_KEY</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_sample_num_to_id'>sample_num_to_id</span><span class='lparen'>(</span><span class='id identifier rubyid_sample_nums'>sample_nums</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="associate_kit_information_lazy-instance_method">
+  
+    #<strong>associate_kit_information_lazy</strong>(obj, kit_num:, sample_num:, patient:)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>must run DataAssociation.import on returned array in order to complete association</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+192
+193
+194
+195
+196
+197</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 192</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_associate_kit_information_lazy'>associate_kit_information_lazy</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='comma'>,</span> <span class='label'>kit_num:</span><span class='comma'>,</span> <span class='label'>sample_num:</span><span class='comma'>,</span> <span class='label'>patient:</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_das'>das</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_das'>das</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_lazy_associate'>lazy_associate</span><span class='lparen'>(</span><span class='const'>OLAConstants</span><span class='op'>::</span><span class='const'>KIT_KEY</span><span class='comma'>,</span> <span class='id identifier rubyid_kit_num'>kit_num</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_das'>das</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_lazy_associate'>lazy_associate</span><span class='lparen'>(</span><span class='const'>OLAConstants</span><span class='op'>::</span><span class='const'>SAMPLE_KEY</span><span class='comma'>,</span> <span class='id identifier rubyid_sample_num'>sample_num</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_das'>das</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_lazy_associate'>lazy_associate</span><span class='lparen'>(</span><span class='const'>OLAConstants</span><span class='op'>::</span><span class='const'>PATIENT_KEY</span><span class='comma'>,</span> <span class='id identifier rubyid_patient'>patient</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1510,15 +1581,15 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-176
-177
-178
-179
-180
-181</pre>
+184
+185
+186
+187
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_kit_ops'>get_kit_ops</span><span class='lparen'>(</span><span class='id identifier rubyid_kit_id'>kit_id</span><span class='comma'>,</span> <span class='id identifier rubyid_operation_type_id'>operation_type_id</span><span class='comma'>,</span> <span class='id identifier rubyid_lookback'>lookback</span> <span class='op'>=</span> <span class='int'>100</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_operations'>operations</span> <span class='op'>=</span> <span class='const'>Operation</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='label'>operation_type_id:</span> <span class='id identifier rubyid_operation_type_id'>operation_type_id</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>done</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>running</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='lparen'>(</span><span class='id identifier rubyid_lookback'>lookback</span><span class='rparen'>)</span>
@@ -1648,8 +1719,8 @@ $(document).ready(function() {
   <span class='kw'>unless</span> <span class='id identifier rubyid_debug'>debug</span>
     <span class='comment'># grab all data associations from inputs and place into temporary
 </span>    <span class='id identifier rubyid_populate_temporary_values_from_input_associations'>populate_temporary_values_from_input_associations</span><span class='lparen'>(</span><span class='id identifier rubyid_ops'>ops</span><span class='comma'>,</span> <span class='id identifier rubyid_input_name'>input_name</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#PROPOGATION_KEYS-constant" title="OLAKitIDs::PROPOGATION_KEYS (constant)">PROPOGATION_KEYS</a></span></span><span class='rparen'>)</span>
-  <span class='kw'>else</span> <span class='comment'># debug mode
-</span>    <span class='id identifier rubyid_ops'>ops</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_ops'>ops</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
       <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_temporary'>temporary</span><span class='lbracket'>[</span><span class='const'>OLAConstants</span><span class='op'>::</span><span class='const'>KIT_KEY</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_kit_num_to_id'>kit_num_to_id</span><span class='lparen'>(</span><span class='int'>1</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_temporary'>temporary</span><span class='lbracket'>[</span><span class='const'>OLAConstants</span><span class='op'>::</span><span class='const'>SAMPLE_KEY</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_sample_num_to_id'>sample_num_to_id</span><span class='lparen'>(</span><span class='id identifier rubyid_i'>i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_temporary'>temporary</span><span class='lbracket'>[</span><span class='const'>OLAConstants</span><span class='op'>::</span><span class='const'>PATIENT_KEY</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_rand'>rand</span><span class='lparen'>(</span><span class='int'>1</span><span class='op'>..</span><span class='int'>30</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -1860,21 +1931,36 @@ $(document).ready(function() {
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>populates <a href=":input_component">op.temporary</a> with the component from the input</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-141
 142
-143</pre>
+143
+144
+145
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_retrieve_input_components'>retrieve_input_components</span><span class='lparen'>(</span><span class='id identifier rubyid_ops'>ops</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_das'>das</span> <span class='op'>=</span> <span class='id identifier rubyid_get_many_associations'>get_many_associations</span><span class='lparen'>(</span><span class='id identifier rubyid_ops'>ops</span><span class='comma'>,</span> <span class='const'>COMPONENT_KEY</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_ops'>ops</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span>
+    <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_temporary'>temporary</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>input_</span><span class='embexpr_beg'>#{</span><span class='const'>COMPONENT_KEY</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>COMPONENT_KEY</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2023,53 +2109,6 @@ $(document).ready(function() {
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="set_kit_information_lazy-instance_method">
-  
-    #<strong>set_kit_information_lazy</strong>(obj, kit_num:, sample_num:, patient:)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>must run DataAssociation.import on returned array in order to complete association</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-184
-185
-186
-187
-188
-189</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 184</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_set_kit_information_lazy'>set_kit_information_lazy</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='comma'>,</span> <span class='label'>kit_num:</span><span class='comma'>,</span> <span class='label'>sample_num:</span><span class='comma'>,</span> <span class='label'>patient:</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_das'>das</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_das'>das</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_lazy_associate'>lazy_associate</span><span class='lparen'>(</span><span class='const'>OLAConstants</span><span class='op'>::</span><span class='const'>KIT_KEY</span><span class='comma'>,</span> <span class='id identifier rubyid_kit_num'>kit_num</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_das'>das</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_lazy_associate'>lazy_associate</span><span class='lparen'>(</span><span class='const'>OLAConstants</span><span class='op'>::</span><span class='const'>SAMPLE_KEY</span><span class='comma'>,</span> <span class='id identifier rubyid_sample_num'>sample_num</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_das'>das</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_lazy_associate'>lazy_associate</span><span class='lparen'>(</span><span class='const'>OLAConstants</span><span class='op'>::</span><span class='const'>PATIENT_KEY</span><span class='comma'>,</span> <span class='id identifier rubyid_patient'>patient</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
   <h3 class="signature " id="set_many_associations-instance_method">
   
     #<strong>set_many_associations</strong>(objects, key, value, upload = nil)  &#x21d2; <tt>Object</tt> 
@@ -2084,16 +2123,16 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-145
-146
-147
-148
-149
-150
-151</pre>
+153
+154
+155
+156
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_many_associations'>set_many_associations</span><span class='lparen'>(</span><span class='id identifier rubyid_objects'>objects</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_upload'>upload</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_data_associations'>data_associations</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2101,6 +2140,38 @@ $(document).ready(function() {
     <span class='id identifier rubyid_data_associations'>data_associations</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_lazy_associate'>lazy_associate</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_upload'>upload</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='const'>DataAssociation</span><span class='period'>.</span><span class='id identifier rubyid_import'>import</span> <span class='id identifier rubyid_data_associations'>data_associations</span><span class='comma'>,</span> <span class='label'>on_duplicate_key_update:</span> <span class='lbracket'>[</span><span class='symbol'>:object</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_output_components-instance_method">
+  
+    #<strong>set_output_components</strong>(ops, component)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+148
+149
+150
+151</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 148</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_output_components'>set_output_components</span><span class='lparen'>(</span><span class='id identifier rubyid_ops'>ops</span><span class='comma'>,</span> <span class='id identifier rubyid_component'>component</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_items'>items</span> <span class='op'>=</span> <span class='id identifier rubyid_ops'>ops</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_outputs'>outputs</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_item'>item</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_set_many_associations'>set_many_associations</span><span class='lparen'>(</span><span class='id identifier rubyid_items'>items</span><span class='comma'>,</span> <span class='const'>COMPONENT_KEY</span><span class='comma'>,</span> <span class='id identifier rubyid_component'>component</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
