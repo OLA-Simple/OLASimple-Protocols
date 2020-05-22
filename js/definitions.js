@@ -201,12 +201,6 @@ var config = {
             },
           
             {
-              name: 'OLA lysed blood',
-              path: 'object_types/OLA_lysed_blood'  + '.md',
-              type: "local-md"
-            },
-          
-            {
               name: 'OLA plasma',
               path: 'object_types/OLA_plasma'  + '.md',
               type: "local-md"
@@ -215,12 +209,6 @@ var config = {
             {
               name: 'OLA viral RNA',
               path: 'object_types/OLA_viral_RNA'  + '.md',
-              type: "local-md"
-            },
-          
-            {
-              name: 'OLASimple Synthetic DNA',
-              path: 'object_types/OLASimple_Synthetic_DNA'  + '.md',
               type: "local-md"
             },
           
