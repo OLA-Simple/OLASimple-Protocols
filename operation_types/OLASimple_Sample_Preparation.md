@@ -43,7 +43,7 @@ class Protocol
       else
         op.temporary[OLAConstants::PATIENT_KEY] = op.input(PATIENT_ID_INPUT).value
         op.temporary[OLAConstants::KIT_KEY] = op.input(KIT_ID_INPUT).value
-    end
+      end
     end
     
     kit_groups = operations.group_by { |op| op.temporary[OLAConstants::KIT_KEY] }
@@ -51,12 +51,16 @@ class Protocol
     kit_groups.each do |kit_num, ops|
       first_module_setup(ops, kit_num)
     end
-
-    show do
-      title 'Put barcodes on things and stuff'
-      note "yes"
+    
+    operations.each do |op|
+      show do
+        title 'Put barcodes on things and stuff'
+        note "Operation #{op.id}"
+        note "PATIENT_KEY: #{op.temporary[OLAConstants::PATIENT_KEY]}"
+        note "KIT_KEY: #{op.temporary[OLAConstants::KIT_KEY]}"
+        note "SAMPLE_KEY: #{op.temporary[OLAConstants::SAMPLE_KEY]}"
+      end
     end
-
     {}
 
   end
