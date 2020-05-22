@@ -16,7 +16,11 @@ Documentation here. Start with a paragraph, not a heading or title, as in most v
 
 ### Precondition <a href='#' id='precondition'>[hide]</a>
 ```ruby
+eval Library.find_by_name("OLAScheduling").code("source").content
+extend OLAScheduling
+
 def precondition(_op)
+  schedule_same_kit_ops(_op)
   true
 end
 ```
@@ -52,7 +56,7 @@ class Protocol
       first_module_setup(ops, kit_num)
     end
     
-    operations.each do |op|
+    operations.running.each do |op|
       show do
         title 'Put barcodes on things and stuff'
         note "Operation #{op.id}"
@@ -72,11 +76,18 @@ class Protocol
   # Makes the assumptions that all operations here are from the same kit
   # with output items made, and have a suitable batch size
   def first_module_setup(operations, kit_num)
+      
+    if operations.size > OLAConstants::BATCH_SIZE
+      operations.each do |op|
+        op.error(:batch_size_too_big, "operations.size operations batched with #{kit_num}, but max batch size is #{BATCH_SIZE}.")
+      end
+      return
+    end
     assign_sample_aliases_from_kit_id(operations, kit_num)
 
     data_associations = []
     operations.each do |op|
-      new_das = set_kit_information_lazy(
+      new_das = associate_kit_information_lazy(
         op.output(OUTPUT).item,
         kit_num: op.temporary[OLAConstants::KIT_KEY], 
         sample_num: op.temporary[OLAConstants::SAMPLE_KEY], 
