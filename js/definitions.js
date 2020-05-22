@@ -25,12 +25,6 @@ var config = {
 
           
             {
-              name: 'OLASimple Job Submission (RT-PCR)',
-              path: 'operation_types/OLASimple_Job_Submission_RT-PCR_' + '.md',
-              type: "local-md"
-            },
-          
-            {
               name: 'OLASimple Ligation',
               path: 'operation_types/OLASimple_Ligation' + '.md',
               type: "local-md"
@@ -49,12 +43,6 @@ var config = {
             },
           
             {
-              name: 'OLASimple Paper Detection (Manual)',
-              path: 'operation_types/OLASimple_Paper_Detection_Manual_' + '.md',
-              type: "local-md"
-            },
-          
-            {
               name: 'OLASimple RNA Extraction',
               path: 'operation_types/OLASimple_RNA_Extraction' + '.md',
               type: "local-md"
@@ -67,20 +55,8 @@ var config = {
             },
           
             {
-              name: 'OLASimple Visual Call (Manual)',
-              path: 'operation_types/OLASimple_Visual_Call_Manual_' + '.md',
-              type: "local-md"
-            },
-          
-            {
               name: 'Pipette Training',
               path: 'operation_types/Pipette_Training' + '.md',
-              type: "local-md"
-            },
-          
-            {
-              name: 'test',
-              path: 'operation_types/test' + '.md',
               type: "local-md"
             },
           
@@ -191,12 +167,6 @@ var config = {
             {
               name: 'OLA PCR',
               path: 'object_types/OLA_PCR'  + '.md',
-              type: "local-md"
-            },
-          
-            {
-              name: 'OLA intention',
-              path: 'object_types/OLA_intention'  + '.md',
               type: "local-md"
             },
           
