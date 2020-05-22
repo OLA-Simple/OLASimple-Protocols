@@ -78,6 +78,12 @@ var config = {
               type: "local-md"
             },
           
+            {
+              name: 'test',
+              path: 'operation_types/test' + '.md',
+              type: "local-md"
+            },
+          
 
         ]
 
