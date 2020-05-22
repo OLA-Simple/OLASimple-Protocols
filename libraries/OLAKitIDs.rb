@@ -98,7 +98,7 @@ module OLAKitIDs
       ops.each_with_index do |op, i|
         op.temporary[OLAConstants::KIT_KEY] = kit_num_to_id(1)
         op.temporary[OLAConstants::SAMPLE_KEY] = sample_num_to_id(i + 1)
-        op.temporary[OLAConstants::PATIENT_KEY] = rand(1..30)
+        op.temporary[OLAConstants::PATIENT_KEY] = rand(1..30).to_s
       end
     end
   end
@@ -163,7 +163,6 @@ module OLAKitIDs
   #
   # requires that "operations" input only contains operations from a single kit
   def assign_sample_aliases_from_kit_id(operations, kit_id)
-    operations.each { |op| op.temporary[OLAConstants::PATIENT_KEY] = op.get(OLAConstants::PATIENT_KEY) }
     operations = operations.sort_by { |op| op.temporary[OLAConstants::PATIENT_KEY] }
     sample_nums = sample_nums_from_kit_num(extract_kit_number(kit_id))
     operations.each_with_index do |op, i|
