@@ -4,7 +4,7 @@ module OLAGraphics
   include Graphics
   include Graphics::MyGraphics
 
-  @@colors = ["red", "yellow", "green", "blue", "purple"]
+  @@colors = ["red", "yellow", "green", "blue", "purple", "gray"]
 
   def self.set_tube_colors(new_colors)
     @@colrs = new_colors
@@ -67,6 +67,10 @@ module OLAGraphics
           fill: #ffc4c4;
       }
       
+      #svg .graystrip rect {
+          fill: #d4d4d4;
+      }
+      
       #svg .greenstrip rect {
           fill: #c4f9c2;
       }
@@ -111,7 +115,7 @@ EOF
 
   # make a tube label
   def tube_label(kit, unit, component, sample)
-    self.two_labels("#{kit}#{unit}", "#{component}#{sample}")
+    self.two_labels("#{unit}#{component}", "#{sample}")
   end
 
   def make_arrow(from, to, tlabel = nil, blabel = nil, tfontsize = 25, bfontsize = 25)
