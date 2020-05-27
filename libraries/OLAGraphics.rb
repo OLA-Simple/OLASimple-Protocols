@@ -1,6 +1,5 @@
 # require_relative 'graphics'
 needs "OLASimple/SVGGraphics"
-
 module OLAGraphics
   include Graphics
   include Graphics::MyGraphics
@@ -26,6 +25,10 @@ module OLAGraphics
       
       #svg .white rect {
           fill: #ffffff;
+      }
+      
+      #svg .gray path {
+          fill: #d4d4d4;
       }
       
       #svg .blue path {
@@ -225,14 +228,14 @@ EOF
     grid.each_pos do |r, c|
 
       # add label
-      tube_label = self.tube_label(kit, unit, components[r], sample)
+      tube_label = ["#{unit}#{components[r]}", "#{sample}"]
       tube_type = closedtube
       if open_tubes.include?(r)
         tube_type = opentube
       end
       tube = make_tube(tube_type,
                        "",
-                       ["#{kit}#{unit}", "#{components[r]}#{sample}"],
+                       tube_label,
                        nil,
                        false)
       tube.new_class!(apply_classes[r])
