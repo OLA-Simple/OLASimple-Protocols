@@ -209,7 +209,8 @@ module RefExtension
   end
 
   def make_item_and_alias(name, package_name, from_item)
-    output_item = self.output(name).make
+    self.output(name).make
+    output_item = self.output(name).item
     self.make_alias_from_pack_hash(output_item, package_name, from_item)
   end
 
