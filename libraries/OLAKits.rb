@@ -94,44 +94,44 @@ module OLAKits
     }
   end
 
-  def self.rtpcr_kit
+  def self.rt_pcr()
     {
-        "name" => "RT-PCR kit",
-        "Sample Labeling" => {
-            "Unit Name" => "S",
+        "name" => "uw kit",
+        "sample prep" => {
+            "Unit Name" => "A",
             "Components" => {
-                
-            },
-            "Number of Samples" => 2,
+                "sample tube 1" => "AA",
+                "sample tube 2" => "AB",
+            }
         },
-
-        "RNA Extraction" => {
-            "Unit Name" => "E",
+        "extraction" => "todo",
+        "pcr" => {
+            "Unit Name" => "B",
             "Components" => {
-                "DTT/tRNA" => "E0",
-                "Lysis buffer" => "E1",
-                "Wash 1" => "E2",
-                "Wash 2" => "E3",
-                "sodium azide water" => "E4",
-                "Sample column" => "E5",
-                "Extract tube" => "E6"
+                "sample tube" => "A",
+                "diluent A" => "B"
             },
+            "PCR Rehydration Volume" => 40,
+            "Sample Volume" => 10,
             "Number of Samples" => 2,
+            "Number of Sub Packages" => 2,
         },
 
         "ligation" => {
             "Unit Name" => "C",
             "Components" => {
                 "sample tubes" => [
-                    "A",
-                    "B",
-                    "C",
-                    "D",
-                    "E"
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7"
                 ],
-                "diluent A" => "F"
+                "diluent A" => "G"
             },
-            "PCR to Ligation Mix Volume" => 2.4,
+            "PCR to Ligation Mix Volume" => 1.2,
             "Ligation Mix Rehydration Volume" => 24,
             "Number of Samples" => 2,
             "Number of Sub Packages" => 2
@@ -141,43 +141,37 @@ module OLAKits
             "Unit Name" => "D",
             "Components" => {
                 "strips" => [
-                    "A",
-                    "B",
-                    "C",
-                    "D",
-                    "E"
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7"
                 ],
-                "stop" => "F",
-                "gold" => "G",
-                "diluent A" => "H"
+                "stop" => "G",
+                "gold" => "H",
+                "diluent A" => "I"
             },
             "Number of Samples" => 2,
             "Number of Sub Packages" => 4,
-            "Stop Rehydration Volume" => 40,
-            "Gold Rehydration Volume" => 480,
+            "Stop Rehydration Volume" => 36,
+            "Gold Rehydration Volume" => 600,
             "Gold to Strip Volume" => 40,
             "Sample to Strip Volume" => 24,
             "Stop to Sample Volume" => 2.4,
-        },
-
-        "analysis" => {
-            "Components" => {
-                "strips" => [
-                    "A",
-                    "B",
-                    "C",
-                    "D",
-                    "E"
-                ],
-            },
+            "Sample Volume" => 2.4,
             "Mutation Labels" => [
                 "K65R",
                 "K103N",
+                "V106M",
                 "Y181C",
                 "M184V",
-                "G190A"
+                "G190A",
+                "UNKNOWN"
             ],
-            "Mutation Colors" => ["red", "yellow", "green", "blue", "purple"]
+            "Mutation Colors" => ["red", "green","yellow", "blue", "purple", "white", "gray"]
+
         }
 
     }
