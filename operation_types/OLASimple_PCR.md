@@ -81,10 +81,10 @@ class Protocol
 
   # Manually put in pack hash...
   PACK_HASH = {
-      "Unit Name" => "B",
+      "Unit Name" => "A",
       "Components" => {
-          "sample tube" => "A",
-          "diluent A" => "B"
+          "sample tube" => "2",
+          "diluent A" => "1"
       },
       "PCR Rehydration Volume" => 40,
       "Number of Samples" => 2,
@@ -98,8 +98,8 @@ class Protocol
   VORTEX_TIME = "5 seconds" # time to pulse vortex to mix
 
   # for debugging
-  PREV_COMPONENT = "K"
-  PREV_UNIT = "A"
+  PREV_COMPONENT = ""
+  PREV_UNIT = "E"
 
 
   TUBE_CAP_WARNING = "Check to make sure tube caps are completely closed."
@@ -122,7 +122,7 @@ class Protocol
   ]
   
   
-  SAMPLE_ALIAS = if KIT_NAME == "uw kit" then "DNA Sample" else CELL_LYSATE end
+  SAMPLE_ALIAS = "RNA Extract"
 
   ##########################################
   # ##
@@ -136,39 +136,32 @@ class Protocol
 
 
     operations.running.retrieve interactive: false
+    operations.running.make
     save_user operations
     debug_setup(operations) if debug
     
-    if KIT_NAME == "uw kit"
-        if debug
-            labels = "ABCDEF".split('')
-            operations.each.with_index do |op, i|
-                op.input(INPUT).item.associate(SAMPLE_KEY, labels[i])  
-                op.input(INPUT).item.associate(COMPONENT_KEY, "")  
-            end
+    
+    if debug
+        labels = ['001','002']
+        operations.each.with_index do |op, i|
+            op.input(INPUT).item.associate(SAMPLE_KEY, labels[i])  
+            op.input(INPUT).item.associate(COMPONENT_KEY, "6")
+            op.input(INPUT).item.associate(UNIT_KEY, PREV_UNIT)
         end
     end
+    
     
     save_temporary_input_values(operations, INPUT)
     operations.each do |op|
       op.temporary[:pack_hash] = PACK_HASH
     end
     save_temporary_output_values(operations)
-    
-    # reassign labels to sample numbers if uw kit
-    if KIT_NAME == "uw kit"
-        operations.each do |op|
-            op.temporary[:output_sample] = {"A"=>1, "B"=>2}[op.temporary[:output_sample]]
-        end 
-    end
+
     
     run_checks operations
-    if KIT_NAME == "uw kit"
-        uw_kit_introduction operations.running
-    else
-        kenya_kit_introduction operations.running
-    end
+    kit_introduction operations.running
     area_preparation "pre-PCR", MATERIALS, POST_PCR
+    get_inputs operations.running
     get_pcr_packages operations.running
     open_pcr_packages operations.running
     debug_table operations.running
@@ -243,7 +236,7 @@ class Protocol
   # Instructions
   #######################################
  
-  def uw_kit_introduction ops
+  def kit_introduction ops
     username = get_technician_name(self.jid).color("darkblue")
     kit_nums = ops.map {|op| op.input(INPUT).item.get(KIT_KEY)}.uniq
     samples = "#{ops.length} #{"sample".pluralize(ops.length)}"
@@ -272,6 +265,18 @@ class Protocol
     end
   end
 
+  def get_inputs myops
+    show do
+      title "Place #{SAMPLE_ALIAS.bold} samples in #{AREA.bold}."
+    
+      note "Place the following #{SAMPLE_ALIAS.bold} samples into a rack in the #{AREA.bold} area."
+      t = Table.new
+      t.add_column("Tube", myops.map {|op| ref(op.input(INPUT).item)})
+      table t
+      # check "Wipe with a #{WIPE}"
+    end
+  end
+
   def get_pcr_packages myops
     # TODO: remove all references to 4C fridge and replace with refridgerator
     gops = group_packages(myops)
@@ -297,18 +302,16 @@ class Protocol
 
       show_open_package(kit_and_unit, "", ops.first.temporary[:pack_hash][NUM_SUB_PACKAGES_FIELD_VALUE]) do
           # img
-          tube_labels = ops.map {|op| op.output_ref(OUTPUT)}
-          tube_labels += ops.map {|op| op.ref("diluent A")}
-          tube_labels.uniq.sort!
-    
+          pcr_tube_labels = ops.map {|op| op.output_tube_label(OUTPUT)}
+          
           num_samples = ops.first.temporary[:pack_hash][NUM_SAMPLES_FIELD_VALUE]
           kit, unit, component, sample = ops.first.output_tokens(OUTPUT)
           # diluentATube = label_tube(closedtube, tube_label(kit, unit, diluentAcomponent, ""))
           diluentATube = self.make_tube(closedtube, "Diluent A", ops.first.tube_label("diluent A"), "medium", true)
     
           grid = SVGGrid.new(num_samples, 1, 75, 10)
-          num_samples.times.each do |i|
-            pcrtube = self.make_tube(closedtube, "", ["#{kit}#{unit}", "#{component}#{i + 1}"], "powder", true).scale(0.75)
+          pcr_tube_labels.each_with_index do |tube_label, i|
+            pcrtube = self.make_tube(closedtube, "", tube_label, "powder", true).scale(0.75)
             grid.add(pcrtube, i, 0)
           end
           grid.boundy = closedtube.boundy * 0.75
@@ -317,7 +320,7 @@ class Protocol
           grid.translate!(25, 25)
           img = SVGElement.new(children: [diluentATube, grid], boundy: diluentATube.boundy + 50, boundx: 300).translate!(20)
         
-        check "Look for #{num_samples + 1} #{"tube".pluralize(num_samples)}" # labeled #{tube_labels.join(', ').bold}"
+        check "Look for #{num_samples + 1} #{"tube".pluralize(num_samples)}"
         check "Place tubes on a rack"
         note display_svg(img, 0.75)
       end
@@ -400,17 +403,6 @@ class Protocol
   def add_template_to_master_mix myops
     gops = group_packages(myops)
 
-    # # TODO: Should this be moved to the preparation area?
-    # show do
-    #   title "Place #{SAMPLE_ALIAS.bold} samples in #{AREA.bold}."
-    #
-    #   note "Place the following #{SAMPLE_ALIAS.bold} samples into a rack in the #{AREA.bold}."
-    #   t = Table.new
-    #   t.add_column("Tube", myops.map {|op| ref(op.input(INPUT).item)})
-    #   table t
-    #   # check "Wipe with a #{WIPE}"
-    # end
-
     gops.each do |unit, ops|
       samples = ops.map {|op| op.input(INPUT).item}
       sample_refs = samples.map {|sample| ref(sample)}
@@ -430,14 +422,6 @@ class Protocol
           note display_svg(img, 0.75)
 
         end
-
-        # show do
-        #   title "Mix and vortex #{PCR_SAMPLE} #{to.bold}"
-
-        #   warning TUBE_CAP_WARNING
-        #   check "Vortex #{pluralizer("sample", 1)} for #{VORTEX_TIME} to mix."
-        #   check "Centrifuge #{pluralizer("sample", ops.length)} for #{CENTRIFUGE_TIME} to pull down liquid."
-        # end
       end
     end
   end
@@ -449,23 +433,12 @@ class Protocol
     samples = ops.map {|op| op.output(OUTPUT).item}
     sample_refs = samples.map {|sample| ref(sample)}
 
-    # show do
-    #   title "Bring #{pluralizer(PCR_SAMPLE, ops.length)} to the #{POST_PCR.bold} area"
-    #   check "Walk #{"tube".pluralize(ops.length)} #{ops.map {|op| ref(op.output(OUTPUT).item).bold}.join(', ')} to the #{POST_PCR.bold} area"
-    #   image "Actions/OLA/map_Klavins.svg" if KIT_NAME == "uw kit"
-    # end
-
     # END OF PRE_PCR PROTOCOL
 
     vortex_and_centrifuge_helper(PCR_SAMPLE,
                                  ops.map {|op| ref(op.output(OUTPUT).item)},
                                  VORTEX_TIME, CENTRIFUGE_TIME,
                                  "to mix.", "to pull down liquid", AREA, mynote = nil)
-
-
-    # show do
-    #   title "Place #{PCR_SAMPLE.pluralize(ops.length)} in #{THERMOCYCLER}, close and tighten the lid."
-    # end
 
     t = Table.new()
     cycles_temp = "<table style=\"width:100%\">
@@ -505,9 +478,6 @@ class Protocol
 
     items = [INPUT].map {|x| myops.map {|op| op.input(x)}}.flatten.uniq
     item_refs = [INPUT].map {|x| myops.map {|op| op.input_ref(x)}}.flatten.uniq
-    # if KIT_NAME == "uw kit"
-    #     item_refs = [] 
-    # end
     temp_items = ["diluent A"].map {|x| myops.map {|op| op.ref(x)}}.flatten.uniq
 
     all_refs = temp_items + item_refs
@@ -524,13 +494,6 @@ class Protocol
   end
 
   def conclusion myops
-    # if KIT_NAME == "uw kit"
-    #     show do 
-    #         title "Please return DNA tubes"
-    #         check "Please return tubes #{myops.map { |op| op.input_ref(INPUT).bold}.join(', ')} to the <b>M20 \"BOX 1A-60D\"</b>"
-    #         image "Actions/OLA/map_Klavins.svg "
-    #     end
-    # end
     show do
       title "Thank you!"
       warning "<h2>You must click #{"OK".quote.bold} to complete the protocol</h2>"
@@ -538,7 +501,6 @@ class Protocol
       note "You may start the next protocol in 2 hours."
     end
   end
-
 
 end # Class
 ```
