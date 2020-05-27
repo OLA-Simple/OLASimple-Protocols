@@ -1059,12 +1059,14 @@ $(document).ready(function() {
 
 13
 14
-15</pre>
+15
+16</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'OLAScheduling.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_kit_id'>get_kit_id</span><span class='lparen'>(</span><span class='id identifier rubyid_op'>op</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_retrieve'>retrieve</span>
   <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_item'>item</span><span class='op'>&amp;.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#KIT_KEY-constant" title="OLAScheduling::KIT_KEY (constant)">KIT_KEY</a></span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_input'>input</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#KIT_PARAMETER-constant" title="OLAScheduling::KIT_PARAMETER (constant)">KIT_PARAMETER</a></span></span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_value'>value</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1098,7 +1100,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-27
 28
 29
 30
@@ -1127,10 +1128,11 @@ $(document).ready(function() {
 53
 54
 55
-56</pre>
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAScheduling.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'OLAScheduling.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_schedule_same_kit_ops'>schedule_same_kit_ops</span><span class='lparen'>(</span><span class='id identifier rubyid_this_op'>this_op</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_testing_mode?'>testing_mode?</span><span class='lparen'>(</span><span class='id identifier rubyid_this_op'>this_op</span><span class='rparen'>)</span>
@@ -1146,7 +1148,7 @@ $(document).ready(function() {
   <span class='id identifier rubyid_this_op'>this_op</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
   <span class='id identifier rubyid_operations'>operations</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_this_op'>this_op</span>
   <span class='id identifier rubyid_operations'>operations</span> <span class='op'>=</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
-  <span class='id identifier rubyid_operations'>operations</span> <span class='op'>=</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_get_kit_id'>get_kit_id</span><span class='lparen'>(</span><span class='id identifier rubyid_this_op'>this_op</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='id identifier rubyid_kit_id'>kit_id</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_operations'>operations</span> <span class='op'>=</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_get_kit_id'>get_kit_id</span><span class='lparen'>(</span><span class='id identifier rubyid_op'>op</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='id identifier rubyid_kit_id'>kit_id</span> <span class='rbrace'>}</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="#BATCH_SIZE-constant" title="OLAScheduling::BATCH_SIZE (constant)">BATCH_SIZE</a></span></span>
     <span class='const'>Job</span><span class='period'>.</span><span class='id identifier rubyid_schedule'>schedule</span><span class='lparen'>(</span>
       <span class='label'>operations:</span> <span class='id identifier rubyid_operations'>operations</span><span class='comma'>,</span>
@@ -1206,12 +1208,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-18
 19
-20</pre>
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAScheduling.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'OLAScheduling.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_testing_mode?'>testing_mode?</span><span class='lparen'>(</span><span class='id identifier rubyid_op'>op</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_plan'>plan</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
