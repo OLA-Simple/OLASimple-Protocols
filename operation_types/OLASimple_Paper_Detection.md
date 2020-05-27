@@ -91,6 +91,8 @@ class Protocol
   SAMPLE_TO_STRIP_VOLUME = PACK_HASH["Sample to Strip Volume"] # volume of sample to add to the strips
   GOLD_TO_STRIP_VOLUME = PACK_HASH["Gold to Strip Volume"]
   PREV_COMPONENTS = PACK_HASH["Components"]["strips"]
+  MUTATION_LABELS = PACK_HASH["Mutation Labels"]
+  
   PREV_UNIT = "C"
   MATERIALS =  [
       "P1000 pipette and filtered tips",
@@ -232,10 +234,9 @@ class Protocol
       num_samples = ops.first.temporary[:pack_hash][NUM_SAMPLES_FIELD_VALUE]
 
       grid = SVGGrid.new(num_samples, num_samples, 50, 50)
-      num_samples.to_int.times.each do |i|
-        _tokens = tokens.dup
-        _tokens[-1] = i + 1
-        grid.add(display_strip_panel(*_tokens, COLORS).scale!(0.5), i, i)
+      ops.each_with_index do |op, i|
+        tokens = op.output_tokens(OUTPUT)
+        grid.add(display_strip_panel(*tokens, COLORS).scale!(0.5), i, i)
       end
 
       diluentATube = self.make_tube(closedtube, "Diluent A", ops.first.tube_label("diluent A"), "medium", true).scale!(0.75)
@@ -687,9 +688,9 @@ class Protocol
       this_unit = op.temporary[:output_unit]
       this_sample = op.temporary[:output_sample]
       
-      
-      prev_components = ANALYSIS_UNIT["Components"]["strips"]
-      prev_components.each.with_index do |this_component, i|
+      raise "scanned image had less strips than expected!" if PREV_COMPONENTS.size > image_result.size
+      raise "scanned image had more strips than expected!" if PREV_COMPONENTS.size < image_result.size
+      PREV_COMPONENTS.each.with_index do |this_component, i|
         alias_label = op.output_refs(OUTPUT)[i]
         the_choice = image_result[i]
         op.output(OUTPUT).item.associate(make_call_key(alias_label), the_choice)
@@ -713,7 +714,6 @@ class Protocol
   end
   
   def show_calls myops, band_choices
-    mutations_labels = ANALYSIS_UNIT["Mutation Labels"]
     myops.each do |op|
       kit_summary = {}
 
@@ -722,20 +722,19 @@ class Protocol
       this_unit = op.temporary[:output_unit]
       this_sample = op.temporary[:output_sample]
 
-      grid = SVGGrid.new(mutations_labels.length, 1, 90, 10)
+      grid = SVGGrid.new(MUTATION_LABELS.length, 1, 90, 10)
       categories = []
       
-      prev_components = ANALYSIS_UNIT["Components"]["strips"]
-      prev_components.each.with_index do |this_component, i|
+      PREV_COMPONENTS.each.with_index do |this_component, i|
         alias_label = op.output_refs(OUTPUT)[i]
         strip_label = self.tube_label(this_kit, this_unit, this_component, this_sample)
         strip = make_strip(strip_label, COLORS[i] + "strip")
         band_choice = this_item.get(make_call_key(alias_label))
-        codon_label = label(mutations_labels[i], "font-size".to_sym => 25)
+        codon_label = label(MUTATION_LABELS[i], "font-size".to_sym => 25)
         codon_label.align_with(strip, 'center-bottom')
         codon_label.align!('center-top').translate!(0, 30)
         category = this_item.get(make_call_category_key(alias_label))
-        kit_summary[mutations_labels[i]] = {:alias => alias_label, :category => category.to_s, :call => band_choice.to_s}
+        kit_summary[MUTATION_LABELS[i]] = {:alias => alias_label, :category => category.to_s, :call => band_choice.to_s}
         tokens = category.split(' ')
         tokens.push("") if tokens.length == 1
         category_label = two_labels(*tokens)
@@ -767,7 +766,6 @@ class Protocol
   end
 
   def show_summary ops
-    mutations_labels = ANALYSIS_UNIT["Mutation Labels"]
     ops.each do |op|
       hits = op.temporary[:results].select {|k, v| v == POSITIVE}
     end
@@ -781,7 +779,7 @@ class Protocol
       t = Table.new
       t.add_column("Kit", kits)
       t.add_column("Sample", samples)
-      mutations_labels.each do |label|
+      MUTATION_LABELS.each do |label|
         col = ops.map {|op| op.temporary[:results][label][:category]}
         t.add_column(label, col)
         results_hash[label] = col
