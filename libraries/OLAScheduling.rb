@@ -11,6 +11,7 @@ module OLAScheduling
   # also try to retrieve kit id from a kit input parameter if it is available.
   # returns nil if no kit could be found
   def get_kit_id(op)
+    op.inputs[0].retrieve
     op.inputs[0].item&.get(KIT_KEY) || op.input(KIT_PARAMETER)&.value
   end
   
@@ -38,7 +39,7 @@ module OLAScheduling
     this_op.save
     operations << this_op
     operations = operations.to_a.uniq
-    operations = operations.select { |op| get_kit_id(this_op) == kit_id }
+    operations = operations.select { |op| get_kit_id(op) == kit_id }
     if operations.length == BATCH_SIZE
       Job.schedule(
         operations: operations,
