@@ -36,7 +36,7 @@ class Protocol
   KIT_ID_INPUT = 'Kit Identifier'
 
   UNIT = "S"
-  OUTPUT_COMPONENT = "S"
+  OUTPUT_COMPONENT = ""
 
   def main
     operations.make
@@ -54,6 +54,7 @@ class Protocol
     
     kit_groups.each do |kit_num, ops|
       first_module_setup(ops, kit_num)
+      set_output_components(ops, OUTPUT_COMPONENT, UNIT)
     end
     
     operations.running.each do |op|
