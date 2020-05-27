@@ -43,12 +43,14 @@ needs "OLASimple/OLAConstants"
 needs "OLASimple/OLALib"
 needs "OLASimple/OLAGraphics"
 needs "OLASimple/JobComments"
+needs "OLASimple/OLAKitIDs"
 
 class Protocol
   include OLALib
   include OLAGraphics
   include OLAConstants
   include JobComments
+  include OLAKitIDs
 
   ##########################################
   # INPUT/OUTPUT
@@ -70,14 +72,35 @@ class Protocol
   AREA = POST_PCR
 
   # for debugging
-  PREV_COMPONENT = "B"
-  PREV_UNIT = "B"
+  PREV_COMPONENT = "2"
+  PREV_UNIT = "A"
 
   CENTRIFUGE_TIME = "5 seconds" # time to pulse centrifuge to pull down dried powder
   VORTEX_TIME = "5 seconds" # time to pulse vortex to mix
   TUBE_CAP_WARNING = "Check to make sure tube caps are completely closed."
 
-  PACK_HASH = LIGATION_UNIT
+  PACK_HASH = {
+            "Unit Name" => "L",
+            "Components" => {
+                "sample tubes" => [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7"
+                ],
+                "diluent A" => "0"
+            },
+            "PCR to Ligation Mix Volume" => 1.2,
+            "Ligation Mix Rehydration Volume" => 24,
+            "Number of Samples" => 2,
+            "Number of Sub Packages" => 2
+        }
+
+  COLORS =  ["red", "green","yellow", "blue", "purple", "white", "gray"]
+    
   LIGATION_VOLUME = PACK_HASH["Ligation Mix Rehydration Volume"]  # volume to rehydrate ligation mix
   SAMPLE_VOLUME = PACK_HASH["PCR to Ligation Mix Volume"] # volume of pcr product to ligation mix
   MATERIALS =  [
@@ -110,16 +133,20 @@ class Protocol
     end
     save_temporary_output_values(operations)
     run_checks operations
+    
+    expert_mode = ask_if_expert
+    
     introduction(operations.running)
+    
     area_preparation POST_PCR, MATERIALS, PRE_PCR
     get_samples_from_thermocycler(operations.running)
     get_ligation_packages(operations.running)
     open_ligation_packages(operations.running)
     check_for_tube_defects operations.running
     centrifuge_samples sorted_ops.running
-    rehydrate_ligation_mix sorted_ops.running
+    rehydrate_ligation_mix sorted_ops.running, expert_mode
     vortex_and_centrifuge_samples sorted_ops.running
-    add_template sorted_ops.running
+    add_template sorted_ops.running, expert_mode
     vortex_and_centrifuge_samples sorted_ops.running
     cleanup sorted_ops
     start_ligation sorted_ops.running
@@ -142,20 +169,10 @@ class Protocol
   def debug_setup ops
     # make an alias for the inputs
     if debug
-      ops.each do |op|
-        kit_num = rand(1..60)
-        make_alias(op.input(INPUT).item, kit_num, PREV_UNIT, PREV_COMPONENT, 1)
-        # op.input(PACK).item.associate(KIT_KEY, kit_num)
-      end
-
-      if ops.length >= 2
-        i = ops[-1].input(INPUT).item
-        alias_array = get_alias_array(i)
-        alias_array[3] = if (alias_array[3] == 1) then 2 else 1 end
-        make_alias(ops[0].input(INPUT).item, *alias_array)
-
-        # kit_num = ops[-1].input(PACK).item.get(KIT_KEY)
-        # ops[0].input(PACK).item.associate(KIT_KEY, kit_num)
+      ops.each_with_index do |op, i|
+        kit_num = "001"
+        sample_num = sample_num_to_id(i + 1)
+        make_alias(op.input(INPUT).item, kit_num, PREV_UNIT, PREV_COMPONENT, 'a patient id' , sample_num)
       end
     end
   end
@@ -171,6 +188,15 @@ class Protocol
       end
       return {}
     end
+  end
+  
+  def ask_if_expert
+    resp = show do
+      title "Expert Mode?"
+      note "Are you an expert at this protocol? If you do not know what this means, then continue without enabling expert mode."
+      select ["Continue in normal mode", "Enable expert mode"], var: :choice, label: "Expert Mode?", default: 0
+    end
+    return resp[:choice] == "Enable expert mode"
   end
 
   def introduction ops
@@ -224,9 +250,9 @@ class Protocol
           num_samples = ops.first.temporary[:pack_hash][NUM_SAMPLES_FIELD_VALUE]
           grid = SVGGrid.new(1, num_samples, 0, 100)
           tokens = ops.first.output_tokens(OUTPUT)
-          num_samples.times.each do |i|
+          ops.each_with_index do |op, i|
             _tokens = tokens.dup
-            _tokens[-1] = i+1
+            _tokens[-1] = op.temporary[:input_sample]
             ligation_tubes = display_ligation_tubes(*_tokens, COLORS)
             stripwell = ligation_tubes.g
             grid.add(stripwell, 0, i)
@@ -284,64 +310,65 @@ class Protocol
       end
   end
 
-  def rehydrate_ligation_mix myops
+  def rehydrate_ligation_mix myops, expert_mode
     gops = myops.group_by {|op| op.temporary[:input_kit_and_unit]}
     gops.each do |unit, ops|
       ops.each do |op|
-        # All 5 transfers at once...
-        #   show do
-        #     title "Add #{DILUENT_A} #{ref(op.output(A).item)} to #{LIGATION_SAMPLE}"
-        #     labels.map! {|l| "<b>#{l}</b>"}
-        #     note "In this step we will be adding #{vol}uL of #{DILUENT_A} into #{pluralizer("tube", COMPONENTS.length)} "
-        #     "of the colored strip of tubes labeled <b>#{labels[0]} to #{labels[-1]}</b>"
-        #     note "Using a P200 or P200 pipette, add #{vol}uL from #{DILUENT_A} #{bold_ref(op.output(A).item)} into each of the #{COMPONENTS.length} tubes."
-        #     warning "Only open one of the ligation tubes at a time."
-        #     note op.temporary[:labels]
-
-        #     ligation_tubes = display_ligation_tubes(op.temporary[:input_kit], op.temporary[:output_unit], COMPONENTS, op.temporary[:input_sample])
-        #     diluent_A = opentube.mirror_horizontal
-
-        #     note display_svg(diluentA_to_ligation_tubes(
-        # op.temporary[:input_kit], op.temporary[:output_unit], COMPONENTS, op.temporary[:input_sample],
-        # ref(op.output(A).item), vol, [], "(each tube)"), 0.6)
-
-        #     # t = Table.new
-        #     # t.add_column("Tube", labels)
-        #     # t.add_column("Color", COMPONENTS_COLOR_CODE)
-        #     # table t
-        #   end
-
-        # each transfer
-        from = op.ref("diluent A")
-        ligation_tubes = display_ligation_tubes(*op.output_tokens(OUTPUT), COLORS)
-        ligation_tubes.align!('bottom-left')
-        ligation_tubes.align_with(tube, 'bottom-right')
-        ligation_tubes.translate!(50)
-        tubeA = make_tube(closedtube, DILUENT_A, op.tube_label("diluent A"), "medium")
-        image = SVGElement.new(children: [tubeA, ligation_tubes], boundx: 1000, boundy: tube.boundy)
-        image.translate!(50, -50)
-        show do
-          title "Position #{DILUENT_A} #{from.bold} and colored tubes #{op.temporary[:label_string].bold} in front of you."
-          note "In the next steps you will dissolve the powder in #{pluralizer("tube", COMPONENTS.length)} using #{DILUENT_A}"
-          note display_svg(image, 0.75)
-        end
-        ligation_tubes_svg = display_ligation_tubes(*op.output_tokens(OUTPUT), COLORS).translate!(0, -20)
-        img = display_svg(ligation_tubes_svg, 0.7)
-        # centrifuge_helper(LIGATION_SAMPLE, op.temporary[:labels], CENTRIFUGE_TIME, "to pull down dried powder.", img)
-
         labels = op.output_refs(OUTPUT)
-        labels.each.with_index do |label, i|
+        if expert_mode
+        # All transfers at once...
+          from = op.ref("diluent A")
+          tubeA = make_tube(opentube, [DILUENT_A, from], op.tube_label("diluent A"), "medium")
           show do
-            raw transfer_title_proc(LIGATION_VOLUME, from, label)
-            # title "Add #{LIGATION_VOLUME}uL #{DILUENT_A} #{from.bold} to #{LIGATION_SAMPLE} #{label}
-            warning "Change pipette tip between tubes"
-            note "Set a #{P200_POST} pipette to [0 2 4]." 
-            note "Add #{LIGATION_VOLUME}uL from #{from.bold} into tube #{label.bold}"
-            note "Close tube #{label.bold}"
-            tubeA = make_tube(opentube, [DILUENT_A, from], "", "medium")
-            transfer_image = transfer_to_ligation_tubes_with_highlight(
-                tubeA, i, *op.output_tokens(OUTPUT), COLORS, LIGATION_VOLUME, "(#{P200_POST} pipette)")
+            title "Add #{DILUENT_A} #{from} to #{LIGATION_SAMPLE}s #{op.temporary[:label_string].bold}"
+            labels.map! {|l| "<b>#{l}</b>"}
+            note "In this step we will be adding #{LIGATION_VOLUME}uL of #{DILUENT_A} #{from} into #{pluralizer("tube", COMPONENTS.length)} "
+            "of the colored strip of tubes labeled <b>#{labels[0]} to #{labels[-1]}</b>"
+            note "Using a P200 pipette, add #{LIGATION_VOLUME}uL from #{DILUENT_A} #{from} into each of the #{COMPONENTS.length} tubes."
+            warning "Only open one of the ligation tubes at a time."
+
+            ligation_tubes = display_ligation_tubes(*op.output_tokens(OUTPUT), COLORS).translate!(0, -20)
+
+            transfer_image = make_transfer(tubeA, ligation_tubes, 200, "#{LIGATION_VOLUME}uL", "(#{P200_POST} pipette)" )
             note display_svg(transfer_image, 0.6)
+
+            # t = Table.new
+            # t.add_column("Tube", labels)
+            # t.add_column("Color", COMPONENTS_COLOR_CODE)
+            # table t
+          end
+        else
+          # each transfer
+          from = op.ref("diluent A")
+          ligation_tubes = display_ligation_tubes(*op.output_tokens(OUTPUT), COLORS)
+          ligation_tubes.align!('bottom-left')
+          ligation_tubes.align_with(tube, 'bottom-right')
+          ligation_tubes.translate!(50)
+          tubeA = make_tube(closedtube, DILUENT_A, op.tube_label("diluent A"), "medium")
+          image = SVGElement.new(children: [tubeA, ligation_tubes], boundx: 1000, boundy: tube.boundy)
+          image.translate!(50, -50)
+          show do
+            title "Position #{DILUENT_A} #{from.bold} and colored tubes #{op.temporary[:label_string].bold} in front of you."
+            note "In the next steps you will dissolve the powder in #{pluralizer("tube", COMPONENTS.length)} using #{DILUENT_A}"
+            note display_svg(image, 0.75)
+          end
+          ligation_tubes_svg = display_ligation_tubes(*op.output_tokens(OUTPUT), COLORS).translate!(0, -20)
+          img = display_svg(ligation_tubes_svg, 0.7)
+          # centrifuge_helper(LIGATION_SAMPLE, op.temporary[:labels], CENTRIFUGE_TIME, "to pull down dried powder.", img)
+  
+          labels.each.with_index do |label, i|
+            show do
+              raw transfer_title_proc(LIGATION_VOLUME, from, label)
+              # title "Add #{LIGATION_VOLUME}uL #{DILUENT_A} #{from.bold} to #{LIGATION_SAMPLE} #{label}
+              warning "Change pipette tip between tubes"
+              note "Set a #{P200_POST} pipette to [0 2 4]." 
+              note "Add #{LIGATION_VOLUME}uL from #{from.bold} into tube #{label.bold}"
+              note "Close tube #{label.bold}"
+              tubeA = make_tube(opentube, [DILUENT_A, from], "", "medium")
+              transfer_image = transfer_to_ligation_tubes_with_highlight(
+                  tubeA, i, *op.output_tokens(OUTPUT), COLORS, LIGATION_VOLUME, "(#{P200_POST} pipette)")
+              note display_svg(transfer_image, 0.6)
+            end
           end
         end
         # vortex_and_centrifuge_helper(LIGATION_SAMPLE,
@@ -373,7 +400,7 @@ class Protocol
     #                              "to pull down liquid.")
   end
 
-  def add_template myops
+  def add_template myops, expert_mode
 
     show do
       title "Get #{PCR_SAMPLE.pluralize(myops.length)} from #{THERMOCYCLER}"
@@ -387,29 +414,46 @@ class Protocol
     gops.each do |unit, ops|
       ops.each do |op|
         from = op.input_ref(INPUT)
-        show do
-          title "Position #{PCR_SAMPLE} #{from.bold} and #{LIGATION_SAMPLE.pluralize(COMPONENTS.length)} #{op.temporary[:label_string].bold} in front of you."
-          note "In the next steps you will add #{PCR_SAMPLE} to #{pluralizer("tube", COMPONENTS.length)}"
-          tube = make_tube(closedtube, [PCR_SAMPLE, from], "", "small")
-          ligation_tubes = display_ligation_tubes(*op.output_tokens(OUTPUT), COLORS)
-          ligation_tubes.align!('bottom-left')
-          ligation_tubes.align_with(tube, 'bottom-right')
-          ligation_tubes.translate!(50)
-          image = SVGElement.new(children: [tube, ligation_tubes], boundx: 1000, boundy: tube.boundy)
-          image.translate!(50, -30)
-          note display_svg(image, 0.75)
-        end
-        labels = op.output_refs(OUTPUT)
-        labels.each.with_index do |label, i|
+        if expert_mode
+        # All transfers at once...
           show do
-            raw transfer_title_proc(SAMPLE_VOLUME, from, label)
-            # title "Add #{PCR_SAMPLE} #{from.bold} to #{LIGATION_SAMPLE} #{label}"
+            raw transfer_title_proc(SAMPLE_VOLUME, from, op.temporary[:label_string])
             warning "Change of pipette tip between tubes"
-            note "Using a #{"P10"} pipette set to [0 1 2], add #{SAMPLE_VOLUME}uL from #{from.bold} into tube #{label.bold}"
-            note "Close tube #{label.bold}"
-            tube = make_tube(opentube, ["PCR Sample"], op.input_tube_label(INPUT), "small").scale(0.75)
-            img = transfer_to_ligation_tubes_with_highlight(tube, i, *op.output_tokens(OUTPUT), COLORS, SAMPLE_VOLUME, "(#{P20_POST} pipette)")
-            note display_svg(img, 0.6)
+            note "Using a #{P20_POST} pipette set to [0 1 2], add #{SAMPLE_VOLUME}uL from #{from.bold} into each of #{op.temporary[:label_string].bold}."
+            note "Only open one ligation tube at a time."
+            
+            tubeP = make_tube(opentube, ["PCR Sample"], op.input_tube_label(INPUT), "small").scale(0.75)
+            ligation_tubes = display_ligation_tubes(*op.output_tokens(OUTPUT), COLORS).translate!(0, -20)
+            transfer_image = make_transfer(tubeP, ligation_tubes, 200, "#{SAMPLE_VOLUME}uL", "(#{P20_POST} pipette)" )
+            
+            note display_svg(transfer_image, 0.6)
+
+          end
+        else
+          show do
+            title "Position #{PCR_SAMPLE} #{from.bold} and #{LIGATION_SAMPLE.pluralize(COMPONENTS.length)} #{op.temporary[:label_string].bold} in front of you."
+            note "In the next steps you will add #{PCR_SAMPLE} to #{pluralizer("tube", COMPONENTS.length)}"
+            tube = make_tube(closedtube, [PCR_SAMPLE, from], "", "small")
+            ligation_tubes = display_ligation_tubes(*op.output_tokens(OUTPUT), COLORS)
+            ligation_tubes.align!('bottom-left')
+            ligation_tubes.align_with(tube, 'bottom-right')
+            ligation_tubes.translate!(50)
+            image = SVGElement.new(children: [tube, ligation_tubes], boundx: 1000, boundy: tube.boundy)
+            image.translate!(50, -30)
+            note display_svg(image, 0.75)
+          end
+          labels = op.output_refs(OUTPUT)
+          labels.each.with_index do |label, i|
+            show do
+              raw transfer_title_proc(SAMPLE_VOLUME, from, label)
+              # title "Add #{PCR_SAMPLE} #{from.bold} to #{LIGATION_SAMPLE} #{label}"
+              warning "Change of pipette tip between tubes"
+              note "Using a #{"P10"} pipette set to [0 1 2], add #{SAMPLE_VOLUME}uL from #{from.bold} into tube #{label.bold}"
+              note "Close tube #{label.bold}"
+              tube = make_tube(opentube, ["PCR Sample"], op.input_tube_label(INPUT), "small").scale(0.75)
+              img = transfer_to_ligation_tubes_with_highlight(tube, i, *op.output_tokens(OUTPUT), COLORS, SAMPLE_VOLUME, "(#{P20_POST} pipette)")
+              note display_svg(img, 0.6)
+            end
           end
         end
 
