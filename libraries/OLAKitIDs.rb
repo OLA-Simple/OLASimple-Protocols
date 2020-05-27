@@ -56,16 +56,17 @@ module OLAKitIDs
   end
   
   def sample_validation_with_multiple_tries(kit_number)
-    expected_sample_nums = sample_nums_from_kit_num(kit_number)
-    expected_sample_nums = expected_sample_nums[0,operations.size]
+
     5.times do
+      expected_sample_nums = sample_nums_from_kit_num(kit_number)
+      expected_sample_nums = expected_sample_nums[0,operations.size]
       result = validate_samples(expected_sample_nums)
       return true if result || debug
       show do
         title "Wrong Samples"
         note "Ensure that you have the correct samples before continuing"
         note "You are processing kit <b>#{kit_num_to_id(kit_number)}</b>"
-        note "Incoming samples should be numbered #{expected_sample_nums.map { |s| sample_num_to_id(s) }.to_sentence}."
+        note "Incoming samples should be numbered #{sample_nums_from_kit_num(kit_number).map { |s| sample_num_to_id(s) }.to_sentence}."
         note "On the next step you will retry scanning in the samples."
       end
     end
@@ -138,16 +139,19 @@ module OLAKitIDs
     from_das.map { |da| to.lazy_associate(da.key, da.value) }
   end
   
-  # populates op.temporary[:input_component] with the component from the input
+  # populates op.temporary[:input_component] and :input_unit with the component from the input
   def retrieve_input_components(ops)
     ops.each do |op|
-      op.temporary["input_#{COMPONENT_KEY}".to_sym] = op.get(COMPONENT_KEY)
+      op.temporary["input_#{OLAConstants::COMPONENT_KEY}".to_sym] = op.get(OLAConstants::COMPONENT_KEY)
+      op.temporary["input_#{OLAConstants::UNIT_KEY}".to_sym] = op.get(OLAConstants::UNIT_KEY)
     end
   end
   
-  def set_output_components(ops, component)
+  # Assumes only one output item
+  def set_output_components(ops, component, unit)
     items = ops.map { |op| op.outputs[0].item }
-    set_many_associations(items, COMPONENT_KEY, component)
+    set_many_associations(items, OLAConstants::COMPONENT_KEY, component)
+    set_many_associations(items, OLAConstants::UNIT_KEY, unit)
   end
   
   def set_many_associations(objects, key, value, upload = nil)
