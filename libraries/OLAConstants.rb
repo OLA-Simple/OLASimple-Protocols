@@ -27,14 +27,14 @@ module OLAConstants
   # KIT SELECTION
   ##########################################
 
-  KIT_SELECTION = OLAKits.kenya_kit()
+  KIT_SELECTION = OLAKits.rt_pcr()
   KIT_NAME = KIT_SELECTION["name"]
   SAMPLE_PREP_UNIT = KIT_SELECTION["sample prep"]
   PCR_UNIT = KIT_SELECTION["pcr"]
   LIGATION_UNIT = KIT_SELECTION["ligation"]
   DETECTION_UNIT = KIT_SELECTION["detection"]
   ANALYSIS_UNIT = KIT_SELECTION["analysis"]
-  COLORS = ANALYSIS_UNIT["Mutation Colors"]
+  COLORS = DETECTION_UNIT["Mutation Colors"]
 
   ##########################################
   # LAB SPECIFICATIONS
