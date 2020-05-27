@@ -58,6 +58,16 @@ class Protocol
   ETHANOL = "molecular grade ethanol"
   GuSCN_WASTE = "GuSCN waste container"
   
+  
+  PACK_HASH = {
+    "Unit Name" => "E",
+    "Components" => {
+        "sample tube" => "2",
+        "diluent A" => "1"
+    },
+    "Number of Samples" => 2,
+  }
+  
   THIS_UNIT = "E"
   INCOMING_SAMPLE = "S"
   DTT = "E0"
@@ -81,7 +91,7 @@ class Protocol
   
   SHARED_COMPONENTS = [DTT, WASH1, WASH2, SA_WATER]
   PER_SAMPLE_COMPONENTS = [LYSIS_BUFFER, SAMPLE_COLUMN, RNA_EXTRACT]
-
+  OUTPUT_COMPONENT = "6"
   
 
   CENTRIFUGE_TIME = "1 minute"
@@ -141,19 +151,20 @@ class Protocol
     if operations.length > BATCH_SIZE
       raise "Batch size > #{BATCH_SIZE} is not supported for this protocol. Please rebatch."
     end
-    
-    operations.retrieve interactive: false
-    operations.make interactive: false
+
+    operations.make.retrieve interactive: false
     
     populate_temporary_kit_info_from_input_associations(operations, INPUT)
     propogate_kit_info_forward(operations, INPUT, OUTPUT)
-
+    
     kits = operations.running.group_by { |op| op.temporary[KIT_KEY]}
     this_package = THIS_UNIT + kits.keys.first
     if kits.length > 1
         raise "More than one kit is not supported by this protocol. Please rebatch." 
     end
-    
+    operations.make
+    set_output_components(operations, OUTPUT_COMPONENT, THIS_UNIT)
+
     this_package
   end
 
