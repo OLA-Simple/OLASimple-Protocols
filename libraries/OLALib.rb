@@ -75,7 +75,7 @@ module RefExtension
   end
 
   def label_helper(k, u, c, s)
-    ["#{k}#{u}", "#{c}#{s}"]
+    ["#{u}#{c}", "#{s}"]
   end
 
   def input_tube_label(name)
@@ -114,7 +114,11 @@ module RefExtension
 
   def alias_helper(kit, unit, component, sample)
     # returns the label given kit, unit, comp and sample
-    "#{kit}#{unit}#{component}#{sample}"
+    if !sample.blank?
+      "#{unit}#{component}-#{sample}"
+    else
+      "#{unit}#{component}"
+    end
   end
 
   def ref_helper(item)
@@ -200,7 +204,7 @@ module RefExtension
     # from associations
     output_item.associate(:from, self.input(from_item).item.id)
     output_item.associate(:fromref, self.input_ref(from_item))
-    output_item.associate(:from_pack, "#{self.temporary[:input_kit]}#{self.temporary[:input_unit]}")
+    output_item.associate(:from_pack, "#{self.temporary[:input_unit]}#{self.temporary[:input_kit]}")
     output_item
   end
 
@@ -272,9 +276,13 @@ module OLALib
 # Item Alias
 ####################################
 
-  def alias_helper(kit, unit, component, sample = nil)
-    sample = sample || ""
-    "#{kit}#{unit}#{component}#{sample}"
+  def alias_helper(kit, unit, component, sample)
+    # returns the label given kit, unit, comp and sample
+    if !sample.blank?
+      "#{unit}#{component}-#{sample}"
+    else
+      "#{unit}#{component}"
+    end
   end
 
   def make_alias(item, kit, unit, component, patient, sample = nil)
@@ -285,15 +293,15 @@ module OLALib
     item.associate(UNIT_KEY, unit)
     item.associate(COMPONENT_KEY, component)
     item.associate(SAMPLE_KEY, sample)
-    item.associate(PATIENT_ID_KEY, patient)
+    item.associate(PATIENT_KEY, patient)
   end
 
   def get_alias_array(item)
-    [item.get(KIT_KEY), item.get(UNIT_KEY), item.get(COMPONENT_KEY), item.get(SAMPLE_KEY), item.get(PATIENT_ID_KEY)]
+    [item.get(KIT_KEY), item.get(UNIT_KEY), item.get(COMPONENT_KEY), item.get(SAMPLE_KEY), item.get(PATIENT_KEY)]
   end
 
   def ref(item)
-    "#{item.get(KIT_KEY)}#{item.get(UNIT_KEY)}#{item.get(COMPONENT_KEY)}#{item.get(SAMPLE_KEY)}"
+    "#{item.get(UNIT_KEY)}#{item.get(COMPONENT_KEY)}-#{item.get(SAMPLE_KEY)}"
   end
 
   def save_temporary_input_values(ops, input)
