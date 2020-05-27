@@ -1370,12 +1370,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
+9
 10
-11
-12</pre>
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_set_tube_colors'>set_tube_colors</span><span class='lparen'>(</span><span class='id identifier rubyid_new_colors'>new_colors</span><span class='rparen'>)</span>
   <span class='cvar'>@@colrs</span> <span class='op'>=</span> <span class='id identifier rubyid_new_colors'>new_colors</span>
@@ -1406,9 +1406,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-322
-323
-324
 325
 326
 327
@@ -1451,10 +1448,13 @@ $(document).ready(function() {
 364
 365
 366
-367</pre>
+367
+368
+369
+370</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 322</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 325</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_detection_strip_diagram'>detection_strip_diagram</span>
   <span class='id identifier rubyid_img'>img</span> <span class='op'>=</span> <span class='const'>SVGElement</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='int'>270</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='int'>270</span><span class='rparen'>)</span>
@@ -1522,15 +1522,15 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-247
-248
-249
 250
 251
-252</pre>
+252
+253
+254
+255</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 247</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 250</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_ligation_tubes'>display_ligation_tubes</span><span class='lparen'>(</span><span class='id identifier rubyid_kit'>kit</span><span class='comma'>,</span> <span class='id identifier rubyid_unit'>unit</span><span class='comma'>,</span> <span class='id identifier rubyid_components'>components</span><span class='comma'>,</span> <span class='id identifier rubyid_sample'>sample</span><span class='comma'>,</span> <span class='id identifier rubyid_colors'>colors</span><span class='comma'>,</span> <span class='id identifier rubyid_open_tubes'>open_tubes</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_hide'>hide</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_spacing'>spacing</span> <span class='op'>=</span> <span class='int'>70</span><span class='rparen'>)</span>
   
@@ -1558,17 +1558,17 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-299
-300
-301
 302
 303
 304
 305
-306</pre>
+306
+307
+308
+309</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 299</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 302</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_panel_and_tubes'>display_panel_and_tubes</span><span class='lparen'>(</span><span class='id identifier rubyid_kit'>kit</span><span class='comma'>,</span> <span class='id identifier rubyid_panel_unit'>panel_unit</span><span class='comma'>,</span> <span class='id identifier rubyid_tube_unit'>tube_unit</span><span class='comma'>,</span> <span class='id identifier rubyid_components'>components</span><span class='comma'>,</span> <span class='id identifier rubyid_sample'>sample</span><span class='comma'>,</span> <span class='id identifier rubyid_colors'>colors</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_tubes'>tubes</span> <span class='op'>=</span> <span class='id identifier rubyid_display_ligation_tubes'>display_ligation_tubes</span><span class='lparen'>(</span><span class='id identifier rubyid_kit'>kit</span><span class='comma'>,</span> <span class='id identifier rubyid_tube_unit'>tube_unit</span><span class='comma'>,</span> <span class='id identifier rubyid_components'>components</span><span class='comma'>,</span> <span class='id identifier rubyid_sample'>sample</span><span class='comma'>,</span> <span class='id identifier rubyid_colors'>colors</span><span class='rparen'>)</span>
@@ -1609,9 +1609,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-278
-279
-280
 281
 282
 283
@@ -1628,10 +1625,13 @@ $(document).ready(function() {
 294
 295
 296
-297</pre>
+297
+298
+299
+300</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 278</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 281</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_strip_panel'>display_strip_panel</span><span class='lparen'>(</span><span class='id identifier rubyid_kit'>kit</span><span class='comma'>,</span> <span class='id identifier rubyid_unit'>unit</span><span class='comma'>,</span> <span class='id identifier rubyid_components'>components</span><span class='comma'>,</span> <span class='id identifier rubyid_sample'>sample</span><span class='comma'>,</span> <span class='id identifier rubyid_colors'>colors</span><span class='rparen'>)</span>
   <span class='kw'>def</span> <span class='id identifier rubyid_panel'>panel</span> <span class='id identifier rubyid_kit'>kit</span><span class='comma'>,</span> <span class='id identifier rubyid_unit'>unit</span><span class='comma'>,</span> <span class='id identifier rubyid_components'>components</span><span class='comma'>,</span> <span class='id identifier rubyid_sample'>sample</span><span class='comma'>,</span> <span class='id identifier rubyid_apply_classes'>apply_classes</span>
@@ -1673,13 +1673,13 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-94
-95
-96
-97</pre>
+97
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_svg'>display_svg</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='comma'>,</span> <span class='id identifier rubyid_scale'>scale</span> <span class='op'>=</span> <span class='int'>1</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_style!'>style!</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_style'>get_style</span><span class='rparen'>)</span>
@@ -1716,6 +1716,7 @@ $(document).ready(function() {
       <pre class="lines">
 
 
+18
 19
 20
 21
@@ -1789,10 +1790,13 @@ $(document).ready(function() {
 89
 90
 91
-92</pre>
+92
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_style'>get_style</span>
   <span class='heredoc_beg'>&lt;&lt;EOF</span>
@@ -1804,6 +1808,10 @@ $(document).ready(function() {
     
     #svg .white rect {
         fill: #ffffff;
+    }
+    
+    #svg .gray path {
+        fill: #d4d4d4;
     }
     
     #svg .blue path {
@@ -1888,14 +1896,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-254
-255
-256
 257
-258</pre>
+258
+259
+260
+261</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 254</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 257</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_highlight_ligation_tube'>highlight_ligation_tube</span><span class='lparen'>(</span><span class='id identifier rubyid_i'>i</span><span class='comma'>,</span> <span class='id identifier rubyid_kit'>kit</span><span class='comma'>,</span> <span class='id identifier rubyid_unit'>unit</span><span class='comma'>,</span> <span class='id identifier rubyid_components'>components</span><span class='comma'>,</span> <span class='id identifier rubyid_sample'>sample</span><span class='comma'>,</span> <span class='id identifier rubyid_colors'>colors</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ligation_tubes'>ligation_tubes</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_display_ligation_tubes'>display_ligation_tubes</span><span class='lparen'>(</span>
@@ -1922,9 +1930,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-114
-115
-116
 117
 118
 119
@@ -1943,10 +1948,13 @@ $(document).ready(function() {
 132
 133
 134
-135</pre>
+135
+136
+137
+138</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_make_arrow'>make_arrow</span><span class='lparen'>(</span><span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='id identifier rubyid_to'>to</span><span class='comma'>,</span> <span class='id identifier rubyid_tlabel'>tlabel</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_blabel'>blabel</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_tfontsize'>tfontsize</span> <span class='op'>=</span> <span class='int'>25</span><span class='comma'>,</span> <span class='id identifier rubyid_bfontsize'>bfontsize</span> <span class='op'>=</span> <span class='int'>25</span><span class='rparen'>)</span>
   <span class='comment'># make right arrow
@@ -1990,9 +1998,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-308
-309
-310
 311
 312
 313
@@ -2002,10 +2007,13 @@ $(document).ready(function() {
 317
 318
 319
-320</pre>
+320
+321
+322
+323</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 308</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 311</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_make_strip'>make_strip</span> <span class='id identifier rubyid_mylabel'>mylabel</span><span class='comma'>,</span> <span class='id identifier rubyid_classname'>classname</span>
   <span class='id identifier rubyid_mystrip'>mystrip</span> <span class='op'>=</span> <span class='const'>SVGElement</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>83.1</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>247.45</span><span class='rparen'>)</span>
@@ -2040,9 +2048,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-137
-138
-139
 140
 141
 142
@@ -2054,10 +2059,13 @@ $(document).ready(function() {
 148
 149
 150
-151</pre>
+151
+152
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 137</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_make_transfer'>make_transfer</span><span class='lparen'>(</span><span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='id identifier rubyid_to'>to</span><span class='comma'>,</span> <span class='id identifier rubyid_spacing'>spacing</span><span class='comma'>,</span> <span class='id identifier rubyid_top_label'>top_label</span><span class='comma'>,</span> <span class='id identifier rubyid_bottom_label'>bottom_label</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_to'>to</span><span class='period'>.</span><span class='id identifier rubyid_align_with'>align_with</span><span class='lparen'>(</span><span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>center-right</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_align!'>align!</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>center-left</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -2094,9 +2102,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-153
-154
-155
 156
 157
 158
@@ -2154,10 +2159,13 @@ $(document).ready(function() {
 210
 211
 212
-213</pre>
+213
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 156</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_make_tube'>make_tube</span><span class='lparen'>(</span><span class='id identifier rubyid_tube'>tube</span><span class='comma'>,</span> <span class='id identifier rubyid_bottom_label'>bottom_label</span><span class='comma'>,</span> <span class='id identifier rubyid_middle_label'>middle_label</span><span class='comma'>,</span> <span class='id identifier rubyid_fluid'>fluid</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_cropped_for_closed_tube'>cropped_for_closed_tube</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>fluidclass:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bottom_label'>bottom_label</span> <span class='op'>=</span> <span class='id identifier rubyid_bottom_label'>bottom_label</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_bottom_label'>bottom_label</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
@@ -2240,9 +2248,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-369
-370
-371
 372
 373
 374
@@ -2443,10 +2448,13 @@ $(document).ready(function() {
 569
 570
 571
-572</pre>
+572
+573
+574
+575</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 369</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 372</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_negative_selection_diagram'>negative_selection_diagram</span>
   <span class='id identifier rubyid_img'>img</span> <span class='op'>=</span> <span class='const'>SVGElement</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='int'>600</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='int'>262</span><span class='rparen'>)</span>
@@ -2672,9 +2680,6 @@ l14.998,90.066C423.649,206.246,428.687,209.771,434.899,209.771z&quot;/&gt;
       <pre class="lines">
 
 
-279
-280
-281
 282
 283
 284
@@ -2685,10 +2690,13 @@ l14.998,90.066C423.649,206.246,428.687,209.771,434.899,209.771z&quot;/&gt;
 289
 290
 291
-292</pre>
+292
+293
+294
+295</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 279</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 282</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_panel'>panel</span> <span class='id identifier rubyid_kit'>kit</span><span class='comma'>,</span> <span class='id identifier rubyid_unit'>unit</span><span class='comma'>,</span> <span class='id identifier rubyid_components'>components</span><span class='comma'>,</span> <span class='id identifier rubyid_sample'>sample</span><span class='comma'>,</span> <span class='id identifier rubyid_apply_classes'>apply_classes</span>
   <span class='id identifier rubyid_apply_classes'>apply_classes</span> <span class='op'>=</span> <span class='id identifier rubyid_apply_classes'>apply_classes</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2735,9 +2743,6 @@ l14.998,90.066C423.649,206.246,428.687,209.771,434.899,209.771z&quot;/&gt;
       <pre class="lines">
 
 
-219
-220
-221
 222
 223
 224
@@ -2761,10 +2766,13 @@ l14.998,90.066C423.649,206.246,428.687,209.771,434.899,209.771z&quot;/&gt;
 242
 243
 244
-245</pre>
+245
+246
+247
+248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 219</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 222</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_stripwell'>stripwell</span><span class='lparen'>(</span><span class='id identifier rubyid_kit'>kit</span><span class='comma'>,</span> <span class='id identifier rubyid_unit'>unit</span><span class='comma'>,</span> <span class='id identifier rubyid_components'>components</span><span class='comma'>,</span> <span class='id identifier rubyid_sample'>sample</span><span class='comma'>,</span> <span class='id identifier rubyid_open_tubes'>open_tubes</span><span class='comma'>,</span> <span class='id identifier rubyid_apply_classes'>apply_classes</span><span class='comma'>,</span> <span class='id identifier rubyid_hide'>hide</span><span class='comma'>,</span> <span class='id identifier rubyid_spacing'>spacing</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_open_tubes'>open_tubes</span> <span class='op'>=</span> <span class='id identifier rubyid_open_tubes'>open_tubes</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2775,14 +2783,14 @@ l14.998,90.066C423.649,206.246,428.687,209.771,434.899,209.771z&quot;/&gt;
   <span class='id identifier rubyid_grid'>grid</span><span class='period'>.</span><span class='id identifier rubyid_each_pos'>each_pos</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='op'>|</span>
 
     <span class='comment'># add label
-</span>    <span class='id identifier rubyid_tube_label'>tube_label</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_tube_label'>tube_label</span><span class='lparen'>(</span><span class='id identifier rubyid_kit'>kit</span><span class='comma'>,</span> <span class='id identifier rubyid_unit'>unit</span><span class='comma'>,</span> <span class='id identifier rubyid_components'>components</span><span class='lbracket'>[</span><span class='id identifier rubyid_r'>r</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_sample'>sample</span><span class='rparen'>)</span>
+</span>    <span class='id identifier rubyid_tube_label'>tube_label</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_unit'>unit</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_components'>components</span><span class='lbracket'>[</span><span class='id identifier rubyid_r'>r</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sample'>sample</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_tube_type'>tube_type</span> <span class='op'>=</span> <span class='id identifier rubyid_closedtube'>closedtube</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_open_tubes'>open_tubes</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_r'>r</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_tube_type'>tube_type</span> <span class='op'>=</span> <span class='id identifier rubyid_opentube'>opentube</span>
     <span class='kw'>end</span>
     <span class='id identifier rubyid_tube'>tube</span> <span class='op'>=</span> <span class='id identifier rubyid_make_tube'>make_tube</span><span class='lparen'>(</span><span class='id identifier rubyid_tube_type'>tube_type</span><span class='comma'>,</span>
                      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-                     <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_kit'>kit</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_unit'>unit</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_components'>components</span><span class='lbracket'>[</span><span class='id identifier rubyid_r'>r</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sample'>sample</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                     <span class='id identifier rubyid_tube_label'>tube_label</span><span class='comma'>,</span>
                      <span class='kw'>nil</span><span class='comma'>,</span>
                      <span class='kw'>false</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_tube'>tube</span><span class='period'>.</span><span class='id identifier rubyid_new_class!'>new_class!</span><span class='lparen'>(</span><span class='id identifier rubyid_apply_classes'>apply_classes</span><span class='lbracket'>[</span><span class='id identifier rubyid_r'>r</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -2813,9 +2821,6 @@ l14.998,90.066C423.649,206.246,428.687,209.771,434.899,209.771z&quot;/&gt;
       <pre class="lines">
 
 
-260
-261
-262
 263
 264
 265
@@ -2825,10 +2830,13 @@ l14.998,90.066C423.649,206.246,428.687,209.771,434.899,209.771z&quot;/&gt;
 269
 270
 271
-272</pre>
+272
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 260</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 263</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_transfer_to_ligation_tubes_with_highlight'>transfer_to_ligation_tubes_with_highlight</span><span class='lparen'>(</span><span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='comma'>,</span> <span class='id identifier rubyid_kit'>kit</span><span class='comma'>,</span> <span class='id identifier rubyid_unit'>unit</span><span class='comma'>,</span> <span class='id identifier rubyid_components'>components</span><span class='comma'>,</span> <span class='id identifier rubyid_sample'>sample</span><span class='comma'>,</span> <span class='id identifier rubyid_colors'>colors</span><span class='comma'>,</span> <span class='id identifier rubyid_vol'>vol</span><span class='comma'>,</span> <span class='id identifier rubyid_bottom_label'>bottom_label</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bottom_label'>bottom_label</span> <span class='op'>=</span> <span class='id identifier rubyid_bottom_label'>bottom_label</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
@@ -2874,12 +2882,12 @@ l14.998,90.066C423.649,206.246,428.687,209.771,434.899,209.771z&quot;/&gt;
       <pre class="lines">
 
 
-110
-111
-112</pre>
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tube_label'>tube_label</span><span class='lparen'>(</span><span class='id identifier rubyid_kit'>kit</span><span class='comma'>,</span> <span class='id identifier rubyid_unit'>unit</span><span class='comma'>,</span> <span class='id identifier rubyid_component'>component</span><span class='comma'>,</span> <span class='id identifier rubyid_sample'>sample</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_two_labels'>two_labels</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_kit'>kit</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_unit'>unit</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_component'>component</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sample'>sample</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -2915,17 +2923,17 @@ l14.998,90.066C423.649,206.246,428.687,209.771,434.899,209.771z&quot;/&gt;
       <pre class="lines">
 
 
-100
-101
-102
 103
 104
 105
 106
-107</pre>
+107
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'OLAGraphics.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_two_labels'>two_labels</span><span class='lparen'>(</span><span class='id identifier rubyid_text1'>text1</span><span class='comma'>,</span> <span class='id identifier rubyid_text2'>text2</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_label1'>label1</span> <span class='op'>=</span> <span class='id identifier rubyid_label'>label</span><span class='lparen'>(</span><span class='id identifier rubyid_text1'>text1</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>font-size</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='op'>=&gt;</span> <span class='int'>25</span><span class='rparen'>)</span>
