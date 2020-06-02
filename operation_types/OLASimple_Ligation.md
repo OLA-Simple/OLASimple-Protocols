@@ -79,27 +79,7 @@ class Protocol
   VORTEX_TIME = "5 seconds" # time to pulse vortex to mix
   TUBE_CAP_WARNING = "Check to make sure tube caps are completely closed."
 
-  PACK_HASH = {
-            "Unit Name" => "L",
-            "Components" => {
-                "sample tubes" => [
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7"
-                ],
-                "diluent A" => "0"
-            },
-            "PCR to Ligation Mix Volume" => 1.2,
-            "Ligation Mix Rehydration Volume" => 24,
-            "Number of Samples" => 2,
-            "Number of Sub Packages" => 2
-        }
-
-  COLORS =  ["red", "green","yellow", "blue", "purple", "white", "gray"]
+  PACK_HASH = LIGATION_UNIT
     
   LIGATION_VOLUME = PACK_HASH["Ligation Mix Rehydration Volume"]  # volume to rehydrate ligation mix
   SAMPLE_VOLUME = PACK_HASH["PCR to Ligation Mix Volume"] # volume of pcr product to ligation mix
