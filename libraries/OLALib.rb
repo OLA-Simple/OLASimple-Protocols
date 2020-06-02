@@ -334,17 +334,8 @@ module OLALib
     end
   end
 
-#   def save_temporary_output_values(myops, pack_field_value_name, unit)
-#     myops.each do |op|
-#       op.temporary[:output_kit] = op.temporary[:input_kit]
-#       op.temporary[:output_sample] = op.temporary[:input_sample]
-#       op.temporary[:output_unit] = unit
-#       op.temporary[:output_kit_and_unit] = [op.temporary[:output_kit], op.temporary[:output_unit]].join('')
-#     end
-#   end
-
   def group_packages(myops)
-    myops.group_by {|op| op.temporary[:output_kit_and_unit]}
+    myops.group_by { |op| "#{op.temporary[:output_kit]}#{op.temporary[:output_unit]}" }
   end
 
 
@@ -361,26 +352,6 @@ module OLALib
 
   def get_array_association(item, label, i)
     item.get("#{label}#{i}".to_sym)
-  end
-
-  def make_collection_alias(item, kit, unit, components, sample = nil)
-    sample = sample || ""
-    raise "must be an item not a collection for array associations" unless item.is_a?(Item)
-    item.associate(KIT_KEY, kit)
-    item.associate(UNIT_KEY, unit)
-    make_array_association(item, COMPONENT_KEY, components)
-    item.associate(SAMPLE_KEY, sample)
-  end
-
-  def collection_ref(collection, index)
-    component = get_array_association(collection, COMPONENT_KEY, index)
-    "#{collection.get(KIT_KEY)}#{collection.get(UNIT_KEY)}#{component}#{collection.get(SAMPLE_KEY)}"
-  end
-
-  def get_collection_refs(item, length)
-    length.times.map do |i|
-      collection_ref(item, i)
-    end
   end
 
 ####################################
@@ -484,6 +455,15 @@ module OLALib
 # Step Utilities
 ####################################
 
+  def ask_if_expert
+    resp = show do
+      title "Expert Mode?"
+      note "Are you an expert at this protocol? If you do not know what this means, then continue without enabling expert mode."
+      select ["Continue in normal mode", "Enable expert mode"], var: :choice, label: "Expert Mode?", default: 0
+    end
+    return resp[:choice] == "Enable expert mode"
+  end
+
   def check_for_tube_defects myops
     # show do
     defects = show do
@@ -540,7 +520,7 @@ module OLALib
 
   def show_open_package(kit, unit, num_sub_packages)
     show do
-      title "Tear open #{unit.bold}#{kit.bold}"
+      title "Tear open #{kit.bold}#{unit.bold}"
       if num_sub_packages > 0
         note "Tear open all smaller packages."
       end
