@@ -327,7 +327,7 @@ EOF
   end
 
   def detection_strip_diagram
-    img = SVGElement.new(boundx: 270, boundy: 270)
+    img = SVGElement.new(boundx: 270, boundy: 350)
     img.add_child(<<EOF
      <g id="Strip">
 	<g>
