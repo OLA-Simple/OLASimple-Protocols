@@ -64,33 +64,8 @@ class Protocol
   ##########################################
   # Protocol Specifics
   ##########################################
-
-
-  # TUBE LABELS ARE DIFF FOR NUTTADA
-  # Nuttada: Introduction NO CELL LYSATE OR MENTION BLOOD (USE NONINFECTION SYNTHETIC DNA)
-  # use only P200 pipette
-  # change to P20 pipette
-  # eliminate 10% bleach / 70% ethanol
-  # eliminate timer from materials list
-  # NUTTADA: R1 fridge, name pre-pcr bench
-  # "Tear open package. There are two section. Tear open both "
-  # throw error if two operations have same input item
-  # change transfer images to P200
-  # centrifuge sample after vortexing (after pcr rehydration)
-  # Nuttada: cell lysate > DNA sample
-
-  # Manually put in pack hash...
-  PACK_HASH = {
-      "Unit Name" => "A",
-      "Components" => {
-          "sample tube" => "2",
-          "diluent A" => "1"
-      },
-      "PCR Rehydration Volume" => 40,
-      "Number of Samples" => 2,
-      "Number of Sub Packages" => 2,
-  }
-
+  
+  PACK_HASH = PCR_UNIT
   AREA = PRE_PCR
   SAMPLE_VOLUME = 10 # volume of sample to add to PCR mix
   PCR_MIX_VOLUME = PACK_HASH["PCR Rehydration Volume"] # volume of water to rehydrate PCR mix in
@@ -98,7 +73,7 @@ class Protocol
   VORTEX_TIME = "5 seconds" # time to pulse vortex to mix
 
   # for debugging
-  PREV_COMPONENT = ""
+  PREV_COMPONENT = "6"
   PREV_UNIT = "E"
 
 
@@ -145,7 +120,7 @@ class Protocol
         labels = ['001','002']
         operations.each.with_index do |op, i|
             op.input(INPUT).item.associate(SAMPLE_KEY, labels[i])  
-            op.input(INPUT).item.associate(COMPONENT_KEY, "6")
+            op.input(INPUT).item.associate(COMPONENT_KEY, PREV_COMPONENT)
             op.input(INPUT).item.associate(UNIT_KEY, PREV_UNIT)
         end
     end
