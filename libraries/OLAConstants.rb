@@ -30,6 +30,7 @@ module OLAConstants
   KIT_SELECTION = OLAKits.rt_pcr()
   KIT_NAME = KIT_SELECTION["name"]
   SAMPLE_PREP_UNIT = KIT_SELECTION["sample prep"]
+  EXTRACTION_UNIT = KIT_SELECTION["extraction"]
   PCR_UNIT = KIT_SELECTION["pcr"]
   LIGATION_UNIT = KIT_SELECTION["ligation"]
   DETECTION_UNIT = KIT_SELECTION["detection"]
