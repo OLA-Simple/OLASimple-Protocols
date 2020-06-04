@@ -59,7 +59,7 @@ class Protocol
   ###########################################
   ## INPUT/OUTPUT
   ###########################################
-  #F
+  # F
   INPUT = 'Ligation Product'
   OUTPUT = 'Detection Strip'
   PACK = 'Detection Pack'
@@ -123,6 +123,7 @@ class Protocol
     save_temporary_output_values(operations)
     expert_mode = ask_if_expert
     introduction operations.running
+    safety_warning
     area_preparation POST_PCR, MATERIALS, PRE_PCR
     get_detection_packages operations.running
     open_detection_packages operations.running
@@ -147,18 +148,17 @@ class Protocol
       warning '<h2> Signal can develop more slowly if the room is humid. After the 10-min timer ends, you should see at least two lines on each strip. </h2>'
       warning 'If your signal is hard to see by eyes, give it another 5 minutes before clicking OK.'
     end
-
+    
     show do
-      title 'Skipping Scanning Steps'
-      note 'Hi Sam'
-      note 'Since this is a dry run, we are not displaying the scanner instructions'
+      title "hi sam"
+      note "skipping scanning steps since analysis doesnt work on nursery"
     end
-
-    read_from_scanner sorted_ops.running
-    analysis operations.running
+    # read_from_scanner sorted_ops.running
+    # analysis operations.running
 
     cleanup sorted_ops
     conclusion sorted_ops
+    wash_self
     accept_comments
     { 'Ok' => 1 }
   end
@@ -199,13 +199,20 @@ class Protocol
   end
 
   def introduction(_myops)
-    username = get_technician_name(jid).color('darkblue')
     show do
-      title "Welcome #{username} to OLASimple Paper Detection procotol"
+      title 'Welcome to OLASimple Paper Detection procotol'
       note 'In this protocol you will be adding samples from the ligation protocol onto paper detection strips. ' \
             'You will then scan an image of the strips and upload the image. The strips will detect whether the sample has drug resistance mutations.'
-      check 'Put on gloves.'
-      note 'Click "OK" to start the protocol.'
+    end
+  end
+
+  def safety_warning
+    show do
+      title 'Review the safety warnings'
+      note 'Always wear a lab coat and gloves for this protocol. We will use two layers of gloves for parts of this protocol.'
+      note 'Use on tight gloves. Tight gloves help reduce chances for your gloves to be trapped when closing the tubes which can increase contamination risk.'
+      note 'Change outer gloves after touching any common surface (such as a refrigerator door handle) as your gloves now can be contaminated by RNase or other previously amplified products that can cause false positives.'
+      check 'Put on a lab coat and "doubled" gloves now.'
     end
   end
 
@@ -214,9 +221,11 @@ class Protocol
     show do
       title "Get #{DET_PKG_NAME.pluralize(gops.length)} from the #{FRIDGE_POST}"
       gops.each do |unit, _ops|
-        check "package #{unit.bold}"
+        check "Retrieve package #{unit.bold}"
       end
       check "Place #{pluralizer('package', gops.length)} on the bench in the #{AREA.bold} area."
+      check 'Remove the <b>outside layer</b> of gloves (since you just touched the door knob).'
+      check 'Put on a new outside layer of gloves.'
     end
   end
 
@@ -247,7 +256,6 @@ class Protocol
       goldTube.align_with(diluentATube, 'top-right').translate!(50)
       stopTube.align_with(goldTube, 'top-right').translate!(50)
       img = SVGElement.new(children: [grid, diluentATube, goldTube, stopTube], boundx: 500, boundy: 220)
-      img
 
       show_open_package(kit, THIS_UNIT, NUM_SUB_PACKAGES) do
         note "Check that there are the following tubes and #{STRIPS}:"
@@ -267,7 +275,7 @@ class Protocol
         check "Set a #{P200_POST} pipette to [0 3 6]. Add #{STOP_VOLUME}uL from #{from.bold} into tube #{to.bold}"
         tubeA = make_tube(opentube, DILUENT_A, ops.first.tube_label('diluent A'), 'medium')
         tubeS = make_tube(opentube, STOP_MIX, ops.first.tube_label('stop'), 'powder')
-        img = make_transfer(tubeA, tubeS, 200, "#{STOP_VOLUME}uL", "(#{P200_POST} pipette)")
+        img = make_transfer(tubeA, tubeS, 300, "#{STOP_VOLUME}uL", "(#{P200_POST} pipette)")
         img.translate!(20)
         note display_svg(img, 0.75)
       end
@@ -342,8 +350,12 @@ class Protocol
             ligation_tubes.align!('bottom-left')
             ligation_tubes.align_with(tube, 'bottom-right')
             ligation_tubes.translate!(50)
-            transfer_image = make_transfer(labeled_tube, ligation_tubes, 200, "#{STOP_TO_SAMPLE_VOLUME}uL", "(#{P20_POST} pipette)")
+            transfer_image = make_transfer(labeled_tube, ligation_tubes, 300, "#{STOP_TO_SAMPLE_VOLUME}uL", "(#{P20_POST} pipette)")
             note display_svg(transfer_image, 0.75)
+            to_labels.each do |l|
+              check "Transfer #{STOP_TO_SAMPLE_VOLUME}uL from #{STOP_MIX.bold} into #{l.bold}"
+            end
+
           end
         else
           to_labels.each.with_index do |label, i|
@@ -365,7 +377,7 @@ class Protocol
     end
 
     show do
-      title 'Vortex and centrifuge all 12 tubes for 5 seconds.'
+      title "Vortex and centrifuge all #{operations.size * PREV_COMPONENTS.size} tubes for 5 seconds."
       check 'Vortex for 5 seconds.'
       check 'Centrifuge for 5 seconds.'
       note 'This step is important to avoid FALSE POSITIVE.'
@@ -402,9 +414,9 @@ class Protocol
 
     show do
       title 'Wait for stop cycle to finish (5 minutes).'
-      check "Wait for the #{THERMOCYCLER} containing your samples to finish. "
+      note "Wait for the #{THERMOCYCLER} containing your samples to finish. "
       bullet "If the #{THERMOCYCLER} beeps, it is done. If not, continue waiting."
-      check "Once the #{THERMOCYCLER} finishes, IMMEDIATELY continue to the next step."
+      note "Once the #{THERMOCYCLER} finishes, IMMEDIATELY continue to the next step."
       check "Take all #{pluralizer('sample', myops.length * PREV_COMPONENTS.length)} from the #{THERMOCYCLER}."
       check "Vortex #{'sample'.pluralize(PREV_COMPONENTS.length)} for 5 seconds to mix."
       check "Centrifuge #{'sample'.pluralize(PREV_COMPONENTS.length)} for 5 seconds to pull down liquid"
@@ -426,10 +438,12 @@ class Protocol
 
         show do
           title "For each colored tube, add #{SAMPLE_TO_STRIP_VOLUME}uL of #{LIGATION_SAMPLE} to the sample port of each #{STRIP}."
+          warning '<h2>Complicated Step! Take note of all instructions before beginning transfers.</h2>'
           unless timer_set
-            warning '<h2>Set a 5 minute timer after adding ligation sample to <b>FIRST A1</b> strip at the SAMPLE PORT.</h2>'
+            note 'Set a 5 minute timer after adding ligation sample to <b>FIRST</b> strip at the SAMPLE PORT.'
           end
-          warning '<h2>Add the rest of ligation samples to the rest of strips and then immediately click OK</h2>'
+          note 'Immediately click OK when finished adding ligation sample to LAST strip at the sample port.'
+          note '<hr>'
           timer_set = true
           #   check "Set a 5 minute timer" unless set_timer
           check "Set a #{P200_POST} pipette to [0 2 4]. Add #{SAMPLE_TO_STRIP_VOLUME}uL of <b>each</b> #{LIGATION_SAMPLE} to the corresponding #{STRIP}."
@@ -445,12 +459,6 @@ class Protocol
           note display_svg(img, 0.6)
         end
       end
-    end
-    show do
-      title 'Check to see if strips are wetting'
-      note 'You should see the strip become wet in reading window '
-      note "If strips are not wetting after 2 minutes, contact #{SUPERVISOR}"
-      warning 'Do not continue until all strips are fully wet.'
     end
   end
 
@@ -470,7 +478,7 @@ class Protocol
         warning "Do not centrifuge #{to.bold} after vortexing."
         tubeA = make_tube(opentube, DILUENT_A, ops.first.tube_label('diluent A'), 'medium')
         tubeG = make_tube(opentube, GOLD_MIX, ops.first.tube_label('gold'), 'powder', fluidclass: 'pinkfluid')
-        img = make_transfer(tubeA, tubeG, 200, "#{GOLD_VOLUME}uL", "(#{P1000_POST} pipette)")
+        img = make_transfer(tubeA, tubeG, 300, "#{GOLD_VOLUME}uL", "(#{P1000_POST} pipette)")
         img.translate!(20)
         note display_svg(img, 0.75)
       end
@@ -490,9 +498,11 @@ class Protocol
     gops.each do |_unit, ops|
       show do
         title "Add gold solution to #{pluralizer(STRIP, PREV_COMPONENTS.length * ops.length)}"
-        warning '<h2>Set a 10 minute timer after adding gold to <b>FIRST A1</b> strip at the SAMPLE PORT.</h2>'
-        warning '<h2> Add gold to the rest of strips and then immediately click OK.'
-        warning '<h2> DO NOT add gold solution onto the reading window.'
+        warning '<h2>Complicated Step! Take note of all instructions before beginning transfers.</h2>'
+        note 'Set a 10 minute timer after adding gold to <b>FIRST</b> strip at the SAMPLE PORT.'
+        note 'Add gold to the rest of strips and then immediately click OK.'
+        warning 'DO NOT add gold solution onto the reading window.'
+        note '<hr>'
         check "Set a #{P200_POST} pipette to [0 4 0]. Transfer #{GOLD_TO_STRIP_VOLUME}uL of #{GOLD_MIX} #{ops.first.ref('gold').bold} to #{pluralizer(STRIP, PREV_COMPONENTS.length * ops.length)}."
         grid = SVGGrid.new(ops.length, ops.length, 50, 50)
         ops.each.with_index do |op, i|
@@ -500,7 +510,7 @@ class Protocol
           grid.add(display_strip_panel(*_tokens, COLORS).scale!(0.5), i, i)
         end
         tubeG = make_tube(opentube, GOLD_MIX, ops.first.tube_label('gold'), 'medium', fluidclass: 'pinkfluid')
-        img = make_transfer(tubeG, grid, 200, "#{GOLD_TO_STRIP_VOLUME}uL", '(each strip)')
+        img = make_transfer(tubeG, grid, 300, "#{GOLD_TO_STRIP_VOLUME}uL", '(each strip)')
         img.boundx = 900
         img.boundy = 400
         img.translate!(40)
@@ -519,9 +529,10 @@ class Protocol
     show do
       title 'Wait until 10 minute timer is up'
       note "#{STRIPS.capitalize} need to rest for 10 minutes before taking an image."
-      note "In the meantime, make sure you have access to the #{PHOTOCOPIER}."
-      warning '<h2> Signal can develop more slowly if the room is humid. After the 10-min timer ends, you should see at least two lines on each strip. </h2>'
-      warning 'If your signal is hard to see by eyes, give it another 5 minutes before clicking OK.'
+      check "In the meantime, make sure you have access to the #{PHOTOCOPIER}."
+      note 'Signal can develop more slowly if the room is humid. After the 10-min timer ends, you should see at least two lines on each strip.'
+      note 'If your signal is hard to see by eyes, give it another 5 minutes before clicking OK.'
+      note 'Do not continue to next step until signal is visible.'
     end
 
     # show do
@@ -656,7 +667,6 @@ class Protocol
   def conclusion(_myops)
     show do
       title 'Thank you!'
-      warning "<h2>You must click #{'OK'.quote.bold} to complete the protocol</h2>"
       note 'Thank you for all your hard work.'
     end
   end
@@ -776,7 +786,7 @@ class Protocol
       img.translate!(15)
       show do
         refs = op.output_refs(OUTPUT)
-        title "Here is the summary of your results for <b>#{refs[0]}-#{refs[-1]}</b>"
+        title "Here is the summary of your results for <b>#{refs[0]} to #{refs[-1]}</b>"
         note display_svg(img)
       end
     end
@@ -788,7 +798,7 @@ class Protocol
     end
     show do
       title 'Sample summary'
-      note "You analyzed #{ops.length} #{'kit'.pluralize(ops.length)}. Below is the summarized data."
+      note "You analyzed #{ops.length} #{'kit'.pluralize(ops.length)}. Below is the exportable summarized data if you need it."
 
       results_hash = {}
       kits = ops.map { |op| op.output(OUTPUT).item.get(KIT_KEY) }
