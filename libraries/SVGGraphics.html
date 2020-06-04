@@ -897,7 +897,7 @@ $(document).ready(function() {
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="" title="Graphics::MyGraphics (module)">MyGraphics</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="" title="Graphics::FunctionalSVG (module)">FunctionalSVG</a></span>, <span class='object_link'><a href="" title="Graphics::MyGraphics (module)">MyGraphics</a></span>
     
   
     
@@ -1044,15 +1044,625 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1179
-1180
-1181</pre>
+1273
+1274
+1275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1179</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1273</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_svg'>save_svg</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_svg'>svg</span><span class='rparen'>)</span>
   <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_svg'>svg</span><span class='period'>.</span><span class='id identifier rubyid_to_str'>to_str</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+<h1>Module: Graphics::FunctionalSVG
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>SVGGraphics.rb</dd>
+  </dl>
+  
+</div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#collectiontube-instance_method" title="#collectiontube (instance method)">#<strong>collectiontube</strong>(contents: &#39;empty&#39;)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#draw_svg-instance_method" title="#draw_svg (instance method)">#<strong>draw_svg</strong>(svg_func, svg_label: nil, **opts)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>svg_func: a symbol method name for a function that returns an SVGElement svg_label: label for svg opts: option hash to be applied to svg_func as named parameters.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#label_helper-instance_method" title="#label_helper (instance method)">#<strong>label_helper</strong>(svg, labels, offsety = 0)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#label_object-instance_method" title="#label_object (instance method)">#<strong>label_object</strong>(svg, _label)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#roundedtube-instance_method" title="#roundedtube (instance method)">#<strong>roundedtube</strong>(opened: false, contents: &#39;empty&#39;)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#samplecolumn-instance_method" title="#samplecolumn (instance method)">#<strong>samplecolumn</strong>(opened: false, contents: &#39;empty&#39;)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#screwbottle-instance_method" title="#screwbottle (instance method)">#<strong>screwbottle</strong>(opened: false, contents: &#39;empty&#39;)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tube-instance_method" title="#tube (instance method)">#<strong>tube</strong>(opened: false, contents: &#39;empty&#39;)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="collectiontube-instance_method">
+  
+    #<strong>collectiontube</strong>(contents: &#39;empty&#39;)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+952
+953
+954
+955
+956
+957
+958
+959
+960
+961
+962
+963</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 952</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_collectiontube'>collectiontube</span><span class='lparen'>(</span><span class='label'>contents:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_ctube'>ctube</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>46.92</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>132.74</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_contents'>contents</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_ctube'>ctube</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span>
+      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;defs&gt;&lt;style&gt;.cls-1_collection_tube{fill:none;stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}&lt;/style&gt;&lt;/defs&gt;&lt;path class=&quot;cls-1_collection_tube&quot; d=&quot;M377.69,251.62v77.6c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.66,2.66,0,0,0,0-.37l-.61-78.29a2.52,2.52,0,0,0-2.52-2.5H380.21A2.52,2.52,0,0,0,377.69,251.62Z&quot; transform=&quot;translate(-374.97 -246.46)&quot;/&gt;&lt;rect class=&quot;cls-1_collection_tube&quot; x=&quot;0.25&quot; y=&quot;0.25&quot; width=&quot;42.32&quot; height=&quot;4.79&quot; rx=&quot;2.4&quot; ry=&quot;2.4&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
+      <span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_contents'>contents</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>full</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_ctube'>ctube</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span>
+      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;defs&gt;&lt;style&gt;.cls-1_collection_tube{fill:#26afe5;}.cls-2_collection_tube{fill:#fff;}.cls-2_collection_tube,.cls-3_collection_tube{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-3_collection_tube{fill:none;}&lt;/style&gt;&lt;/defs&gt;&lt;path class=&quot;cls-1_collection_tube&quot; d=&quot;M412.76,285.62c-8.82,5.75-17.91,3.62-26.54.87l-10.47,3v45.4c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.67,2.67,0,0,0,0-.37Z&quot; transform=&quot;translate(-372.39 -241.25)&quot;/&gt;&lt;path class=&quot;cls-1_collection_tube&quot; d=&quot;M383.88,285.72a15.52,15.52,0,0,0-8.13-.66v4.44l10.47-3Z&quot; transform=&quot;translate(-372.39 -241.25)&quot;/&gt;&lt;rect class=&quot;cls-2_collection_tube&quot; x=&quot;5.5&quot; y=&quot;2.53&quot; width=&quot;33.11&quot; height=&quot;9.82&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
+      <span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="draw_svg-instance_method">
+  
+    #<strong>draw_svg</strong>(svg_func, svg_label: nil, **opts)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>svg_func: a symbol method name for a function that returns an SVGElement svg_label: label for svg opts: option hash to be applied to svg_func as named parameters</p>
+
+<p>example: svg = draw_svg(:tube, svg_label: “HellonWorld”, opened: true, full: true)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+985
+986
+987
+988
+989</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 985</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_draw_svg'>draw_svg</span><span class='lparen'>(</span><span class='id identifier rubyid_svg_func'>svg_func</span><span class='comma'>,</span> <span class='label'>svg_label:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_svg'>svg</span> <span class='op'>=</span> <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='id identifier rubyid_svg_func'>svg_func</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_svg'>svg</span> <span class='op'>=</span> <span class='id identifier rubyid_label_object'>label_object</span><span class='lparen'>(</span><span class='id identifier rubyid_svg'>svg</span><span class='comma'>,</span> <span class='id identifier rubyid_svg_label'>svg_label</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_svg_label'>svg_label</span>
+  <span class='id identifier rubyid_svg'>svg</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="label_helper-instance_method">
+  
+    #<strong>label_helper</strong>(svg, labels, offsety = 0)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+992
+993
+994
+995
+996
+997
+998
+999</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 992</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_label_helper'>label_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_svg'>svg</span><span class='comma'>,</span> <span class='id identifier rubyid_labels'>labels</span><span class='comma'>,</span> <span class='id identifier rubyid_offsety'>offsety</span> <span class='op'>=</span> <span class='int'>0</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_l'>l</span> <span class='op'>=</span> <span class='id identifier rubyid_label'>label</span><span class='lparen'>(</span><span class='id identifier rubyid_labels'>labels</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>font-size</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='op'>=&gt;</span> <span class='int'>25</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_l'>l</span><span class='period'>.</span><span class='id identifier rubyid_align!'>align!</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>center-center</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_l'>l</span><span class='period'>.</span><span class='id identifier rubyid_translate!'>translate!</span><span class='lparen'>(</span><span class='id identifier rubyid_svg'>svg</span><span class='period'>.</span><span class='id identifier rubyid_boundx'>boundx</span> <span class='op'>/</span> <span class='int'>2</span><span class='comma'>,</span> <span class='id identifier rubyid_svg'>svg</span><span class='period'>.</span><span class='id identifier rubyid_boundy'>boundy</span> <span class='op'>/</span> <span class='int'>2</span> <span class='op'>+</span> <span class='id identifier rubyid_offsety'>offsety</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_svg'>svg</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span><span class='id identifier rubyid_l'>l</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_label_helper'>label_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_svg'>svg</span><span class='comma'>,</span> <span class='id identifier rubyid_labels'>labels</span><span class='comma'>,</span> <span class='id identifier rubyid_offsety'>offsety</span> <span class='op'>+</span> <span class='int'>25</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_labels'>labels</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_svg'>svg</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="label_object-instance_method">
+  
+    #<strong>label_object</strong>(svg, _label)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+991
+992
+993
+994
+995
+996
+997
+998
+999
+1000
+1001
+1002
+1003</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 991</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_label_object'>label_object</span><span class='lparen'>(</span><span class='id identifier rubyid_svg'>svg</span><span class='comma'>,</span> <span class='id identifier rubyid__label'>_label</span><span class='rparen'>)</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_label_helper'>label_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_svg'>svg</span><span class='comma'>,</span> <span class='id identifier rubyid_labels'>labels</span><span class='comma'>,</span> <span class='id identifier rubyid_offsety'>offsety</span> <span class='op'>=</span> <span class='int'>0</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_l'>l</span> <span class='op'>=</span> <span class='id identifier rubyid_label'>label</span><span class='lparen'>(</span><span class='id identifier rubyid_labels'>labels</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>font-size</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='op'>=&gt;</span> <span class='int'>25</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_l'>l</span><span class='period'>.</span><span class='id identifier rubyid_align!'>align!</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>center-center</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_l'>l</span><span class='period'>.</span><span class='id identifier rubyid_translate!'>translate!</span><span class='lparen'>(</span><span class='id identifier rubyid_svg'>svg</span><span class='period'>.</span><span class='id identifier rubyid_boundx'>boundx</span> <span class='op'>/</span> <span class='int'>2</span><span class='comma'>,</span> <span class='id identifier rubyid_svg'>svg</span><span class='period'>.</span><span class='id identifier rubyid_boundy'>boundy</span> <span class='op'>/</span> <span class='int'>2</span> <span class='op'>+</span> <span class='id identifier rubyid_offsety'>offsety</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_svg'>svg</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span><span class='id identifier rubyid_l'>l</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_label_helper'>label_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_svg'>svg</span><span class='comma'>,</span> <span class='id identifier rubyid_labels'>labels</span><span class='comma'>,</span> <span class='id identifier rubyid_offsety'>offsety</span> <span class='op'>+</span> <span class='int'>25</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_labels'>labels</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_svg'>svg</span>
+  <span class='kw'>end</span>
+  
+  <span class='id identifier rubyid_labels'>labels</span> <span class='op'>=</span> <span class='id identifier rubyid__label'>_label</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_label_helper'>label_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_svg'>svg</span><span class='comma'>,</span> <span class='id identifier rubyid_labels'>labels</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="roundedtube-instance_method">
+  
+    #<strong>roundedtube</strong>(opened: false, contents: &#39;empty&#39;)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+913
+914
+915
+916
+917
+918
+919
+920
+921
+922
+923
+924
+925
+926
+927</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 913</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_roundedtube'>roundedtube</span><span class='lparen'>(</span><span class='label'>opened:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>contents:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid__roundedtube'>_roundedtube</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>46.92</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>132.74</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_contents'>contents</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>full</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid__roundedtube'>_roundedtube</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span>
+          <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;defs&gt;&lt;style&gt;.cls-1{fill:#26afe5;}.cls-2{fill:#fff;}.cls-2,.cls-3{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-3{fill:none;}&lt;/style&gt;&lt;/defs&gt;&lt;title&gt;Untitled-18&lt;/title&gt;&lt;path class=&quot;cls-1&quot; d=&quot;M412.76,285.62c-8.82,5.75-17.91,3.62-26.54.87l-10.47,3v45.4c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.67,2.67,0,0,0,0-.37Z&quot; transform=&quot;translate(-372.39 -241.25)&quot;/&gt;&lt;path class=&quot;cls-1&quot; d=&quot;M383.88,285.72a15.52,15.52,0,0,0-8.13-.66v4.44l10.47-3Z&quot; transform=&quot;translate(-372.39 -241.25)&quot;/&gt;&lt;rect class=&quot;cls-2&quot; x=&quot;5.5&quot; y=&quot;2.53&quot; width=&quot;33.11&quot; height=&quot;9.82&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot;/&gt;&lt;rect class=&quot;cls-2&quot; x=&quot;0.25&quot; y=&quot;0.25&quot; width=&quot;42.88&quot; height=&quot;7.39&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot;/&gt;&lt;path class=&quot;cls-3&quot; d=&quot;M412.06,252&quot; transform=&quot;translate(-372.39 -241.25)&quot;/&gt;&lt;path class=&quot;cls-3&quot; d=&quot;M412.67,253.6a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28&quot; transform=&quot;translate(-372.39 -241.25)&quot;/&gt;&lt;path class=&quot;cls-3&quot; d=&quot;M412.67,255.44a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7&quot; transform=&quot;translate(-372.39 -241.25)&quot;/&gt;&lt;path class=&quot;cls-3&quot; d=&quot;M375.39,257.57v77.6c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.66,2.66,0,0,0,0-.37l-.61-78.29a2.52,2.52,0,0,0-2.52-2.5H377.91A2.52,2.52,0,0,0,375.39,257.57Z&quot; transform=&quot;translate(-372.39 -241.25)&quot;/&gt;&lt;rect class=&quot;cls-2&quot; x=&quot;0.53&quot; y=&quot;11.4&quot; width=&quot;42.32&quot; height=&quot;4.79&quot; rx=&quot;2.4&quot; ry=&quot;2.4&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
+          <span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_contents'>contents</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid__roundedtube'>_roundedtube</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span>
+            <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;defs&gt;&lt;style&gt;.cls-1-emptytube{fill:#fff;}.cls-2{fill:#fff;}.cls-2,.cls-3{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-3{fill:none;}&lt;/style&gt;&lt;/defs&gt;&lt;title&gt;Untitled-18&lt;/title&gt;&lt;path class=&quot;cls-1-emptytube&quot; d=&quot;M412.76,285.62c-8.82,5.75-17.91,3.62-26.54.87l-10.47,3v45.4c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.67,2.67,0,0,0,0-.37Z&quot; transform=&quot;translate(-372.39 -241.25)&quot;/&gt;&lt;path class=&quot;cls-1-emptytube&quot; d=&quot;M383.88,285.72a15.52,15.52,0,0,0-8.13-.66v4.44l10.47-3Z&quot; transform=&quot;translate(-372.39 -241.25)&quot;/&gt;&lt;rect class=&quot;cls-2&quot; x=&quot;5.5&quot; y=&quot;2.53&quot; width=&quot;33.11&quot; height=&quot;9.82&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot;/&gt;&lt;rect class=&quot;cls-2&quot; x=&quot;0.25&quot; y=&quot;0.25&quot; width=&quot;42.88&quot; height=&quot;7.39&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot;/&gt;&lt;path class=&quot;cls-3&quot; d=&quot;M412.06,252&quot; transform=&quot;translate(-372.39 -241.25)&quot;/&gt;&lt;path class=&quot;cls-3&quot; d=&quot;M412.67,253.6a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28&quot; transform=&quot;translate(-372.39 -241.25)&quot;/&gt;&lt;path class=&quot;cls-3&quot; d=&quot;M412.67,255.44a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7&quot; transform=&quot;translate(-372.39 -241.25)&quot;/&gt;&lt;path class=&quot;cls-3&quot; d=&quot;M375.39,257.57v77.6c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.66,2.66,0,0,0,0-.37l-.61-78.29a2.52,2.52,0,0,0-2.52-2.5H377.91A2.52,2.52,0,0,0,375.39,257.57Z&quot; transform=&quot;translate(-372.39 -241.25)&quot;/&gt;&lt;rect class=&quot;cls-2&quot; x=&quot;0.53&quot; y=&quot;11.4&quot; width=&quot;42.32&quot; height=&quot;4.79&quot; rx=&quot;2.4&quot; ry=&quot;2.4&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
+          <span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_roundedtube'>roundedtube</span><span class='lparen'>(</span><span class='label'>opened:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>contents:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid__roundedtube'>_roundedtube</span><span class='period'>.</span><span class='id identifier rubyid_translate!'>translate!</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span><span class='int'>70</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="samplecolumn-instance_method">
+  
+    #<strong>samplecolumn</strong>(opened: false, contents: &#39;empty&#39;)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+936
+937
+938
+939
+940
+941
+942
+943
+944
+945
+946
+947
+948
+949
+950</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 936</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_samplecolumn'>samplecolumn</span><span class='lparen'>(</span><span class='label'>opened:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>contents:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_column'>column</span> <span class='op'>=</span>  <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>46.92</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>132.74</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_contents'>contents</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_opened'>opened</span>
+    <span class='id identifier rubyid_column'>column</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span>
+      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;defs&gt;&lt;style&gt;.cls-1_sc{fill:#fff;}.cls-1_sc,.cls-2_sc{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2_sc{fill:none;}&lt;/style&gt;&lt;/defs&gt;&lt;path class=&quot;cls-1_sc&quot; d=&quot;M375.23,260.43V338c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.66,2.66,0,0,0,0-.37L412,260.41a2.52,2.52,0,0,0-2.52-2.5H377.75A2.52,2.52,0,0,0,375.23,260.43Z&quot; transform=&quot;translate(-371.72 -237.72)&quot;/&gt;&lt;rect class=&quot;cls-1_sc&quot; x=&quot;5.5&quot; y=&quot;2.53&quot; width=&quot;33.11&quot; height=&quot;9.82&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot;/&gt;&lt;rect class=&quot;cls-1_sc&quot; x=&quot;3.51&quot; y=&quot;9.99&quot; width=&quot;36.77&quot; height=&quot;4.72&quot; rx=&quot;1.19&quot; ry=&quot;1.19&quot;/&gt;&lt;path class=&quot;cls-1_sc&quot; d=&quot;M377.22,252.44v51.26a1.65,1.65,0,0,0,.85,1.44l5.56,3.06a1.65,1.65,0,0,1,.85,1.44v7.3a1.65,1.65,0,0,0,1.65,1.65h14.54a1.65,1.65,0,0,0,1.65-1.65v-7.25a1.65,1.65,0,0,1,.91-1.48l6.18-3.09a1.65,1.65,0,0,0,.91-1.48V252.44&quot; transform=&quot;translate(-371.72 -237.72)&quot;/&gt;&lt;rect class=&quot;cls-1_sc&quot; x=&quot;14.16&quot; y=&quot;70.95&quot; width=&quot;15.06&quot; height=&quot;6.09&quot; rx=&quot;0.98&quot; ry=&quot;0.98&quot;/&gt;&lt;rect class=&quot;cls-1_sc&quot; x=&quot;0.25&quot; y=&quot;0.25&quot; width=&quot;42.88&quot; height=&quot;7.39&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot;/&gt;&lt;path class=&quot;cls-2_sc&quot; d=&quot;M416.1,248&quot; transform=&quot;translate(-371.72 -237.72)&quot;/&gt;&lt;path class=&quot;cls-2_sc&quot; d=&quot;M411.38,248.51&quot; transform=&quot;translate(-371.72 -237.72)&quot;/&gt;&lt;path class=&quot;cls-2_sc&quot; d=&quot;M412,250.08a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28&quot; transform=&quot;translate(-371.72 -237.72)&quot;/&gt;&lt;path class=&quot;cls-2_sc&quot; d=&quot;M412,251.91a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7&quot; transform=&quot;translate(-371.72 -237.72)&quot;/&gt;&lt;rect class=&quot;cls-1_sc&quot; x=&quot;1.05&quot; y=&quot;17.78&quot; width=&quot;42.32&quot; height=&quot;4.79&quot; rx=&quot;2.4&quot; ry=&quot;2.4&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
+      <span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_contents'>contents</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>no-collector</span><span class='tstring_end'>&#39;</span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_closed'>closed</span>
+    <span class='id identifier rubyid_column'>column</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span>
+      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;defs&gt;&lt;style&gt;.cls-1_sc{fill:#fff;}.cls-1_sc,.cls-2_sc{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2_sc{fill:none;}&lt;/style&gt;&lt;/defs&gt;&lt;rect class=&quot;cls-1_sc&quot; x=&quot;5.5&quot; y=&quot;2.53&quot; width=&quot;33.11&quot; height=&quot;9.82&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot;/&gt;&lt;rect class=&quot;cls-1_sc&quot; x=&quot;3.51&quot; y=&quot;9.99&quot; width=&quot;36.77&quot; height=&quot;4.72&quot; rx=&quot;1.19&quot; ry=&quot;1.19&quot;/&gt;&lt;path class=&quot;cls-1_sc&quot; d=&quot;M377.46,280.13v51.26a1.65,1.65,0,0,0,.85,1.44l5.56,3.06a1.65,1.65,0,0,1,.85,1.44v7.3a1.65,1.65,0,0,0,1.65,1.65h14.54a1.65,1.65,0,0,0,1.65-1.65v-7.25a1.65,1.65,0,0,1,.91-1.48l6.18-3.09a1.65,1.65,0,0,0,.91-1.48V280.13&quot; transform=&quot;translate(-371.95 -265.42)&quot;/&gt;&lt;rect class=&quot;cls-1_sc&quot; x=&quot;14.16&quot; y=&quot;70.95&quot; width=&quot;15.06&quot; height=&quot;6.09&quot; rx=&quot;0.98&quot; ry=&quot;0.98&quot;/&gt;&lt;rect class=&quot;cls-1_sc&quot; x=&quot;0.25&quot; y=&quot;0.25&quot; width=&quot;42.88&quot; height=&quot;7.39&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot;/&gt;&lt;path class=&quot;cls-2_sc&quot; d=&quot;M416.34,275.65&quot; transform=&quot;translate(-371.95 -265.42)&quot;/&gt;&lt;path class=&quot;cls-2_sc&quot; d=&quot;M411.62,276.2&quot; transform=&quot;translate(-371.95 -265.42)&quot;/&gt;&lt;path class=&quot;cls-2_sc&quot; d=&quot;M412.23,277.77a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28&quot; transform=&quot;translate(-371.95 -265.42)&quot;/&gt;&lt;path class=&quot;cls-2_sc&quot; d=&quot;M412.23,279.61a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7&quot; transform=&quot;translate(-371.95 -265.42)&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
+      <span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_column'>column</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span><span class='id identifier rubyid_samplecolumn'>samplecolumn</span><span class='period'>.</span><span class='id identifier rubyid_translate!'>translate!</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span><span class='op'>-</span><span class='int'>70</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='comment'>#default to closed and empty if options could not be matched
+</span>  <span class='kw'>end</span>
+  <span class='id identifier rubyid_column'>column</span><span class='period'>.</span><span class='id identifier rubyid_translate!'>translate!</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span><span class='int'>70</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="screwbottle-instance_method">
+  
+    #<strong>screwbottle</strong>(opened: false, contents: &#39;empty&#39;)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+929
+930
+931
+932
+933
+934</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 929</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_screwbottle'>screwbottle</span><span class='lparen'>(</span><span class='label'>opened:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>contents:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid__screwbottle'>_screwbottle</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>46.92</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>132.74</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid__screwbottle'>_screwbottle</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span>
+      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;defs&gt;&lt;style&gt;.cls-1{fill:#26afe5;}.cls-2,.cls-3{fill:none;}.cls-3,.cls-4{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-4{fill:#fff;}&lt;/style&gt;&lt;/defs&gt;&lt;path class=&quot;cls-1&quot; d=&quot;M377.92,325.7c-4.23-1-8.46.27-11.89,2v31.86a8.73,8.73,0,0,0,8.71,8.71h41.68a8.73,8.73,0,0,0,8.71-8.71V328.25c-9.24.24-7.87,3.46-19.44,7.63S387.64,328,377.92,325.7Z&quot; transform=&quot;translate(-365.78 -243.8)&quot;/&gt;&lt;path class=&quot;cls-2&quot; d=&quot;M369,280.29&quot; transform=&quot;translate(-365.78 -243.8)&quot;/&gt;&lt;rect class=&quot;cls-3&quot; x=&quot;0.25&quot; y=&quot;43.66&quot; width=&quot;59.09&quot; height=&quot;80.08&quot; rx=&quot;8.6&quot; ry=&quot;8.6&quot;/&gt;&lt;path class=&quot;cls-4&quot; d=&quot;M395.58,244c-16.32,0-29.55,3.59-29.55,8V285.6c0,4.42,13.23,8,29.55,8s29.55-3.59,29.55-8V252.05C425.12,247.63,411.89,244,395.58,244Z&quot; transform=&quot;translate(-365.78 -243.8)&quot;/&gt;&lt;ellipse class=&quot;cls-4&quot; cx=&quot;29.8&quot; cy=&quot;8.12&quot; rx=&quot;22.86&quot; ry=&quot;4.76&quot;/&gt;&lt;line class=&quot;cls-3&quot; x1=&quot;5.46&quot; y1=&quot;14.46&quot; x2=&quot;5.46&quot; y2=&quot;41.93&quot;/&gt;&lt;line class=&quot;cls-3&quot; x1=&quot;30.86&quot; y1=&quot;18.98&quot; x2=&quot;30.86&quot; y2=&quot;46.45&quot;/&gt;&lt;line class=&quot;cls-3&quot; x1=&quot;55.9&quot; y1=&quot;12.89&quot; x2=&quot;55.9&quot; y2=&quot;40.36&quot;/&gt;&lt;line class=&quot;cls-3&quot; x1=&quot;44.1&quot; y1=&quot;17.66&quot; x2=&quot;44.1&quot; y2=&quot;45.13&quot;/&gt;&lt;line class=&quot;cls-3&quot; x1=&quot;17.63&quot; y1=&quot;17.66&quot; x2=&quot;17.63&quot; y2=&quot;45.13&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
+      <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_translate!'>translate!</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='int'>70</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tube-instance_method">
+  
+    #<strong>tube</strong>(opened: false, contents: &#39;empty&#39;)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+965
+966
+967
+968
+969
+970
+971
+972
+973
+974
+975
+976
+977
+978</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 965</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tube'>tube</span><span class='lparen'>(</span><span class='label'>opened:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>contents:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tube'>tube</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>46.92</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>132.74</span><span class='rparen'>)</span>
+  
+  <span class='kw'>if</span> <span class='id identifier rubyid_contents'>contents</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_opened'>opened</span>
+    <span class='id identifier rubyid_tube'>tube</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span>
+      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;defs&gt;&lt;style&gt;.cls-1_tube{fill:#fff;}.cls-1_tube,.cls-2_tube{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2_tube{fill:none;}&lt;/style&gt;&lt;/defs&gt;&lt;rect class=&quot;cls-1_tube&quot; x=&quot;5.5&quot; y=&quot;2.53&quot; width=&quot;33.11&quot; height=&quot;9.82&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot;/&gt;&lt;rect class=&quot;cls-1_tube&quot; x=&quot;0.25&quot; y=&quot;0.25&quot; width=&quot;42.88&quot; height=&quot;7.39&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot;/&gt;&lt;path class=&quot;cls-2_tube&quot; d=&quot;M411.36,243.86&quot; transform=&quot;translate(-371.69 -233.08)&quot;/&gt;&lt;path class=&quot;cls-2_tube&quot; d=&quot;M412,245.43a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28&quot; transform=&quot;translate(-371.69 -233.08)&quot;/&gt;&lt;path class=&quot;cls-2_tube&quot; d=&quot;M412,247.27a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7&quot; transform=&quot;translate(-371.69 -233.08)&quot;/&gt;&lt;rect class=&quot;cls-1_tube&quot; x=&quot;0.53&quot; y=&quot;11.4&quot; width=&quot;42.32&quot; height=&quot;4.79&quot; rx=&quot;2.4&quot; ry=&quot;2.4&quot;/&gt;&lt;path class=&quot;cls-2_tube&quot; d=&quot;M374.62,249.27V304.5l11.32,68c.8,4.79,4.61,5.75,7.86,5.09s4.39-5.33,4.39-5.33l13.16-67.79V249.27Z&quot; transform=&quot;translate(-371.69 -233.08)&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
+      <span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_contents'>contents</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_opened'>opened</span>
+    <span class='id identifier rubyid_tube'>tube</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span>
+      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;defs&gt;&lt;style&gt;.cls-1_tube{fill:none;}.cls-1_tube,.cls-2_tube{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2_tube{fill:#fff;}&lt;/style&gt;&lt;/defs&gt;&lt;title&gt;Untitled-1&lt;/title&gt;&lt;path class=&quot;cls-1_tube&quot; d=&quot;M410.51,263.07&quot; transform=&quot;translate(-371.13 -215.85)&quot;/&gt;&lt;path class=&quot;cls-1_tube&quot; d=&quot;M411.12,264.64a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28&quot; transform=&quot;translate(-371.13 -215.85)&quot;/&gt;&lt;path class=&quot;cls-1_tube&quot; d=&quot;M411.12,266.47a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7&quot; transform=&quot;translate(-371.13 -215.85)&quot;/&gt;&lt;rect class=&quot;cls-2_tube&quot; x=&quot;0.25&quot; y=&quot;47.83&quot; width=&quot;42.32&quot; height=&quot;4.79&quot; rx=&quot;2.4&quot; ry=&quot;2.4&quot;/&gt;&lt;path class=&quot;cls-1_tube&quot; d=&quot;M373.78,268.47V323.7l11.32,68c.8,4.79,4.61,5.75,7.86,5.09s4.39-5.33,4.39-5.33l13.16-67.79V268.47Z&quot; transform=&quot;translate(-371.13 -215.85)&quot;/&gt;&lt;rect class=&quot;cls-2_tube&quot; x=&quot;394.99&quot; y=&quot;233.39&quot; width=&quot;33.11&quot; height=&quot;9.82&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot; transform=&quot;translate(236.03 -411.02) rotate(84.22)&quot;/&gt;&lt;rect class=&quot;cls-2_tube&quot; x=&quot;393.55&quot; y=&quot;233.89&quot; width=&quot;42.88&quot; height=&quot;7.39&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot; transform=&quot;translate(238.41 -415.09) rotate(84.22)&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
+      <span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_tube'>tube</span><span class='period'>.</span><span class='id identifier rubyid_translate!'>translate!</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span><span class='int'>70</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1664,12 +2274,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-913
-914
-915</pre>
+1007
+1008
+1009</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 913</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1007</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_closedlid'>closedlid</span>
   <span class='ivar'>@closedlid</span>
@@ -1707,12 +2317,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-913
-914
-915</pre>
+1007
+1008
+1009</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 913</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1007</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_closedtube'>closedtube</span>
   <span class='ivar'>@closedtube</span>
@@ -1750,12 +2360,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-913
-914
-915</pre>
+1007
+1008
+1009</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 913</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1007</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_detection_strip'>detection_strip</span>
   <span class='ivar'>@detection_strip</span>
@@ -1793,12 +2403,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-913
-914
-915</pre>
+1007
+1008
+1009</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 913</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1007</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_openlid'>openlid</span>
   <span class='ivar'>@openlid</span>
@@ -1836,12 +2446,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-913
-914
-915</pre>
+1007
+1008
+1009</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 913</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1007</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_opentube'>opentube</span>
   <span class='ivar'>@opentube</span>
@@ -1879,12 +2489,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-913
-914
-915</pre>
+1007
+1008
+1009</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 913</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1007</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_strip'>strip</span>
   <span class='ivar'>@strip</span>
@@ -1922,12 +2532,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-913
-914
-915</pre>
+1007
+1008
+1009</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 913</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1007</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_striplabel'>striplabel</span>
   <span class='ivar'>@striplabel</span>
@@ -1965,12 +2575,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-913
-914
-915</pre>
+1007
+1008
+1009</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 913</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1007</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tube'>tube</span>
   <span class='ivar'>@tube</span>
@@ -2002,16 +2612,16 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1145
-1146
-1147
-1148
-1149
-1150
-1151</pre>
+1239
+1240
+1241
+1242
+1243
+1244
+1245</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1145</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1239</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_control_band'>control_band</span>
   <span class='id identifier rubyid_band'>band</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>83.1</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>247.45</span><span class='rparen'>)</span>
@@ -2040,12 +2650,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-934
-935
-936</pre>
+1028
+1029
+1030</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 934</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1028</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_downarrow'>downarrow</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_uparrow'>uparrow</span><span class='period'>.</span><span class='id identifier rubyid_mirror_vertical'>mirror_vertical</span><span class='period'>.</span><span class='id identifier rubyid_new_class'>new_class</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>downarrow</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -2070,20 +2680,20 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1104
-1105
-1106
-1107
-1108
-1109
-1110
-1111
-1112
-1113
-1114</pre>
+1198
+1199
+1200
+1201
+1202
+1203
+1204
+1205
+1206
+1207
+1208</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1104</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1198</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fluid_large'>fluid_large</span>
   <span class='id identifier rubyid_fluid'>fluid</span> <span class='op'>=</span> <span class='cvar'>@@tubebb</span><span class='period'>.</span><span class='id identifier rubyid_inst'>inst</span>
@@ -2116,20 +2726,20 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1092
-1093
-1094
-1095
-1096
-1097
-1098
-1099
-1100
-1101
-1102</pre>
+1186
+1187
+1188
+1189
+1190
+1191
+1192
+1193
+1194
+1195
+1196</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1092</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1186</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fluid_medium'>fluid_medium</span>
   <span class='id identifier rubyid_fluid'>fluid</span> <span class='op'>=</span> <span class='cvar'>@@tubebb</span><span class='period'>.</span><span class='id identifier rubyid_inst'>inst</span>
@@ -2162,20 +2772,20 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1080
-1081
-1082
-1083
-1084
-1085
-1086
-1087
-1088
-1089
-1090</pre>
+1174
+1175
+1176
+1177
+1178
+1179
+1180
+1181
+1182
+1183
+1184</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1080</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1174</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fluid_small'>fluid_small</span>
   <span class='id identifier rubyid_fluid'>fluid</span> <span class='op'>=</span> <span class='cvar'>@@tubebb</span><span class='period'>.</span><span class='id identifier rubyid_inst'>inst</span>
@@ -2208,12 +2818,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-924
-925
-926</pre>
+1018
+1019
+1020</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 924</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1018</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_larrow'>larrow</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_rarrow'>rarrow</span><span class='period'>.</span><span class='id identifier rubyid_mirror_horizontal'>mirror_horizontal</span><span class='period'>.</span><span class='id identifier rubyid_new_class'>new_class</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>larrow</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -2238,16 +2848,16 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1161
-1162
-1163
-1164
-1165
-1166
-1167</pre>
+1255
+1256
+1257
+1258
+1259
+1260
+1261</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1161</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1255</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mut_band'>mut_band</span>
   <span class='id identifier rubyid_band'>band</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>83.1</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>247.45</span><span class='rparen'>)</span>
@@ -2276,21 +2886,21 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1116
-1117
-1118
-1119
-1120
-1121
-1122
-1123
-1124
-1125
-1126
-1127</pre>
+1210
+1211
+1212
+1213
+1214
+1215
+1216
+1217
+1218
+1219
+1220
+1221</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1116</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1210</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_powder'>powder</span>
   <span class='id identifier rubyid_powder'>powder</span> <span class='op'>=</span> <span class='cvar'>@@tubebb</span><span class='period'>.</span><span class='id identifier rubyid_inst'>inst</span>
@@ -2324,14 +2934,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-918
-919
-920
-921
-922</pre>
+1012
+1013
+1014
+1015
+1016</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 918</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1012</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rarrow'>rarrow</span>
   <span class='id identifier rubyid_arrow'>arrow</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>33.48</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>38.65</span><span class='rparen'>)</span>
@@ -2358,21 +2968,21 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-956
-957
-958
-959
-960
-961
-962
-963
-964
-965
-966
-967</pre>
+1050
+1051
+1052
+1053
+1054
+1055
+1056
+1057
+1058
+1059
+1060
+1061</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 956</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1050</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tube2mL'>tube2mL</span>
   <span class='id identifier rubyid__tube'>_tube</span> <span class='op'>=</span> <span class='cvar'>@@tubebb</span><span class='period'>.</span><span class='id identifier rubyid_inst'>inst</span>
@@ -2406,14 +3016,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-928
-929
-930
-931
-932</pre>
+1022
+1023
+1024
+1025
+1026</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 928</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1022</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uparrow'>uparrow</span>
   <span class='id identifier rubyid_arrow'>arrow</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>38.65</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>33.48</span><span class='rparen'>)</span>
@@ -2440,16 +3050,16 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1153
-1154
-1155
-1156
-1157
-1158
-1159</pre>
+1247
+1248
+1249
+1250
+1251
+1252
+1253</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1153</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1247</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_wt_band'>wt_band</span>
   <span class='id identifier rubyid_band'>band</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>83.1</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>247.45</span><span class='rparen'>)</span>
