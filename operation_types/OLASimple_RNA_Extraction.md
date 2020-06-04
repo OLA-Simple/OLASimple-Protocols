@@ -29,11 +29,13 @@ end
 
 ### Protocol Code <a href='#' id='protocol'>[hide]</a>
 ```ruby
-needs "OLASimple/OLAConstants"
-needs "OLASimple/OLALib"
-needs "OLASimple/OLAGraphics"
-needs "OLASimple/JobComments"
-needs "OLASimple/OLAKitIDs"
+# frozen_string_literal: true
+
+needs 'OLASimple/OLAConstants'
+needs 'OLASimple/OLALib'
+needs 'OLASimple/OLAGraphics'
+needs 'OLASimple/JobComments'
+needs 'OLASimple/OLAKitIDs'
 
 class Protocol
   include OLAConstants
@@ -41,71 +43,70 @@ class Protocol
   include OLAGraphics
   include JobComments
   include OLAKitIDs
+  include FunctionalSVG
 
   ##########################################
   # INPUT/OUTPUT
   ##########################################
 
-  INPUT = "Plasma"
-  OUTPUT = "Viral RNA"
+  INPUT = 'Plasma'
+  OUTPUT = 'Viral RNA'
 
   ##########################################
   # COMPONENTS
   ##########################################
 
   AREA = PRE_PCR
-  BSC = "BSC"
-  ETHANOL = "molecular grade ethanol"
-  GuSCN_WASTE = "GuSCN waste container"
-  
-  
+  BSC = 'BSC'
+  ETHANOL = 'molecular grade ethanol'
+  GuSCN_WASTE = 'GuSCN waste container'
+
   PACK_HASH = EXTRACTION_UNIT
 
-  THIS_UNIT     = PACK_HASH["Unit Name"]
-  DTT           = THIS_UNIT + PACK_HASH["Components"]["dtt"]
-  LYSIS_BUFFER  = THIS_UNIT + PACK_HASH["Components"]["lysis buffer"]
-  WASH1         = THIS_UNIT + PACK_HASH["Components"]["wash buffer 1"]
-  WASH2         = THIS_UNIT + PACK_HASH["Components"]["wash buffer 2"]
-  SA_WATER      = THIS_UNIT + PACK_HASH["Components"]["sodium azide water"]
-  SAMPLE_COLUMN = THIS_UNIT + PACK_HASH["Components"]["sample column"]
-  RNA_EXTRACT   = THIS_UNIT + PACK_HASH["Components"]["rna extract tube"]
+  THIS_UNIT     = PACK_HASH['Unit Name']
+  DTT           = THIS_UNIT + PACK_HASH['Components']['dtt']
+  LYSIS_BUFFER  = THIS_UNIT + PACK_HASH['Components']['lysis buffer']
+  WASH1         = THIS_UNIT + PACK_HASH['Components']['wash buffer 1']
+  WASH2         = THIS_UNIT + PACK_HASH['Components']['wash buffer 2']
+  SA_WATER      = THIS_UNIT + PACK_HASH['Components']['sodium azide water']
+  SAMPLE_COLUMN = THIS_UNIT + PACK_HASH['Components']['sample column']
+  RNA_EXTRACT   = THIS_UNIT + PACK_HASH['Components']['rna extract tube']
 
   KIT_SVGs = {
-    DTT           => :roundedtube,
-    LYSIS_BUFFER  => :roundedtube,
-    SA_WATER      => :roundedtube,
-    WASH1         => :screwbottle,
-    WASH2         => :screwbottle,
+    DTT => :roundedtube,
+    LYSIS_BUFFER => :roundedtube,
+    SA_WATER => :roundedtube,
+    WASH1 => :screwbottle,
+    WASH2 => :screwbottle,
     SAMPLE_COLUMN => :samplecolumn,
-    RNA_EXTRACT   => :tube,
-  }
+    RNA_EXTRACT => :tube
+  }.freeze
   INPUT_SVG = :roundedtube
 
-  SHARED_COMPONENTS = [DTT, WASH1, WASH2, SA_WATER]
-  PER_SAMPLE_COMPONENTS = [LYSIS_BUFFER, SAMPLE_COLUMN, RNA_EXTRACT]
-  OUTPUT_COMPONENT = "6"
-  
-  CENTRIFUGE_TIME = "1 minute"
+  SHARED_COMPONENTS = [DTT, WASH1, WASH2, SA_WATER].freeze
+  PER_SAMPLE_COMPONENTS = [LYSIS_BUFFER, SAMPLE_COLUMN, RNA_EXTRACT].freeze
+  OUTPUT_COMPONENT = '6'
+
+  CENTRIFUGE_TIME = '1 minute'
 
   # for debugging
-  PREV_COMPONENT = "S"
-  PREV_UNIT = ""
+  PREV_COMPONENT = 'S'
+  PREV_UNIT = ''
 
   def main
-
     this_package = prepare_protocol_operations
 
     introduction
     record_technician_id
     safety_warning
     required_equipment
-    
+
     retrieve_inputs
     kit_num = extract_kit_number(this_package)
     sample_validation_with_multiple_tries(kit_num)
-    
+
     retrieve_and_open_package(this_package)
-    
+
     prepare_buffers
     lyse_samples
     add_ethanol
@@ -119,26 +120,26 @@ class Protocol
     add_wash_1
     centrifuge_columns(flow_instructions: "Discard flow through into #{GuSCN_WASTE}")
     change_collection_tubes
-    
+
     add_wash_2
     centrifuge_columns(flow_instructions: "Discard flow through into #{GuSCN_WASTE}")
     change_collection_tubes
 
     transfer_column_to_e6
     elute
-    incubate(sample_labels.map { |s| "#{SAMPLE_COLUMN}-#{s}" }, "1 minute")
-    centrifuge_columns(flow_instructions: "<b>DO NOT DISCARD FLOW THROUGH</b>")
+    incubate(sample_labels.map { |s| "#{SAMPLE_COLUMN}-#{s}" }, '1 minute')
+    centrifuge_columns(flow_instructions: '<b>DO NOT DISCARD FLOW THROUGH</b>')
 
     finish_up
     disinfect
     store
     cleanup
-
+    wash_self
     accept_comments
-    return {}
+    {}
   end
 
-  # perform initiating steps for operations, 
+  # perform initiating steps for operations,
   # and gather kit package from operations
   # that will be used for this protocol.
   # returns kit package if nothing went wrong
@@ -150,9 +151,9 @@ class Protocol
     operations.make.retrieve interactive: false
 
     if debug
-      labels = ['001','002']
+      labels = %w[001 002]
       operations.each.with_index do |op, i|
-        op.input(INPUT).item.associate(SAMPLE_KEY, labels[i])  
+        op.input(INPUT).item.associate(SAMPLE_KEY, labels[i])
         op.input(INPUT).item.associate(COMPONENT_KEY, PREV_COMPONENT)
         op.input(INPUT).item.associate(UNIT_KEY, PREV_UNIT)
         op.input(INPUT).item.associate(KIT_KEY, '001')
@@ -164,16 +165,14 @@ class Protocol
       op.temporary[:pack_hash] = PACK_HASH
     end
     save_temporary_output_values(operations)
-    
+
     operations.each do |op|
-      op.make_item_and_alias(OUTPUT, "rna extract tube", INPUT)
+      op.make_item_and_alias(OUTPUT, 'rna extract tube', INPUT)
     end
-    
-    kits = operations.running.group_by { |op| op.temporary[:input_kit]}
-    this_package = THIS_UNIT + kits.keys.first
-    if kits.length > 1
-        raise "More than one kit is not supported by this protocol. Please rebatch." 
-    end
+
+    kits = operations.running.group_by { |op| op.temporary[:input_kit] }
+    this_package = kits.keys.first + THIS_UNIT
+    raise 'More than one kit is not supported by this protocol. Please rebatch.' if kits.length > 1
 
     this_package
   end
@@ -182,75 +181,73 @@ class Protocol
     operations.map { |op| op.temporary[:input_sample] }
   end
 
-  def save_user ops
+  def save_user(ops)
     ops.each do |op|
-      username = get_technician_name(self.jid)
+      username = get_technician_name(jid)
       op.associate(:technician, username)
     end
   end
 
   def introduction
     show do
-      title "Welcome to OLASimple RNA Extraction"
-      check "Put on tight gloves. Tight gloves help reduce chances for your gloves to be trapped when closing the tubes which can increase contamination risk."
-      note "In this protocol you will lyse and purify RNA from HIV-infected plasma."
-      check "OLA RNA Extraction is sensitive to contamination. Small contamination from the previously amplified products can cause false positives. Before proceeding, wipe the space and pipettes with 10% bleach (freshly prepared or prepared daily) and 70% ethanol using paper towels."
-      note "RNA is prone to degradation by RNase present in our eyes, skin, and breath. Avoid opening tubes outside the Biosafety Cabinet (BSC)."
-      note "Change gloves after touching any common surface (such as a refrigerator door handle) as your gloves now can be contaminated by RNase or other previously amplified products that can cause false positives."
-      check "Before starting this protocol, make sure you have access to molecular grade ethanol (~10 mL). Do not use other grades of ethanol as this will negatively affect the RNA extraction yield."
-
+      title 'Welcome to OLASimple RNA Extraction'
+      note 'In this protocol you will lyse and purify RNA from HIV-infected plasma.'
+      check 'OLA RNA Extraction is sensitive to contamination. Small contamination from the previously amplified products can cause false positives. Before proceeding, wipe the space and pipettes with 10% bleach (freshly prepared or prepared daily) and 70% ethanol using paper towels.'
+      note 'RNA is prone to degradation by RNase present in our eyes, skin, and breath. Avoid opening tubes outside the Biosafety Cabinet (BSC).'
+      check 'Before starting this protocol, make sure you have access to molecular grade ethanol (~10 mL). Do not use other grades of ethanol as this will negatively affect the RNA extraction yield.'
     end
-
   end
 
   def safety_warning
     show do
-      title "Review the safety warnings"
-      warning "You will be working with infectious materials."
-      note "Do <b>ALL</b> work in a biosafety cabinet (#{BSC.bold})"
-      note "Always wear a lab coat and gloves for this protocol."
+      title 'Review the safety warnings'
+      warning 'You will be working with infectious materials.'
       warning "Do not mix #{LYSIS_BUFFER} or #{WASH1} with bleach, as this will generate toxic cyanide gas. #{LYSIS_BUFFER} AND #{WASH1} waste must be discarded appropriately based on guidelines for GuSCN handling waste"
-      check "Put on a lab coat and \"doubled\" gloves now."
+      note 'Use tight gloves. Tight gloves help reduce chances for your gloves to be trapped when closing the tubes which can increase contamination risk.'
+      note "Do <b>ALL</b> work in a biosafety cabinet (#{BSC.bold})"
+      note 'Always wear a lab coat and gloves for this protocol. We will use two layers of gloves for parts of this protocol.'
+      note 'Change outer gloves after touching any common surface (such as a refrigerator door handle) as your gloves now can be contaminated by RNase or other previously amplified products that can cause false positives.'
+      check 'Put on a lab coat and "doubled" gloves now.'
     end
   end
 
   def required_equipment
     show do
-      title "Get required equipment"
+      title 'Get required equipment'
       note "You will need the following equipment in the #{BSC.bold}"
       materials = [
-          "P1000 pipette and filter tips",
-          "P200 pipette and filter tips",
-          "P20 pipette and filter tips",
-          "Vortex mixer",
-          "Cold tube rack",
-          "Timer",
-          "Bleach in a beaker",
-          "70% v/v ethanol",
-          "Molecular grade ethanol"
+        'P1000 pipette and filter tips',
+        'P200 pipette and filter tips',
+        'P20 pipette and filter tips',
+        'Vortex mixer',
+        'Cold tube rack',
+        'Timer',
+        'Bleach in a beaker',
+        '70% v/v ethanol',
+        'Molecular grade ethanol'
       ]
       materials.each do |m|
         check m
       end
     end
   end
-  
+
   def retrieve_and_open_package(this_package)
     show do
       title "Take package #{this_package.bold} from the #{FRIDGE_PRE} and place on the #{BENCH_PRE} in the #{BSC}"
-      check "Grab package"
-      check "Remove the <b>outside layer</b> of gloves (since you just touched the door knob)."
-      check "Put on a new outside layer of gloves."
+      check 'Grab package'
+      check 'Remove the <b>outside layer</b> of gloves (since you just touched the door knob).'
+      check 'Put on a new outside layer of gloves.'
     end
-    
-    show_open_package(this_package, "", 0) do
+
+    show_open_package(this_package, '', 0) do
       img = kit_image
-      check "Check that the following are in the pack:"
+      check 'Check that the following are in the pack:'
       note display_svg(img, 0.75)
-      note "Arrange tubes on plastic rack for later use."
+      note 'Arrange tubes on plastic rack for later use.'
     end
   end
-  
+
   def kit_image
     grid = SVGGrid.new(PER_SAMPLE_COMPONENTS.size + SHARED_COMPONENTS.size, operations.size, 80, 100)
     initial_contents = {
@@ -260,9 +257,9 @@ class Protocol
       WASH1 => 'full',
       WASH2 => 'full',
       SAMPLE_COLUMN => 'empty',
-      RNA_EXTRACT => 'empty',
+      RNA_EXTRACT => 'empty'
     }
-    
+
     SHARED_COMPONENTS.each_with_index do |component, i|
       svg = draw_svg(KIT_SVGs[component], svg_label: component, opened: false, contents: initial_contents[component])
       grid.add(svg, i, 0)
@@ -279,31 +276,30 @@ class Protocol
     grid.align!('center-left')
     img = SVGElement.new(children: [grid], boundx: 1000, boundy: 300).translate!(30, 50)
   end
-  
-  
+
   def retrieve_inputs
     input_sample_ids = operations.map do |op|
       op.input_ref(INPUT)
     end
-    
+
     grid = SVGGrid.new(input_sample_ids.size, 1, 80, 100)
-    input_sample_ids.each_with_index do |s,i|
+    input_sample_ids.each_with_index do |s, i|
       svg = draw_svg(INPUT_SVG, svg_label: s.split('-').join("\n"), opened: false, contents: 'full')
       grid.add(svg, i, 0)
     end
-    
+
     img = SVGElement.new(children: [grid], boundx: 1000, boundy: 200).translate!(0, -30)
     show do
-      title "Retrieve Samples"
+      title 'Retrieve Samples'
       note display_svg(img, 0.75)
       check "Take #{input_sample_ids.to_sentence} from #{FRIDGE_PRE}"
     end
   end
-  
+
   # helper method for simple transfers in this protocol
   def transfer_and_vortex(title, from, to, volume_ul, warning: nil, to_contents: 'empty', to_svg_override: nil, from_svg_override: nil)
     pipette, extra_note = pipette_decision(volume_ul)
-    
+
     from_component, from_sample_num = from.split('-')
     to_component, to_sample_num = to.split('-')
     from_svg = from_svg_override || KIT_SVGs[from_component]
@@ -313,9 +309,9 @@ class Protocol
       from_svg = draw_svg(from_svg, svg_label: from_label, opened: true, contents: 'full')
       to_label = [to_component, to_sample_num].join("\n")
       to_svg = draw_svg(to_svg, svg_label: to_label, opened: true, contents: to_contents)
-      img = make_transfer(from_svg, to_svg, 250, "#{volume_ul}ul", "(#{pipette})")
+      img = make_transfer(from_svg, to_svg, 300, "#{volume_ul}ul", "(#{pipette})")
     end
-    
+
     show do
       title title
       check "Transfer <b>#{volume_ul}uL</b> of <b>#{from}</b> into <b>#{to}</b> using a #{pipette} pipette."
@@ -327,18 +323,18 @@ class Protocol
       check "Centrifuge <b>#{to}</b> for <b>5 seconds</b>."
     end
   end
-  
+
   def pipette_decision(volume_ul)
     if volume_ul <= 20
-      return P20_PRE
+      P20_PRE
     elsif volume_ul <= 200
-      return P200_PRE
+      P200_PRE
     elsif volume_ul <= 1000
-      return P1000_PRE
+      P1000_PRE
     else
       factor = volume_ul.fdiv(1000).ceil
       split_volume = volume_ul.fdiv(factor)
-      return P1000_PRE, "Split transfer into <b>#{factor}</b> seperate transfers of <b>#{split_volume}uL</b>."
+      [P1000_PRE, "Split transfer into <b>#{factor}</b> seperate transfers of <b>#{split_volume}uL</b>."]
     end
   end
 
@@ -348,16 +344,17 @@ class Protocol
       title 'Incubate Sample Solutions'
       note "Let <b>#{samples.to_sentence}</b> incubate for <b>#{time}</b> at room temperature."
       check "Set a timer for <b>#{time}</b>"
+      note "Do not proceed until time has elapsed."
     end
   end
 
   def centrifuge_columns(flow_instructions: nil)
-    columns = sample_labels.map { |s| "#{SAMPLE_COLUMN}-#{s}"}
-    
+    columns = sample_labels.map { |s| "#{SAMPLE_COLUMN}-#{s}" }
+
     show do
       title " Centrifuge Columns for #{CENTRIFUGE_TIME}"
-      warning "Ensure both tube caps are closed"
-      raw centrifuge_proc("Column", columns, CENTRIFUGE_TIME, "", AREA)
+      warning 'Ensure both tube caps are closed'
+      raw centrifuge_proc('Column', columns, CENTRIFUGE_TIME, '', AREA)
       check flow_instructions if flow_instructions
     end
   end
@@ -365,58 +362,58 @@ class Protocol
   def prepare_buffers
     # add sa water to dtt/trna
     transfer_and_vortex(
-        "Prepare #{DTT}", 
-        SA_WATER, 
-        DTT, 
-        25,
-        to_contents: 'full'
+      "Prepare #{DTT}",
+      SA_WATER,
+      DTT,
+      25,
+      to_contents: 'full'
     )
 
     # add dtt solution to lysis buffer
     operations.each do |op|
       transfer_and_vortex(
-        "Prepare #{LYSIS_BUFFER}-#{op.temporary[:output_sample]}", 
-        DTT, 
-        "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}", 
+        "Prepare #{LYSIS_BUFFER}-#{op.temporary[:output_sample]}",
+        DTT,
+        "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}",
         10,
         to_contents: 'full'
       )
-    end    
+    end
 
     # prepare wash buffer 2 with ethanaol
     transfer_and_vortex(
-      "Prepare #{WASH2}", 
-      ETHANOL, 
-      WASH2, 
+      "Prepare #{WASH2}",
+      ETHANOL,
+      WASH2,
       1600,
       warning: 'Do not use other grades of ethanol.',
       to_contents: 'full'
     )
   end
-  
+
   # transfer plasma Samples into lysis buffer and incubate
   def lyse_samples
     operations.each do |op|
       transfer_and_vortex(
-        "Lyse Sample #{op.input_ref(INPUT)}", 
-        "#{op.input_ref(INPUT)}",
-        "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}", 
+        "Lyse Sample #{op.input_ref(INPUT)}",
+        op.input_ref(INPUT).to_s,
+        "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}",
         300,
         to_contents: 'full',
         from_svg_override: INPUT_SVG
       )
     end
-    
+
     lysed_samples = operations.map { |op| "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}" }
-    incubate(lysed_samples, "15 minutes")
+    incubate(lysed_samples, '15 minutes')
   end
 
   def add_ethanol
     operations.each do |op|
       transfer_and_vortex(
-        "Add Buffer Ethanol to #{LYSIS_BUFFER}-#{op.temporary[:output_sample]}", 
-        ETHANOL, 
-        "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}", 
+        "Add Buffer Ethanol to #{LYSIS_BUFFER}-#{op.temporary[:output_sample]}",
+        ETHANOL,
+        "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}",
         1200,
         to_contents: 'full'
       )
@@ -430,45 +427,45 @@ class Protocol
   end
 
   def change_collection_tubes
-    sample_columns = operations.map { |op| "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}"}
+    sample_columns = operations.map { |op| "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}" }
     show do
       title 'Change Collection Tubes'
       sample_columns.each do |column|
         check "Transfer <b>#{column}</b> to a new collection tube."
       end
-      note "Discard previous collection tubes."
+      note 'Discard previous collection tubes.'
     end
   end
 
   def add_wash_1
-    sample_columns = operations.each do |op| 
+    sample_columns = operations.each do |op|
       column = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}"
       transfer_carefully(WASH1, column, 500, from_type: 'buffer', to_type: 'column', to_contents: 'full')
     end
   end
 
   def add_wash_2
-    sample_columns = operations.each do |op| 
+    sample_columns = operations.each do |op|
       column = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}"
       transfer_carefully(WASH2, column, 500, from_type: 'buffer', to_type: 'column', to_contents: 'full')
     end
   end
-  
+
   def transfer_carefully(from, to, volume_ul, from_type: nil, to_type: nil, to_contents: nil)
     pipette, extra_note = pipette_decision(volume_ul)
-      
+
     from_component = from.split('-')[0]
     to_component = to.split('-')[0]
-    
+
     img = nil
     if KIT_SVGs[from_component] && KIT_SVGs[to_component]
       from_label = from.split('-').join("\n")
       from_svg = draw_svg(KIT_SVGs[from_component], svg_label: from_label, opened: true, contents: 'full')
       to_label = to.split('-').join("\n")
       to_svg = draw_svg(KIT_SVGs[to_component], svg_label: to_label, opened: true, contents: to_contents)
-      img = make_transfer(from_svg, to_svg, 250, "#{volume_ul}ul", "(#{pipette})")
+      img = make_transfer(from_svg, to_svg, 300, "#{volume_ul}ul", "(#{pipette})")
     end
-    show do 
+    show do
       title "Add #{from_type || from} to #{to_type || to}"
       note "<b>Carefully</b> open #{to_type} <b>#{to}</b> lid."
       check "<b>Carefully</b> Add <b>#{volume_ul}uL</b> of #{from_type} <b>#{from}</b> to <b>#{to}</b> using a #{pipette} pipette."
@@ -482,7 +479,7 @@ class Protocol
   def transfer_column_to_e6
     show do
       title 'Transfer Columns'
-      warning "Make sure the bottom of the E5 and E6 columns  did not touch any fluid from the previous collection tubes. When in doubt, centrifuge for 1 more minute and replace collection tubes again."
+      warning 'Make sure the bottom of the E5 and E6 columns  did not touch any fluid from the previous collection tubes. When in doubt, centrifuge for 1 more minute and replace collection tubes again.'
       operations.each do |op|
         column = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}"
         extract_tube = "#{RNA_EXTRACT}-#{op.temporary[:output_sample]}"
@@ -492,9 +489,9 @@ class Protocol
   end
 
   def elute
-    show do 
+    show do
       title 'Add Elution Buffer'
-      warning "Add buffer to center of columns"
+      warning 'Add buffer to center of columns'
       operations.each do |op|
         column = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}"
         check "Add <b>60uL</b> from <b>#{SA_WATER}</b> to column <b>#{column}</b>"
@@ -504,137 +501,43 @@ class Protocol
 
   def finish_up
     show do
-      title "Prepare Samples for Storage"
+      title 'Prepare Samples for Storage'
       operations.each do |op|
         column = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}"
         extract_tube = "#{RNA_EXTRACT}-#{op.temporary[:output_sample]}"
         check "Remove column <b>#{column}</b> from <b>#{extract_tube}</b>, and discard <b>#{column} in #{WASTE_PRE}</b>"
       end
-      extract_tubes = sample_labels.map { |s| "#{RNA_EXTRACT}-#{s}"}
+      extract_tubes = sample_labels.map { |s| "#{RNA_EXTRACT}-#{s}" }
       check "Place <b>#{extract_tubes.to_sentence}</b> on cold rack"
-    end
-  end
-
-  def disinfect
-    show do
-      title 'Disinfect Items'
-      check 'Spray and wipe down all reagent and sample tubes with bleach and ethanol.'
     end
   end
 
   def store
     show do
       title 'Store Items'
-      extract_tubes = sample_labels.map { |s| "#{RNA_EXTRACT}-#{s}"}
+      extract_tubes = sample_labels.map { |s| "#{RNA_EXTRACT}-#{s}" }
       note "Store <b>#{extract_tubes.to_sentence}</b> in the fridge on a cold rack if the amplification module will be proceeded immediately."
-      
       note "Store <b>#{extract_tubes.to_sentence}</b> in -20C freezer if proceeding with the amplification module later."
     end
   end
 
   def cleanup
     show do
-      title "Clean up Waste"
+      title 'Clean up Waste'
       warning "DO NOT dispose of liquid waste and bleach into #{GuSCN_WASTE}, this can produce dangerous gas."
-      bullet "Dispose of liquid waste in bleach down the sink with running water."
+      bullet 'Dispose of liquid waste in bleach down the sink with running water.'
       bullet "Dispose of remaining tubes into #{WASTE_PRE}."
+      bullet "Dispose of #{GuSCN_WASTE} in <a special way that we haven't figured out yet.>"
     end
 
     show do
-      title "Clean Biosafety Cabinet (BSC)"
-      note "Place items in the BSC off to the side."
-      note "Spray surface of BSC with 10% bleach. Wipe clean using paper towel."
-      note "Spray surface of BSC with 70% ethanol. Wipe clean using paper towel."
+      title 'Clean Biosafety Cabinet (BSC)'
+      note 'Place items in the BSC off to the side.'
+      note 'Spray surface of BSC with 10% bleach. Wipe clean using paper towel.'
+      note 'Spray surface of BSC with 70% ethanol. Wipe clean using paper towel.'
       note "After cleaning, dispose of gloves and paper towels in #{WASTE_PRE}."
     end
   end
-
-  
-  
-  ####################################################################################
-  #### SVGs                                                                       ####
-  ####################################################################################
-  def roundedtube(opened: false, contents: 'empty')
-    _roundedtube = SVGElement.new(boundx: 46.92, boundy: 132.74)
-    _roundedtube.add_child(
-        '<svg><defs><style>.cls-1{fill:#26afe5;}.cls-2{fill:#fff;}.cls-2,.cls-3{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-3{fill:none;}</style></defs><title>Untitled-18</title><path class="cls-1" d="M412.76,285.62c-8.82,5.75-17.91,3.62-26.54.87l-10.47,3v45.4c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.67,2.67,0,0,0,0-.37Z" transform="translate(-372.39 -241.25)"/><path class="cls-1" d="M383.88,285.72a15.52,15.52,0,0,0-8.13-.66v4.44l10.47-3Z" transform="translate(-372.39 -241.25)"/><rect class="cls-2" x="5.5" y="2.53" width="33.11" height="9.82" rx="2.36" ry="2.36"/><rect class="cls-2" x="0.25" y="0.25" width="42.88" height="7.39" rx="2.36" ry="2.36"/><path class="cls-3" d="M412.06,252" transform="translate(-372.39 -241.25)"/><path class="cls-3" d="M412.67,253.6a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28" transform="translate(-372.39 -241.25)"/><path class="cls-3" d="M412.67,255.44a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7" transform="translate(-372.39 -241.25)"/><path class="cls-3" d="M375.39,257.57v77.6c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.66,2.66,0,0,0,0-.37l-.61-78.29a2.52,2.52,0,0,0-2.52-2.5H377.91A2.52,2.52,0,0,0,375.39,257.57Z" transform="translate(-372.39 -241.25)"/><rect class="cls-2" x="0.53" y="11.4" width="42.32" height="4.79" rx="2.4" ry="2.4"/></svg>'
-        ).translate!(0,70)
-  end
-  
-  def screwbottle(opened: false, contents: 'empty')
-    _screwbottle = SVGElement.new(boundx: 46.92, boundy: 132.74)
-    _screwbottle.add_child(
-        '<svg><defs><style>.cls-1{fill:#26afe5;}.cls-2,.cls-3{fill:none;}.cls-3,.cls-4{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-4{fill:#fff;}</style></defs><path class="cls-1" d="M377.92,325.7c-4.23-1-8.46.27-11.89,2v31.86a8.73,8.73,0,0,0,8.71,8.71h41.68a8.73,8.73,0,0,0,8.71-8.71V328.25c-9.24.24-7.87,3.46-19.44,7.63S387.64,328,377.92,325.7Z" transform="translate(-365.78 -243.8)"/><path class="cls-2" d="M369,280.29" transform="translate(-365.78 -243.8)"/><rect class="cls-3" x="0.25" y="43.66" width="59.09" height="80.08" rx="8.6" ry="8.6"/><path class="cls-4" d="M395.58,244c-16.32,0-29.55,3.59-29.55,8V285.6c0,4.42,13.23,8,29.55,8s29.55-3.59,29.55-8V252.05C425.12,247.63,411.89,244,395.58,244Z" transform="translate(-365.78 -243.8)"/><ellipse class="cls-4" cx="29.8" cy="8.12" rx="22.86" ry="4.76"/><line class="cls-3" x1="5.46" y1="14.46" x2="5.46" y2="41.93"/><line class="cls-3" x1="30.86" y1="18.98" x2="30.86" y2="46.45"/><line class="cls-3" x1="55.9" y1="12.89" x2="55.9" y2="40.36"/><line class="cls-3" x1="44.1" y1="17.66" x2="44.1" y2="45.13"/><line class="cls-3" x1="17.63" y1="17.66" x2="17.63" y2="45.13"/></svg>'
-        ).translate!(0, 70)
-  end
-  
-  def samplecolumn(opened: false, contents: 'empty')
-    column =  SVGElement.new(boundx: 46.92, boundy: 132.74)
-    if contents == 'empty' && !opened
-      column.add_child(
-        '<svg><defs><style>.cls-1_sc{fill:#fff;}.cls-1_sc,.cls-2_sc{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2_sc{fill:none;}</style></defs><path class="cls-1_sc" d="M375.23,260.43V338c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.66,2.66,0,0,0,0-.37L412,260.41a2.52,2.52,0,0,0-2.52-2.5H377.75A2.52,2.52,0,0,0,375.23,260.43Z" transform="translate(-371.72 -237.72)"/><rect class="cls-1_sc" x="5.5" y="2.53" width="33.11" height="9.82" rx="2.36" ry="2.36"/><rect class="cls-1_sc" x="3.51" y="9.99" width="36.77" height="4.72" rx="1.19" ry="1.19"/><path class="cls-1_sc" d="M377.22,252.44v51.26a1.65,1.65,0,0,0,.85,1.44l5.56,3.06a1.65,1.65,0,0,1,.85,1.44v7.3a1.65,1.65,0,0,0,1.65,1.65h14.54a1.65,1.65,0,0,0,1.65-1.65v-7.25a1.65,1.65,0,0,1,.91-1.48l6.18-3.09a1.65,1.65,0,0,0,.91-1.48V252.44" transform="translate(-371.72 -237.72)"/><rect class="cls-1_sc" x="14.16" y="70.95" width="15.06" height="6.09" rx="0.98" ry="0.98"/><rect class="cls-1_sc" x="0.25" y="0.25" width="42.88" height="7.39" rx="2.36" ry="2.36"/><path class="cls-2_sc" d="M416.1,248" transform="translate(-371.72 -237.72)"/><path class="cls-2_sc" d="M411.38,248.51" transform="translate(-371.72 -237.72)"/><path class="cls-2_sc" d="M412,250.08a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28" transform="translate(-371.72 -237.72)"/><path class="cls-2_sc" d="M412,251.91a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7" transform="translate(-371.72 -237.72)"/><rect class="cls-1_sc" x="1.05" y="17.78" width="42.32" height="4.79" rx="2.4" ry="2.4"/></svg>'
-        )
-    elsif contents == 'no-collector' && closed
-      column.add_child(
-        '<svg><defs><style>.cls-1_sc{fill:#fff;}.cls-1_sc,.cls-2_sc{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2_sc{fill:none;}</style></defs><rect class="cls-1_sc" x="5.5" y="2.53" width="33.11" height="9.82" rx="2.36" ry="2.36"/><rect class="cls-1_sc" x="3.51" y="9.99" width="36.77" height="4.72" rx="1.19" ry="1.19"/><path class="cls-1_sc" d="M377.46,280.13v51.26a1.65,1.65,0,0,0,.85,1.44l5.56,3.06a1.65,1.65,0,0,1,.85,1.44v7.3a1.65,1.65,0,0,0,1.65,1.65h14.54a1.65,1.65,0,0,0,1.65-1.65v-7.25a1.65,1.65,0,0,1,.91-1.48l6.18-3.09a1.65,1.65,0,0,0,.91-1.48V280.13" transform="translate(-371.95 -265.42)"/><rect class="cls-1_sc" x="14.16" y="70.95" width="15.06" height="6.09" rx="0.98" ry="0.98"/><rect class="cls-1_sc" x="0.25" y="0.25" width="42.88" height="7.39" rx="2.36" ry="2.36"/><path class="cls-2_sc" d="M416.34,275.65" transform="translate(-371.95 -265.42)"/><path class="cls-2_sc" d="M411.62,276.2" transform="translate(-371.95 -265.42)"/><path class="cls-2_sc" d="M412.23,277.77a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28" transform="translate(-371.95 -265.42)"/><path class="cls-2_sc" d="M412.23,279.61a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7" transform="translate(-371.95 -265.42)"/></svg>'
-        )
-    else
-      column.add_child(samplecolumn.translate!(0,-70)) #default to closed and empty if options could not be matched
-    end
-    column.translate!(0,70)
-  end
-  
-  def collectiontube(contents: 'empty')
-    ctube = SVGElement.new(boundx: 46.92, boundy: 132.74)
-    if contents == 'empty'
-      ctube.add_child(
-        '<svg><defs><style>.cls-1_collection_tube{fill:none;stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}</style></defs><path class="cls-1_collection_tube" d="M377.69,251.62v77.6c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.66,2.66,0,0,0,0-.37l-.61-78.29a2.52,2.52,0,0,0-2.52-2.5H380.21A2.52,2.52,0,0,0,377.69,251.62Z" transform="translate(-374.97 -246.46)"/><rect class="cls-1_collection_tube" x="0.25" y="0.25" width="42.32" height="4.79" rx="2.4" ry="2.4"/></svg>'
-        )
-    elsif contents == 'full'
-      ctube.add_child(
-        '<svg><defs><style>.cls-1_collection_tube{fill:#26afe5;}.cls-2_collection_tube{fill:#fff;}.cls-2_collection_tube,.cls-3_collection_tube{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-3_collection_tube{fill:none;}</style></defs><path class="cls-1_collection_tube" d="M412.76,285.62c-8.82,5.75-17.91,3.62-26.54.87l-10.47,3v45.4c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.67,2.67,0,0,0,0-.37Z" transform="translate(-372.39 -241.25)"/><path class="cls-1_collection_tube" d="M383.88,285.72a15.52,15.52,0,0,0-8.13-.66v4.44l10.47-3Z" transform="translate(-372.39 -241.25)"/><rect class="cls-2_collection_tube" x="5.5" y="2.53" width="33.11" height="9.82" rx="2.36" ry="2.36"/></svg>'
-        )
-    end
-  end
-  
-  def tube(opened: false, contents: 'empty')
-    tube = SVGElement.new(boundx: 46.92, boundy: 132.74)
-    
-    if contents == 'empty' && !opened
-      tube.add_child(
-        '<svg><defs><style>.cls-1_tube{fill:#fff;}.cls-1_tube,.cls-2_tube{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2_tube{fill:none;}</style></defs><rect class="cls-1_tube" x="5.5" y="2.53" width="33.11" height="9.82" rx="2.36" ry="2.36"/><rect class="cls-1_tube" x="0.25" y="0.25" width="42.88" height="7.39" rx="2.36" ry="2.36"/><path class="cls-2_tube" d="M411.36,243.86" transform="translate(-371.69 -233.08)"/><path class="cls-2_tube" d="M412,245.43a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28" transform="translate(-371.69 -233.08)"/><path class="cls-2_tube" d="M412,247.27a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7" transform="translate(-371.69 -233.08)"/><rect class="cls-1_tube" x="0.53" y="11.4" width="42.32" height="4.79" rx="2.4" ry="2.4"/><path class="cls-2_tube" d="M374.62,249.27V304.5l11.32,68c.8,4.79,4.61,5.75,7.86,5.09s4.39-5.33,4.39-5.33l13.16-67.79V249.27Z" transform="translate(-371.69 -233.08)"/></svg>'
-        )
-    elsif contents == 'empty' && opened
-      tube.add_child(
-        '<svg><defs><style>.cls-1_tube{fill:none;}.cls-1_tube,.cls-2_tube{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2_tube{fill:#fff;}</style></defs><title>Untitled-1</title><path class="cls-1_tube" d="M410.51,263.07" transform="translate(-371.13 -215.85)"/><path class="cls-1_tube" d="M411.12,264.64a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28" transform="translate(-371.13 -215.85)"/><path class="cls-1_tube" d="M411.12,266.47a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7" transform="translate(-371.13 -215.85)"/><rect class="cls-2_tube" x="0.25" y="47.83" width="42.32" height="4.79" rx="2.4" ry="2.4"/><path class="cls-1_tube" d="M373.78,268.47V323.7l11.32,68c.8,4.79,4.61,5.75,7.86,5.09s4.39-5.33,4.39-5.33l13.16-67.79V268.47Z" transform="translate(-371.13 -215.85)"/><rect class="cls-2_tube" x="394.99" y="233.39" width="33.11" height="9.82" rx="2.36" ry="2.36" transform="translate(236.03 -411.02) rotate(84.22)"/><rect class="cls-2_tube" x="393.55" y="233.89" width="42.88" height="7.39" rx="2.36" ry="2.36" transform="translate(238.41 -415.09) rotate(84.22)"/></svg>'
-        )
-    end
-    tube.translate!(0,70)
-  end
-  
-  # svg_func: a symbol method name for a function that returns an SVGElement
-  # svg_label: label for svg
-  # opts: option hash to be applied to svg_func as named parameters
-  #
-  # example: svg = draw_svg(:tube, svg_label: "Hello\nWorld", opened: true, full: true)
-  def draw_svg(svg_func, svg_label: nil, **opts)
-    svg = method(svg_func).call(**opts)
-    svg = label_object(svg, svg_label) if svg_label
-    svg
-  end
-  
-  def label_object(svg, _label)
-    def label_helper(svg, labels, offsety = 0)
-      l = label(labels.shift, "font-size".to_sym => 25)
-      l.align!('center-center')
-      l.translate!(svg.boundx / 2, svg.boundy / 2 + offsety.to_i)
-      svg.add_child(l)
-      return label_helper(svg, labels, offsety + 25) unless labels.empty?
-      return svg
-    end
-    
-    labels = _label.split("\n")
-    return label_helper(svg, labels, 0)
-  end
 end
+
 ```
