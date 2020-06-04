@@ -1,12 +1,11 @@
 module OLAKits
   def self.rt_pcr()
     {
-        "name" => "uw kit",
+        "name" => "rt pcr kit",
         "sample prep" => {
-            "Unit Name" => "A",
+            "Unit Name" => "S",
             "Components" => {
-                "sample tube 1" => "AA",
-                "sample tube 2" => "AB",
+                "sample tube" => ""
             }
         },
         "extraction" => {
@@ -84,7 +83,7 @@ module OLAKits
                 "Y181C",
                 "M184V",
                 "G190A",
-                "UNKNOWN"
+                "X"
             ],
             "Mutation Colors" => ["red", "green","yellow", "blue", "purple", "white", "gray"]
 
