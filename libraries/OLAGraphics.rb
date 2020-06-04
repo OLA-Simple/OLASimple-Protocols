@@ -151,7 +151,7 @@ EOF
     max_y = elements.map {|e| (Vector[e.x, e.y] + e.get_abs_anchor('center-bottom'))[1]}.max
     svg = SVGElement.new(
         children: elements,
-        boundx: 700,
+        boundx: 1000,
         boundy: 300,
         )
     svg.translate!(20)
@@ -270,7 +270,7 @@ EOF
     ligation_tubes.align_with(from, 'center-right').align!('center-left')
     ligation_label = label("ligation tubes", "font-size".to_sym => 25)
     # ligation_label.align_with(ligation_tubes, 'center-bottom').align!('center-top')
-    svg = self.make_transfer(from, ligation_tubes, 200, "#{vol}uL", bottom_label)
+    svg = self.make_transfer(from, ligation_tubes, 300, "#{vol}uL", bottom_label)
     svg.translate!(20)
     svg.boundy = svg.boundy - 20
     svg.boundx = 700
