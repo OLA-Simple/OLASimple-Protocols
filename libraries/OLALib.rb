@@ -314,7 +314,7 @@ module OLALib
       op.temporary[:input_unit] = unit
       op.temporary[:input_component] = component
       op.temporary[:input_sample] = sample
-      op.temporary[:input_kit_and_unit] = [unit, kit].join('')
+      op.temporary[:input_kit_and_unit] = [kit, unit].join('')
     end
   end
   
@@ -329,7 +329,7 @@ module OLALib
       op.temporary[:output_kit] = op.temporary[:input_kit]
       op.temporary[:output_unit] = op.temporary[:pack_hash][UNIT_NAME_FIELD_VALUE]
       op.temporary[:output_sample] = op.temporary[:input_sample]
-      op.temporary[:output_kit_and_unit] = [op.temporary[:output_unit], op.temporary[:output_kit]].join('')
+      op.temporary[:output_kit_and_unit] = [op.temporary[:output_kit], op.temporary[:output_unit]].join('')
       op.temporary[:output_number_of_samples] = op.temporary[:pack_hash][NUM_SAMPLES_FIELD_VALUE]
     end
   end
@@ -464,6 +464,13 @@ module OLALib
     return resp[:choice] == "Enable expert mode"
   end
 
+  def wash_self
+    show do
+      title "Discard gloves and wash hands"
+      check "After clicking #{'OK'.quote.bold}, discard your gloves and wash your hands with soap."
+    end
+  end
+
   def check_for_tube_defects myops
     # show do
     defects = show do
@@ -484,15 +491,11 @@ module OLALib
   end
 
   def area_preparation which_area, materials, other_area
-    show do
-     title "Put on a pair of gloves"
-    end
 
     show do
       title "#{which_area.cap} preparation"
 
       note "You will be doing the protocol in the #{which_area.bold} area"
-      warning "Put on a pair of gloves now"
       warning "Keep all materials in the #{which_area.bold} area separate from the #{other_area.bold} area"
       note "Before continuing, make sure you have the following items in the #{which_area.bold} area:"
       materials.each do |i|
@@ -525,7 +528,14 @@ module OLALib
         note "Tear open all smaller packages."
       end
       self.run(&Proc.new) if block_given?
-      check "Discard the packaging material in the paper box on your right."
+      check "Discard the packaging material."
+    end
+  end
+
+  def disinfect
+    show do
+      title 'Disinfect Items'
+      check 'Spray and wipe down all reagent and sample tubes with bleach and ethanol.'
     end
   end
 
