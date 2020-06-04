@@ -1,4 +1,4 @@
-# OLA Simple Workflow, version 0.2.03
+# OLA Simple Workflow, version 0.2.04
 
 Aquarium workflow enabling rapid HIV drug resistance detection using the OLA simple technique. [[Download](OLASimple-Protocols.aq)] [[Github Repo](https://github.com/OLA-Simple/OLASimple-Protocols)]
 
