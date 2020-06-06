@@ -44,6 +44,7 @@ needs 'OLASimple/OLAConstants'
 needs 'OLASimple/OLALib'
 needs 'OLASimple/OLAGraphics'
 needs 'OLASimple/JobComments'
+needs 'OLASimple/OLAKitIDs'
 
 # TODO: There should be NO calculations in the show blocks
 
@@ -52,6 +53,7 @@ class Protocol
   include OLALib
   include OLAGraphics
   include JobComments
+  include OLAKitIDs
 
   ##########################################
   # INPUT/OUTPUT
@@ -129,25 +131,29 @@ class Protocol
     end
     save_temporary_output_values(operations)
 
-    run_checks operations
-    kit_introduction operations.running
+    run_checks(operations)
+    kit_introduction(operations.running)
+    record_technician_id
     safety_warning
-    area_preparation 'pre-PCR', MATERIALS, POST_PCR
-    get_inputs operations.running
-    get_pcr_packages operations.running
-    open_pcr_packages operations.running
-    debug_table operations.running
+    area_preparation('pre-PCR', MATERIALS, POST_PCR)
+    simple_clean("OLASimple PCR")
+    get_inputs(operations.running)
+    validate_pcr_inputs(operations.running)
+    get_pcr_packages(operations.running)
+    validate_pcr_packages(operations.running)
+    open_pcr_packages(operations.running)
+    debug_table(operations.running)
     # check_for_tube_defects sorted_ops.running
     # nuttada thaw
     # nuttada needs vortex + centrigure
-    centrifuge_samples sorted_ops.running
-    resuspend_pcr_mix sorted_ops.running
-    add_template_to_master_mix sorted_ops.running
-    cleanup sorted_ops
-    start_thermocycler sorted_ops.running
-    conclusion sorted_ops
+    centrifuge_samples(sorted_ops.running)
+    resuspend_pcr_mix(sorted_ops.running)
+    add_template_to_master_mix(sorted_ops.running)
+    cleanup(sorted_ops)
+    start_thermocycler(sorted_ops.running)
     wash_self
     accept_comments
+    conclusion(sorted_ops)
     {}
   end # main
 
@@ -212,9 +218,7 @@ class Protocol
   def kit_introduction(ops)
     show do
       title "Welcome to OLASimple PCR"
-      note 'You will be running the OLASimple PCR protocol. You will start with RNA Extract.' \
-           'You will generate PCR products from the samples and use them later to detect HIV mutations.'
-      check 'OLASimple PCR assay is highly sensitive. If the space is not clean, this could cause false positive. Before proceeding this step, check with your assigner if the space and pipettes have been wiped with 10% bleach and 70% ethanol'
+      note 'You will be running the OLASimple PCR protocol. You will start with RNA Extraction products and will generate PCR products from the samples and use them later to detect HIV mutations.'
     end
   end
 
@@ -224,23 +228,35 @@ class Protocol
       warning 'You will be working with infectious materials.'
       note 'Do <b>ALL</b> work in a biosafety cabinet (BSC)'
       note 'Always wear a lab coat and gloves for this protocol. We will use two layers of gloves for parts of this protocol.'
-      note 'Use on tight gloves. Tight gloves help reduce chances for your gloves to be trapped when closing the tubes which can increase contamination risk.'
-      note 'Change outer gloves after touching any common surface (such as a refrigerator door handle) as your gloves now can be contaminated by RNase or other previously amplified products that can cause false positives.'
+      note 'Make sure to use tight gloves. Tight gloves reduce the chance of the gloves getting caught on the tubes when closing their lids.'
+      note 'Change your outer layer of gloves after touching any common space surface (such as a refrigerator door handle) as your gloves can now be contaminated by RNase or other previously amplified products that can cause false positives.'
       check 'Put on a lab coat and "doubled" gloves now.'
+      note 'Throughout the protocol, please pay extra attention to the orange warning blocks.'
+      warning 'Warning blocks can contain vital saftey information.'
     end
   end
 
   def get_inputs(myops)
+    gops = group_packages(myops)
+
     show do
       title "Place #{SAMPLE_ALIAS.bold} samples in #{AREA.bold}."
-      note "Retrieve from fridge and place the following #{SAMPLE_ALIAS.bold} samples into a rack in the #{AREA.bold} area."
+      note "Retrieve from cold rack and place the following #{SAMPLE_ALIAS.bold} samples into a rack in the #{AREA.bold} area."
+      note 'Samples may also be in the -20 freezer if this protocol has been delayed.'
       tubes = []
-      myops.each_with_index do |op, i|
-        tubes << make_tube(closedtube, '', ref(op.input(INPUT).item).split('-'), 'medium', true).translate!(100 * i)
+      gops.each do |unit, ops|
+        ops.each_with_index do |op, i|
+          tubes << make_tube(closedtube, '', ref(op.input(INPUT).item).split('-'), 'medium', true).translate!(100 * i)
+        end
+        img = SVGElement.new(children: tubes, boundy: 300, boundx: 300).translate!(20)
+        note display_svg(img)
       end
-      img = SVGElement.new(children: tubes, boundy: 300, boundx: 300).translate!(20)
-      note display_svg(img)
     end
+  end
+
+  def validate_pcr_inputs(myops)
+    expected_inputs = myops.map { |op| ref(op.input(INPUT).item).sub("-","") }
+    sample_validation_with_multiple_tries(expected_inputs)
   end
 
   def get_pcr_packages(myops)
@@ -250,12 +266,16 @@ class Protocol
       title "Take #{PCR_PKG_NAME.pluralize(gops.length)} from the #{FRIDGE_PRE} and place on the #{BENCH_PRE} in the #{AREA}"
       # check "Take the following from the #{FRIDGE} and place #{pluralizer(PACKAGE, gops.length)} on the #{BENCH}"
       gops.each do |unit, _ops|
-        check 'Take package' "#{unit.bold}" ' from fridge.'
-        check 'Place package' "#{unit.bold}" ' on the bench.'
+        check 'Take package ' "#{unit.bold}" ' from fridge.'
+        check 'Place package ' "#{unit.bold}" ' on the bench.'
         check 'Remove the <b>outside layer</b> of gloves (since you just touched the door knob).'
         check 'Put on a new outside layer of gloves.'
       end
     end
+  end
+
+  def validate_pcr_packages(myops)
+    group_packages(myops).each { |unit, _ops| package_validation_with_multiple_tries(unit) }
   end
 
   def open_pcr_packages(myops)
@@ -394,7 +414,7 @@ class Protocol
     # END OF PRE_PCR PROTOCOL
 
     vortex_and_centrifuge_helper(PCR_SAMPLE,
-                                 ops.map { |op| ref(op.output(OUTPUT).item) },
+                                 sample_refs,
                                  VORTEX_TIME, CENTRIFUGE_TIME,
                                  'to mix.', 'to pull down liquid', AREA, mynote = nil)
 
@@ -417,7 +437,7 @@ class Protocol
       title 'Run PCR'
       check 'Talk to your assigner which thermocycler to use'
       check 'Close all the lids of the pipette tip boxes and pre-PCR rack'
-      check 'Take only the PCR tubes (BA1 and BA2) with you'
+      check "Take only the PCR tubes (#{sample_refs.to_sentence}) with you"
       check 'Place the PCR samples in the assigned thermocycler, close, and tighten the lid'
       check "Select the program named #{PCR_CYCLE} under OS"
       check "Hit #{'Run'.quote} and #{'OK to 50uL'.quote}"
@@ -439,12 +459,10 @@ class Protocol
     all_refs = temp_items + item_refs
 
     show do
-      title "Throw items into the #{WASTE_PRE}"
+      title "Discard items into the #{WASTE_PRE}"
 
-      note "Throw the following items into the #{WASTE_PRE}"
-      t = Table.new
-      t.add_column('Tube'.bold, all_refs)
-      table t
+      note "Discard the following items into the #{WASTE_PRE}"
+      all_refs.each { |r| bullet r }
     end
     # clean_area AREA
   end
