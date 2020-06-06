@@ -38,39 +38,92 @@ module OLAKitIDs
     sample_nums.reverse
   end
 
-  def validate_samples(expected_sample_nums)
+
+  def intake_ids(this_package, expected_inputs)
+    5.times do
+      resp = show do
+        title 'Scan In the Following Barcodes'
+
+        note "Your Technician ID card"
+        get 'text', var: :tech, label: 'Technician ID', default: ''
+
+
+        note "Input sample IDs #{expected_inputs.to_sentence}"
+        expected_inputs.size.times do |i|
+          get 'text', var: i.to_s.to_sym, label: '', default: ''
+        end
+      end
+      operations.each do |op|
+        op.associate(OLAConstants::TECH_KEY, resp[:tech])
+      end
+
+      if !resp[:package] == this_package
+        show do
+
+        end
+        next
+      end
+    end
+
+  end
+
+  def validate_package(this_package)
     resp = show do
-      title 'Scan Incoming Samples'
+      title 'Validate kit package'
+      note "Scan in the ID of package #{this_package} which you've retrieved."
+      get 'text', var: :package, label: "Package ID", default: ''
+    end
+    return false if resp[:package] != this_package
 
-      note 'Scan in the IDs of all incoming samples in any order.'
-      note "There should not be more than #{expected_sample_nums.size} samples. "
+    return true
+  end
 
-      expected_sample_nums.size.times do |i|
+  def package_validation_with_multiple_tries(this_package)
+    5.times do
+      result = validate_package(this_package)
+      return true if result || debug
+
+      show do
+        title 'Wrong Package'
+        note 'Ensure that you have the correct package before continuing.'
+        note "The package should be labeled <b>#{this_package}</b>."
+        note 'On the next step you will retry scanning in the package.'
+      end
+    end
+    operations.each do |op|
+      op.error(:package_problem, 'Package id is wrong and could not be resolved')
+    end
+    raise 'Package id is wrong and could not be resolved. Speak to a Lab manager.'
+  end
+
+  def validate_samples(expected_sample_ids)
+    resp = show do
+      title 'Validate Incoming Samples'
+
+      note "Scan in the IDs of the inputs #{expected_sample_ids.to_sentence}."
+      expected_sample_ids.size.times do |i|
         get 'text', var: i.to_s.to_sym, label: '', default: ''
       end
     end
 
-    expected_sample_nums.size.times do |i|
-      if extract_sample_number(resp[i.to_s.to_sym])
-        found = expected_sample_nums.delete(extract_sample_number(resp[i.to_s.to_sym]))
+    expected_sample_ids.size.times do |i|
+      if resp[i.to_s.to_sym]
+        found = expected_sample_ids.delete(resp[i.to_s.to_sym])
       end
       return false unless found
     end
     true
   end
 
-  def sample_validation_with_multiple_tries(kit_number)
+  def sample_validation_with_multiple_tries(expected_sample_ids)
     5.times do
-      expected_sample_nums = sample_nums_from_kit_num(kit_number)
-      expected_sample_nums = expected_sample_nums[0, operations.size]
-      result = validate_samples(expected_sample_nums)
+      result = validate_samples(expected_sample_ids)
       return true if result || debug
 
       show do
         title 'Wrong Samples'
-        note 'Ensure that you have the correct samples before continuing'
-        note "You are processing kit <b>#{kit_num_to_id(kit_number)}</b>"
-        note "Incoming samples should be numbered #{sample_nums_from_kit_num(kit_number).map { |s| sample_num_to_id(s) }.to_sentence}."
+        note 'Ensure that you have the correct samples before continuing.'
+        note "Incoming samples should be labeled <b>#{expected_sample_ids.to_sentence}</b>."
         note 'On the next step you will retry scanning in the samples.'
       end
     end
@@ -83,7 +136,7 @@ module OLAKitIDs
   def record_technician_id
     resp = show do
       title 'Scan your technician ID'
-      note 'Scan or write in the technician ID on your badge'
+      note 'Scan or write in the technician ID on your badge.'
       get 'text', var: :id, label: 'ID', default: ''
     end
     operations.each do |op|
