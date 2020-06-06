@@ -100,12 +100,17 @@ class Protocol
     record_technician_id
     safety_warning
     required_equipment
+    simple_clean("OLASimple RNA Extraction")
 
     retrieve_inputs
     kit_num = extract_kit_number(this_package)
-    sample_validation_with_multiple_tries(kit_num)
 
-    retrieve_and_open_package(this_package)
+    expected_inputs = sample_labels.map {|s| "#{THIS_UNIT}#{s}"}
+    sample_validation_with_multiple_tries(expected_inputs)
+
+    retrieve_package(this_package)
+    package_validation_with_multiple_tries(this_package)
+    open_package(this_package)
 
     prepare_buffers
     lyse_samples
@@ -123,7 +128,6 @@ class Protocol
 
     add_wash_2
     centrifuge_columns(flow_instructions: "Discard flow through into #{GuSCN_WASTE}")
-    change_collection_tubes
 
     transfer_column_to_e6
     elute
@@ -136,6 +140,7 @@ class Protocol
     cleanup
     wash_self
     accept_comments
+    conclusion(operations)
     {}
   end
 
@@ -192,7 +197,6 @@ class Protocol
     show do
       title 'Welcome to OLASimple RNA Extraction'
       note 'In this protocol you will lyse and purify RNA from HIV-infected plasma.'
-      check 'OLA RNA Extraction is sensitive to contamination. Small contamination from the previously amplified products can cause false positives. Before proceeding, wipe the space and pipettes with 10% bleach (freshly prepared or prepared daily) and 70% ethanol using paper towels.'
       note 'RNA is prone to degradation by RNase present in our eyes, skin, and breath. Avoid opening tubes outside the Biosafety Cabinet (BSC).'
       check 'Before starting this protocol, make sure you have access to molecular grade ethanol (~10 mL). Do not use other grades of ethanol as this will negatively affect the RNA extraction yield.'
     end
@@ -208,6 +212,8 @@ class Protocol
       note 'Always wear a lab coat and gloves for this protocol. We will use two layers of gloves for parts of this protocol.'
       note 'Change outer gloves after touching any common surface (such as a refrigerator door handle) as your gloves now can be contaminated by RNase or other previously amplified products that can cause false positives.'
       check 'Put on a lab coat and "doubled" gloves now.'
+      note 'Throughout the protocol, please pay extra attention to the orange warning blocks.'
+      warning 'Warning blocks can contain vital saftey information.'
     end
   end
 
@@ -232,14 +238,16 @@ class Protocol
     end
   end
 
-  def retrieve_and_open_package(this_package)
+  def retrieve_package(this_package)
     show do
       title "Take package #{this_package.bold} from the #{FRIDGE_PRE} and place on the #{BENCH_PRE} in the #{BSC}"
       check 'Grab package'
       check 'Remove the <b>outside layer</b> of gloves (since you just touched the door knob).'
       check 'Put on a new outside layer of gloves.'
     end
+  end
 
+  def open_package(this_package)
     show_open_package(this_package, '', 0) do
       img = kit_image
       check 'Check that the following are in the pack:'
@@ -479,7 +487,7 @@ class Protocol
   def transfer_column_to_e6
     show do
       title 'Transfer Columns'
-      warning 'Make sure the bottom of the E5 and E6 columns  did not touch any fluid from the previous collection tubes. When in doubt, centrifuge for 1 more minute and replace collection tubes again.'
+      warning 'Make sure the bottom of the E5 and E6 columns did not touch any fluid from the previous collection tubes. When in doubt, replace collection tubes again and centrifuge for 1 more minute .'
       operations.each do |op|
         column = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}"
         extract_tube = "#{RNA_EXTRACT}-#{op.temporary[:output_sample]}"
@@ -516,7 +524,7 @@ class Protocol
     show do
       title 'Store Items'
       extract_tubes = sample_labels.map { |s| "#{RNA_EXTRACT}-#{s}" }
-      note "Store <b>#{extract_tubes.to_sentence}</b> in the fridge on a cold rack if the amplification module will be proceeded immediately."
+      note "Store <b>#{extract_tubes.to_sentence}</b> in the fridge on a cold rack if the amplification module will proceed immediately."
       note "Store <b>#{extract_tubes.to_sentence}</b> in -20C freezer if proceeding with the amplification module later."
     end
   end
@@ -536,6 +544,13 @@ class Protocol
       note 'Spray surface of BSC with 10% bleach. Wipe clean using paper towel.'
       note 'Spray surface of BSC with 70% ethanol. Wipe clean using paper towel.'
       note "After cleaning, dispose of gloves and paper towels in #{WASTE_PRE}."
+    end
+  end
+
+  def conclusion(_myops)
+    show do
+      title 'Thank you!'
+      note 'You may start the next protocol immediately.'
     end
   end
 end
