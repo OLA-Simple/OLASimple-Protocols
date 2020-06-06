@@ -85,7 +85,7 @@ class Protocol
   SAMPLE_VOLUME = PACK_HASH['PCR to Ligation Mix Volume'] # volume of pcr product to ligation mix
   MATERIALS = [
     'P200 pipette and filtered tips',
-    'P10 pipette and filtered tips',
+    'P2 pipette and filtered tips',
     'a spray bottle of 10% v/v bleach',
     'a spray bottle of 70% v/v ethanol',
     'a timer, practice how to use the timer',
@@ -117,22 +117,28 @@ class Protocol
     expert_mode = ask_if_expert
 
     introduction(operations.running)
+    record_technician_id
     safety_warning
-    area_preparation POST_PCR, MATERIALS, PRE_PCR
+    area_preparation(POST_PCR, MATERIALS, PRE_PCR)
+    simple_clean("OLASimple Ligation")
+
     get_samples_from_thermocycler(operations.running)
+    validate_ligation_inputs(operations.running)
+
     get_ligation_packages(operations.running)
+    validate_ligation_packages(operations.running)
     open_ligation_packages(operations.running)
     # check_for_tube_defects operations.running
-    centrifuge_samples sorted_ops.running
-    rehydrate_ligation_mix sorted_ops.running, expert_mode
-    vortex_and_centrifuge_samples sorted_ops.running
-    add_template sorted_ops.running, expert_mode
-    vortex_and_centrifuge_samples sorted_ops.running
-    cleanup sorted_ops
-    start_ligation sorted_ops.running
-    conclusion sorted_ops
+    centrifuge_samples(sorted_ops.running)
+    rehydrate_ligation_mix(sorted_ops.running, expert_mode)
+    vortex_and_centrifuge_samples(sorted_ops.running)
+    add_template(sorted_ops.running, expert_mode)
+    vortex_and_centrifuge_samples(sorted_ops.running)
+    cleanup(sorted_ops)
+    start_ligation(sorted_ops.running)
     wash_self
     accept_comments
+    conclusion(sorted_ops)
     {}
   end
 
@@ -180,13 +186,12 @@ class Protocol
     resp[:choice] == 'Enable expert mode'
   end
 
-  def introduction(ops)
+  def introduction(_ops)
     show do
-      title "Welcome to OLASimple Ligation"
+      title 'Welcome to OLASimple Ligation'
       note 'You will be running the OLASimple Ligation protocol'
-      note 'In this protocol you will be using PCR samples from the last protocol' \
-            ' and adding small pieces of DNA which will allow you to detect HIV mutations.'
-      check 'OLA Ligation is highly sensitive. Small contamination can cause false positive. Before proceed, please check with your assigner if the space and pipettes have been wiped with 10% bleach and 70% ethanol.'
+      note 'In this protocol you will be using PCR samples from the PCR protocol' \
+      ' and adding small pieces of DNA which will allow you to detect HIV mutations.'
     end
   end
 
@@ -194,9 +199,11 @@ class Protocol
     show do
       title 'Review the safety warnings'
       note 'Always wear a lab coat and gloves for this protocol. We will use two layers of gloves for parts of this protocol.'
-      note 'Change outer gloves after touching any common surface (such as a refrigerator door handle) as your gloves now can be contaminated by RNase or other previously amplified products that can cause false positives.'
-      note 'Use on tight gloves. Tight gloves help reduce chances for your gloves to be trapped when closing the tubes which can increase contamination risk.'
+      note 'Change your outer layer of gloves after touching any common space surface (such as a refrigerator door handle) as your gloves can now be contaminated by RNase or other previously amplified products that can cause false positives.'
+      note 'Make sure to use tight gloves. Tight gloves reduce the chance of the gloves getting caught on the tubes when closing their lids.'
       check 'Put on a lab coat and "doubled" gloves now.'
+      note 'Throughout the protocol, please pay extra attention to the orange warning blocks.'
+      warning 'Warning blocks can contain vital saftey information.'
     end
   end
 
@@ -208,9 +215,13 @@ class Protocol
         check "Retrieve #{PACKAGE_POST} #{unit.bold}"
       end
       check "Place #{pluralizer(PACKAGE_POST, gops.length)} on the #{BENCH_POST} in the #{AREA.bold}."
-      check 'Remove the <b>outside layer</b> of gloves (since you just touched the door knob).'
+      check 'Remove the <b>outside layer</b> of gloves (since you just touched the refrigerator handle).'
       check 'Put on a new outside layer of gloves.'
     end
+  end
+
+  def validate_ligation_packages(myops)
+    group_packages(myops).each { |unit, _ops| package_validation_with_multiple_tries(unit) }
   end
 
   def open_ligation_packages(_myops)
@@ -284,13 +295,19 @@ class Protocol
     end
   end
 
-  def get_samples_from_thermocycler(_myops)
+  def get_samples_from_thermocycler(myops)
     show do
-      title "Retrieve PCR samples from the #{THERMOCYCLER} or freezer"
-      check 'If your samples were stored in the freezer, get samples from the M20 freezer, 4th shelf down in the red box.Thaw samples.'
-      check "Else, if your samples are in the #{THERMOCYCLER}, cancel the run if the machine says \"hold at 4C\", and get your samples."
-      check 'Vortex and centrifuge samples for 5 seconds.'
+      title "Retrieve PCR samples from the #{THERMOCYCLER}"
+      check "Take #{PCR_SAMPLE.pluralize(myops.length)} #{myops.map { |op| ref(op.input(INPUT).item).bold }.join(', ')} from the #{THERMOCYCLER}"
+      note 'If thermocycler run is complete (infinite hold at 4C), hit cancel followed by yes. '
+      check "Position #{PCR_SAMPLE.pluralize(myops.length)} on #{BENCH_POST} in front of you."
+      centrifuge_proc(PCR_SAMPLE, myops.map { |op| ref(op.input(INPUT).item) }, '3 seconds', 'to pull down liquid.', AREA, balance = false)
     end
+  end
+
+  def validate_ligation_inputs(myops)
+    expected_inputs = myops.map { |op| ref(op.input(INPUT).item).sub('-', '') }
+    sample_validation_with_multiple_tries(expected_inputs)
   end
 
   def rehydrate_ligation_mix(myops, expert_mode)
@@ -307,7 +324,8 @@ class Protocol
             labels.map! { |l| "<b>#{l}</b>" }
             note "In this step we will be adding #{LIGATION_VOLUME}uL of #{DILUENT_A} #{from} into #{pluralizer('tube', COMPONENTS.length)} "
             "of the colored strip of tubes labeled <b>#{labels[0]} to #{labels[-1]}</b>"
-            check "Using a P200 pipette, add #{LIGATION_VOLUME}uL from #{DILUENT_A} #{from} into each of the #{COMPONENTS.length} tubes."
+            note "Set a #{P200_POST} pipette to [0 2 4]."
+            note "Using add #{LIGATION_VOLUME}uL from #{DILUENT_A} #{from} into each of the #{COMPONENTS.length} tubes."
             warning 'Only open one of the ligation tubes at a time.'
 
             ligation_tubes = display_ligation_tubes(*op.output_tokens(OUTPUT), COLORS).translate!(0, -20)
@@ -388,14 +406,6 @@ class Protocol
   end
 
   def add_template(myops, expert_mode)
-    show do
-      title "Get #{PCR_SAMPLE.pluralize(myops.length)} from #{THERMOCYCLER}"
-      note "If thermocycler run is complete (infinite hold at 4C), hit cancel followed by yes. Take #{PCR_SAMPLE.pluralize(myops.length)} #{myops.map { |op| ref(op.input(INPUT).item).bold }.join(', ')} from the #{THERMOCYCLER}"
-      note 'If they have been stored, retrieve PCR samples from M20 4th shelf down red box and thaw'
-      check "Position #{PCR_SAMPLE.pluralize(myops.length)} on #{BENCH_POST} in front of you."
-      centrifuge_proc(PCR_SAMPLE, myops.map { |op| ref(op.input(INPUT).item) }, '3 seconds', 'to pull down liquid.', AREA, balance = false)
-    end
-
     gops = myops.group_by { |op| op.temporary[:input_kit_and_unit] }
     gops.each do |_unit, ops|
       ops.each do |op|
@@ -406,12 +416,12 @@ class Protocol
           show do
             raw transfer_title_proc(SAMPLE_VOLUME, from, op.temporary[:label_string])
             warning 'Change of pipette tip between tubes'
-            check "Using a #{P20_POST} pipette set to [0 1 2], add #{SAMPLE_VOLUME}uL from #{from.bold} into each of #{op.temporary[:label_string].bold}."
-            note 'Only open one ligation tube at a time.'
+            check "Using a P2 pipette set to [1 2 0]."
+            note "Add #{SAMPLE_VOLUME}uL from #{from.bold} into each of #{op.temporary[:label_string].bold}. Only open one ligation tube at a time."
 
             tubeP = make_tube(opentube, ['PCR Sample'], op.input_tube_label(INPUT), 'small').scale(0.75)
             ligation_tubes = display_ligation_tubes(*op.output_tokens(OUTPUT), COLORS).translate!(0, -20)
-            transfer_image = make_transfer(tubeP, ligation_tubes, 300, "#{SAMPLE_VOLUME}uL", "(#{P20_POST} pipette)")
+            transfer_image = make_transfer(tubeP, ligation_tubes, 300, "#{SAMPLE_VOLUME}uL", "(Post-PCR P2 pipette)")
             note display_svg(transfer_image, 0.6)
             labels.each do |l|
               check "Transfer #{SAMPLE_VOLUME}uL from #{from.bold} into #{l}"
@@ -435,10 +445,10 @@ class Protocol
               raw transfer_title_proc(SAMPLE_VOLUME, from, label)
               # title "Add #{PCR_SAMPLE} #{from.bold} to #{LIGATION_SAMPLE} #{label}"
               warning 'Change of pipette tip between tubes'
-              check "Using a P10 pipette set to [0 1 2], add #{SAMPLE_VOLUME}uL from #{from.bold} into tube #{label.bold}"
+              check "Using a P2 pipette set to [1 2 0], add #{SAMPLE_VOLUME}uL from #{from.bold} into tube #{label.bold}"
               note "Close tube #{label.bold}"
               tube = make_tube(opentube, ['PCR Sample'], op.input_tube_label(INPUT), 'small').scale(0.75)
-              img = transfer_to_ligation_tubes_with_highlight(tube, i, *op.output_tokens(OUTPUT), COLORS, SAMPLE_VOLUME, "(#{P20_POST} pipette)")
+              img = transfer_to_ligation_tubes_with_highlight(tube, i, *op.output_tokens(OUTPUT), COLORS, SAMPLE_VOLUME, "(Post-PCR P2 pipette)")
               note display_svg(img, 0.6)
             end
           end
@@ -504,12 +514,10 @@ class Protocol
     all_refs = temp_items + item_refs
 
     show do
-      title "Throw items into the #{WASTE_POST}"
+      title "Discard items into the #{WASTE_POST}"
 
-      note "Throw the following items into the #{WASTE_POST} in the #{AREA}"
-      t = Table.new
-      t.add_column('Tube', all_refs)
-      table t
+      note "Discard the following items into the #{WASTE_POST} in the #{AREA}"
+      all_refs.each { |r| bullet r }
     end
     # clean_area AREA
   end
@@ -518,7 +526,7 @@ class Protocol
     if KIT_NAME == 'uw kit'
       show do
         title 'Please return PCR products'
-        check "Place #{'sample'.pluralize(myops.length)} #{myops.map { |op| op.input_ref(INPUT) }.join(', ')} in the M20 4th shelf down in the corresponding red box labeled #{'STORED USED 1B - 24B'.quote.bold} or #{'STORE USED 25B - 48B'.quote.bold}."
+        check "Place #{'sample'.pluralize(myops.length)} #{myops.map { |op| op.input_ref(INPUT) }.join(', ')} in the -20."
         image 'Actions/OLA/map_Klavins.svg '
       end
     end
