@@ -36,6 +36,7 @@ needs 'OLASimple/OLAKitIDs'
 needs 'OLASimple/OLAGraphics'
 needs 'OLASimple/SVGGraphics'
 needs 'OLASimple/OLALib'
+needs 'OLASimple/JobComments'
 
 class Protocol
   include OLALib
@@ -43,8 +44,8 @@ class Protocol
   include FunctionalSVG
   include OLAKitIDs
   include OLAConstants
-  
-  
+  include JobComments
+
   OUTPUT = 'Patient Sample'
   PATIENT_ID_INPUT = 'Patient Sample Identifier'
   KIT_ID_INPUT = 'Kit Identifier'
@@ -69,21 +70,32 @@ class Protocol
     kit_groups = operations.group_by { |op| op.temporary[OLAConstants::KIT_KEY] }
 
     introduction
+    record_technician_id
     safety_warning
+    simple_clean("OLASimple")
+
     kit_groups.each do |kit_num, ops|
       next unless check_batch_size(ops)
+
       first_module_setup(ops, kit_num)
       set_output_components_and_units(ops, OUTPUT, OUTPUT_COMPONENT, UNIT)
 
-      retrieve_and_open_package("#{kit_num}#{UNIT}", ops)
-      retrieve_plasma ops
-      transfer_plasma ops
+      this_package = "#{kit_num}#{UNIT}"
+      retrieve_package(this_package)
+      package_validation_with_multiple_tries(this_package)
+      open_package(this_package, ops)
+      retrieve_plasma(ops)
+      _, expected_plasma_samples = plasma_tubes(ops)
+      sample_validation_with_multiple_tries(expected_plasma_samples)
+      transfer_plasma(ops)
     end
 
     disinfect
     store
     cleanup
     wash_self
+    accept_comments
+    conclusion(operations)
     {}
   end
 
@@ -125,9 +137,9 @@ class Protocol
       ops.each do |op|
         op.error(:batch_size_too_big, "operations.size operations batched with #{kit_num}, but max batch size is #{BATCH_SIZE}.")
       end
-      return false
+      false
     else
-      return true
+      true
     end
   end
 
@@ -142,22 +154,26 @@ class Protocol
     show do
       title 'Review the safety warnings'
       warning 'You will be working with infectious materials.'
-      note "Do <b>ALL</b> work in a biosafety cabinet (BSC)" 
+      note 'Do <b>ALL</b> work in a biosafety cabinet (BSC)'
       note 'Always wear a lab coat and gloves for this protocol. We will use two layers of gloves for parts of this protocol.'
-      note 'Use on tight gloves. Tight gloves help reduce chances for your gloves to be trapped when closing the tubes which can increase contamination risk.'
-      note 'Change outer gloves after touching any common surface (such as a refrigerator door handle) as your gloves now can be contaminated by RNase or other previously amplified products that can cause false positives.'
+      note 'Make sure to use tight gloves. Tight gloves reduce the chance of the gloves getting caught on the tubes when closing their lids.'
+      note 'Change your outer layer of gloves after touching any common space surface (such as a refrigerator door handle) as your gloves can now be contaminated by RNase or other previously amplified products that can cause false positives.'
       check 'Put on a lab coat and "doubled" gloves now.'
+      note 'Throughout the protocol, please pay extra attention to the orange warning blocks.'
+      warning 'Warning blocks can contain vital saftey information.'
     end
   end
 
-  def retrieve_and_open_package(this_package, ops)
+  def retrieve_package(this_package)
     show do
       title "Take package #{this_package.bold} from the #{FRIDGE_PRE} and place on the #{BENCH_PRE} in the BSC"
       check 'Grab package'
       check 'Remove the <b>outside layer</b> of gloves (since you just touched the door knob).'
       check 'Put on a new outside layer of gloves.'
     end
+  end
 
+  def open_package(this_package, ops)
     show_open_package(this_package, '', 0) do
       img = kit_image(ops)
       check 'Check that the following are in the pack:'
@@ -166,7 +182,7 @@ class Protocol
   end
 
   def kit_image(ops)
-    tubes, _ = kit_tubes(ops)
+    tubes, = kit_tubes(ops)
     grid = SVGGrid.new(tubes.size, 1, 80, 100)
     tubes.each_with_index do |svg, i|
       grid.add(svg, i, 0)
@@ -184,7 +200,7 @@ class Protocol
     show do
       title 'Retrieve Plasma samples'
       note "Retrieve plasma samples labeled #{plasma_ids.to_sentence.bold}."
-      note "Patient samples are located in the #{PLASMA_LOCATION.bold}"
+      note "Patient samples are located in the #{PLASMA_LOCATION.bold}."
       note display_svg(img, 0.75)
     end
   end
@@ -192,11 +208,12 @@ class Protocol
   def transfer_plasma(ops)
     from_tubes, from_names = plasma_tubes(ops)
     to_tubes, to_names = kit_tubes(ops)
-    ops.each_with_index do |op, i|
+    ops.each_with_index do |_op, i|
       transfer_img = make_transfer(from_tubes[i], to_tubes[i], 300, "#{SAMPLE_VOLUME}ul", "(#{P1000_PRE})").translate(100, 0)
       show do
         title "Transfer #{from_names[i]} to #{to_names[i]}"
-        note "Transfer <b>#{SAMPLE_VOLUME}uL</b> from <b>#{from_names[i]}</b> to <b>#{to_names[i]}</b> using a #{P1000_PRE} pipette."
+        note "Use a #{P1000_PRE} pipette and set it to <b>[3 5 0]</b>."
+        check "Transfer <b>#{SAMPLE_VOLUME}uL</b> from <b>#{from_names[i]}</b> to <b>#{to_names[i]}</b> using a #{P1000_PRE} pipette."
         note display_svg(transfer_img, 0.75)
       end
     end
@@ -216,14 +233,20 @@ class Protocol
       note 'Place items in the BSC off to the side.'
       note 'Spray surface of BSC with 10% bleach. Wipe clean using paper towel.'
       note 'Spray surface of BSC with 70% ethanol. Wipe clean using paper towel.'
-      note "After cleaning, dispose of gloves and paper towels in #{WASTE_PRE}."
+    end
+  end
+
+  def conclusion(_myops)
+    show do
+      title 'Thank you!'
+      note 'You may start the next protocol immediately.'
     end
   end
 
   def kit_tubes(ops)
     tube_names = ops.map { |op| "#{UNIT}-#{op.temporary[OLAConstants::SAMPLE_KEY]}" }
     tubes = []
-    tube_names.each_with_index do |s, i|
+    tube_names.each_with_index do |s, _i|
       tubes << draw_svg(:roundedtube, svg_label: s.split('-').join("\n"), opened: false, contents: 'empty')
     end
     [tubes, tube_names]
@@ -232,8 +255,8 @@ class Protocol
   def plasma_tubes(ops)
     plasma_ids = ops.map { |op| op.temporary[OLAConstants::PATIENT_KEY] }
     tubes = []
-    plasma_ids.each_with_index do |s, i|
-      tubes << draw_svg(:roundedtube, svg_label: "\n\n\n"+s, opened: false, contents: 'full')
+    plasma_ids.each_with_index do |s, _i|
+      tubes << draw_svg(:roundedtube, svg_label: "\n\n\n" + s, opened: false, contents: 'full')
     end
     [tubes, plasma_ids]
   end
