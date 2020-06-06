@@ -123,38 +123,27 @@ class Protocol
     save_temporary_output_values(operations)
     expert_mode = ask_if_expert
     introduction operations.running
+    record_technician_id
     safety_warning
     area_preparation POST_PCR, MATERIALS, PRE_PCR
+    simple_clean("OLASimple Paper Detection")
+
     get_detection_packages operations.running
+    validate_detection_packages operations.running
     open_detection_packages operations.running
-    rehydrate_stop_solution sorted_ops.running
+    rehydrate_stop_solution(sorted_ops.running)
     wait_for_pcr sorted_ops.running
-    stop_ligation_product sorted_ops.running, expert_mode
-    # short_timer
-    rehydrate_gold_solution sorted_ops.running
-    display_detection_strip_diagram
-    add_ligation_product_to_strips sorted_ops.running
-    add_gold_solution sorted_ops.running
-
-    show do
-      title "Bring timer and #{pluralizer(STRIP, operations.running.length * PREV_COMPONENTS.length)} to the #{PHOTOCOPIER}."
-      image 'Actions/OLA/map_Klavins.svg' if KIT_NAME == 'uw kit'
-    end
-
-    show do
-      title 'Wait until 10 minute timer is up'
-      note "#{STRIPS.capitalize} need to rest for 10 minutes before taking an image."
-      note "In the meantime, make sure you have access to the #{PHOTOCOPIER}."
-      warning '<h2> Signal can develop more slowly if the room is humid. After the 10-min timer ends, you should see at least two lines on each strip. </h2>'
-      warning 'If your signal is hard to see by eyes, give it another 5 minutes before clicking OK.'
-    end
+    retrieve_inputs(sorted_ops.running)
+    # validate_detection_inputs(sorted_ops.running)
     
-    show do
-      title "hi sam"
-      note "skipping scanning steps since analysis doesnt work on nursery"
-    end
-    # read_from_scanner sorted_ops.running
-    # analysis operations.running
+    stop_ligation_product(sorted_ops.running, expert_mode)
+    # short_timer
+    rehydrate_gold_solution(sorted_ops.running)
+    display_detection_strip_diagram
+    add_ligation_product_to_strips(sorted_ops.running)
+    add_gold_solution(sorted_ops.running)
+    read_from_scanner(sorted_ops.running)
+    analysis operations.running
 
     cleanup sorted_ops
     conclusion sorted_ops
@@ -213,6 +202,8 @@ class Protocol
       note 'Use on tight gloves. Tight gloves help reduce chances for your gloves to be trapped when closing the tubes which can increase contamination risk.'
       note 'Change outer gloves after touching any common surface (such as a refrigerator door handle) as your gloves now can be contaminated by RNase or other previously amplified products that can cause false positives.'
       check 'Put on a lab coat and "doubled" gloves now.'
+      note 'Throughout the protocol, please pay extra attention to the orange warning blocks.'
+      warning 'Warning blocks can contain vital saftey information.'
     end
   end
 
@@ -227,6 +218,10 @@ class Protocol
       check 'Remove the <b>outside layer</b> of gloves (since you just touched the door knob).'
       check 'Put on a new outside layer of gloves.'
     end
+  end
+
+  def validate_detection_packages(myops)
+    group_packages(myops).each { |unit, _ops| package_validation_with_multiple_tries(unit) }
   end
 
   def open_detection_packages(myops)
@@ -299,7 +294,7 @@ class Protocol
     end
   end
 
-  def stop_ligation_product(myops, expert_mode)
+  def retrieve_inputs(myops)
     gops = myops.group_by { |op| op.temporary[:output_kit_and_unit] }
     num_tubes = myops.inject(0) { |sum, op| sum + op.output_refs(OUTPUT).length }
     # ordered_ops = gops.map {|unit, ops| ops}.flatten.extend(OperationList) # organize by unit
@@ -314,6 +309,15 @@ class Protocol
         end
       end
     end
+  end
+
+  def validate_detection_inputs(myops)
+    expected_inputs = myops.map { |op| ref(op.input(INPUT).item).sub("-","") }
+    sample_validation_with_multiple_tries(expected_inputs)
+  end
+
+  def stop_ligation_product(myops, expert_mode)
+    gops = myops.group_by { |op| op.temporary[:output_kit_and_unit] }
 
     gops.each do |_unit, ops|
       from = ops.first.ref('stop')
@@ -355,7 +359,6 @@ class Protocol
             to_labels.each do |l|
               check "Transfer #{STOP_TO_SAMPLE_VOLUME}uL from #{STOP_MIX.bold} into #{l.bold}"
             end
-
           end
         else
           to_labels.each.with_index do |label, i|
@@ -416,7 +419,7 @@ class Protocol
       title 'Wait for stop cycle to finish (5 minutes).'
       note "Wait for the #{THERMOCYCLER} containing your samples to finish. "
       bullet "If the #{THERMOCYCLER} beeps, it is done. If not, continue waiting."
-      note "Once the #{THERMOCYCLER} finishes, IMMEDIATELY continue to the next step."
+      warning "Once the #{THERMOCYCLER} finishes, <b>IMMEDIATELY</b> continue to the next step."
       check "Take all #{pluralizer('sample', myops.length * PREV_COMPONENTS.length)} from the #{THERMOCYCLER}."
       check "Vortex #{'sample'.pluralize(PREV_COMPONENTS.length)} for 5 seconds to mix."
       check "Centrifuge #{'sample'.pluralize(PREV_COMPONENTS.length)} for 5 seconds to pull down liquid"
@@ -438,11 +441,11 @@ class Protocol
 
         show do
           title "For each colored tube, add #{SAMPLE_TO_STRIP_VOLUME}uL of #{LIGATION_SAMPLE} to the sample port of each #{STRIP}."
-          warning '<h2>Complicated Step! Take note of all instructions before beginning transfers.</h2>'
           unless timer_set
+            warning '<h2>Complicated Step! Take note of all instructions before beginning transfers.</h2>'
             note 'Set a 5 minute timer after adding ligation sample to <b>FIRST</b> strip at the SAMPLE PORT.'
           end
-          note 'Immediately click OK when finished adding ligation sample to LAST strip at the sample port.'
+          note '<b>Immediately</b> click OK when finished adding ligation sample to LAST strip at the sample port.'
           note '<hr>'
           timer_set = true
           #   check "Set a 5 minute timer" unless set_timer
@@ -498,16 +501,15 @@ class Protocol
     gops.each do |_unit, ops|
       show do
         title "Add gold solution to #{pluralizer(STRIP, PREV_COMPONENTS.length * ops.length)}"
-        warning '<h2>Complicated Step! Take note of all instructions before beginning transfers.</h2>'
         note 'Set a 10 minute timer after adding gold to <b>FIRST</b> strip at the SAMPLE PORT.'
-        note 'Add gold to the rest of strips and then immediately click OK.'
+        note 'Add gold to the rest of strips at the SAMPLE PORT and then <b>immediately</b> click OK.'
         warning 'DO NOT add gold solution onto the reading window.'
         note '<hr>'
-        check "Set a #{P200_POST} pipette to [0 4 0]. Transfer #{GOLD_TO_STRIP_VOLUME}uL of #{GOLD_MIX} #{ops.first.ref('gold').bold} to #{pluralizer(STRIP, PREV_COMPONENTS.length * ops.length)}."
+        check "Set a #{P200_POST} pipette to [0 4 0]. Transfer #{GOLD_TO_STRIP_VOLUME}uL of #{GOLD_MIX} #{ops.first.ref('gold').bold} to #{pluralizer(STRIP, PREV_COMPONENTS.length * ops.length)} at the SAMPLE PORT."
         grid = SVGGrid.new(ops.length, ops.length, 50, 50)
         ops.each.with_index do |op, i|
           _tokens = op.output_tokens(OUTPUT)
-          grid.add(display_strip_panel(*_tokens, COLORS).scale!(0.5), i, i)
+          grid.add(display_strip_panel(*_tokens, COLORS).scale!(0.5).translate!(0, -50), i, i)
         end
         tubeG = make_tube(opentube, GOLD_MIX, ops.first.tube_label('gold'), 'medium', fluidclass: 'pinkfluid')
         img = make_transfer(tubeG, grid, 300, "#{GOLD_TO_STRIP_VOLUME}uL", '(each strip)')
@@ -522,8 +524,7 @@ class Protocol
   def read_from_scanner(myops)
     gops = group_packages(myops)
     show do
-      title "Bring timer and #{pluralizer(STRIP, myops.length * PREV_COMPONENTS.length)} to the #{PHOTOCOPIER}."
-      image 'Actions/OLA/map_Klavins.svg' if KIT_NAME == 'uw kit'
+      title "Bring #{pluralizer(STRIP, myops.length * PREV_COMPONENTS.length)} to the #{PHOTOCOPIER}."
     end
 
     show do
@@ -531,7 +532,7 @@ class Protocol
       note "#{STRIPS.capitalize} need to rest for 10 minutes before taking an image."
       check "In the meantime, make sure you have access to the #{PHOTOCOPIER}."
       note 'Signal can develop more slowly if the room is humid. After the 10-min timer ends, you should see at least two lines on each strip.'
-      note 'If your signal is hard to see by eyes, give it another 5 minutes before clicking OK.'
+      note 'If your signal is hard to see by eye, give it another 5 minutes before clicking OK.'
       note 'Do not continue to next step until signal is visible.'
     end
 
@@ -620,7 +621,8 @@ class Protocol
       refs.push('Diluent A ' + op.ref('diluent A').bold)
       refs.push('Gold Mix ' + op.ref('gold').bold)
       refs.push('Stop Mix ' + op.ref('stop').bold)
-      refs.push("Samples #{op.input_refs(INPUT).join(', ').bold}") unless KIT_NAME == 'uw kit'
+      refs.push("Samples #{op.input_refs(INPUT).join(', ').bold}")
+      refs.push("Strips #{op.output_refs(OUTPUT).join(', ').bold}")
       refs
     end
 
@@ -803,9 +805,11 @@ class Protocol
       results_hash = {}
       kits = ops.map { |op| op.output(OUTPUT).item.get(KIT_KEY) }
       samples = ops.map { |op| op.output(OUTPUT).item.get(SAMPLE_KEY) }
+      patients = ops.map { |op| op.output(OUTPUT).item.get(PATIENT_KEY) }
       t = Table.new
       t.add_column('Kit', kits)
       t.add_column('Sample', samples)
+      t.add_column('Patient ID', patients)
       MUTATION_LABELS.each do |label|
         col = ops.map { |op| op.temporary[:results][label][:category] }
         t.add_column(label, col)
