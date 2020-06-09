@@ -114,13 +114,14 @@ class Protocol
     operations.running.retrieve interactive: false
     operations.running.make
     save_user operations
-    debug_setup(operations) if debug
 
     if debug
       labels = %w[001 002]
+      kit_num = 'K001'
       operations.each.with_index do |op, i|
         op.input(INPUT).item.associate(SAMPLE_KEY, labels[i])
         op.input(INPUT).item.associate(COMPONENT_KEY, PREV_COMPONENT)
+        op.input(INPUT).item.associate(KIT_KEY, kit_num)
         op.input(INPUT).item.associate(UNIT_KEY, PREV_UNIT)
       end
     end
@@ -149,6 +150,7 @@ class Protocol
     centrifuge_samples(sorted_ops.running)
     resuspend_pcr_mix(sorted_ops.running)
     add_template_to_master_mix(sorted_ops.running)
+  
     cleanup(sorted_ops)
     start_thermocycler(sorted_ops.running)
     wash_self
@@ -166,31 +168,6 @@ class Protocol
     ops.each do |op|
       username = get_technician_name(jid)
       op.associate(:technician, username)
-    end
-  end
-
-  def debug_setup(ops)
-    # make an alias for the inputs
-    if debug
-      ops.each do |op|
-        kit_num = rand(1..60)
-        make_alias(op.input(INPUT).item, kit_num, PREV_UNIT, PREV_COMPONENT, 1)
-        # op.input(PACK).item.associate(KIT_KEY, kit_num)
-      end
-
-      if ops.length >= 2
-        i = ops[-1].input(INPUT).item
-        alias_array = get_alias_array(i)
-        alias_array[3] = if alias_array[3] == 1
-                           2
-                         else
-                           1
-                         end
-        make_alias(ops[0].input(INPUT).item, *alias_array)
-
-        # kit_num = ops[-1].input(PACK).item.get(KIT_KEY)
-        # ops[0].input(PACK).item.associate(KIT_KEY, kit_num)
-      end
     end
   end
 
@@ -255,7 +232,7 @@ class Protocol
   end
 
   def validate_pcr_inputs(myops)
-    expected_inputs = myops.map { |op| ref(op.input(INPUT).item).sub("-","") }
+    expected_inputs = myops.map { |op| ref(op.input(INPUT).item) }
     sample_validation_with_multiple_tries(expected_inputs)
   end
 
