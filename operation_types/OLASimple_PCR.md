@@ -123,6 +123,7 @@ class Protocol
         op.input(INPUT).item.associate(COMPONENT_KEY, PREV_COMPONENT)
         op.input(INPUT).item.associate(KIT_KEY, kit_num)
         op.input(INPUT).item.associate(UNIT_KEY, PREV_UNIT)
+        op.input(INPUT).item.associate(PATIENT_KEY, "A PATIENT ID")        
       end
     end
 
@@ -196,20 +197,6 @@ class Protocol
     show do
       title "Welcome to OLASimple PCR"
       note 'You will be running the OLASimple PCR protocol. You will start with RNA Extraction products and will generate PCR products from the samples and use them later to detect HIV mutations.'
-    end
-  end
-
-  def safety_warning
-    show do
-      title 'Review the safety warnings'
-      warning 'You will be working with infectious materials.'
-      note 'Do <b>ALL</b> work in a biosafety cabinet (BSC)'
-      note 'Always wear a lab coat and gloves for this protocol. We will use two layers of gloves for parts of this protocol.'
-      note 'Make sure to use tight gloves. Tight gloves reduce the chance of the gloves getting caught on the tubes when closing their lids.'
-      note 'Change your outer layer of gloves after touching any common space surface (such as a refrigerator door handle) as your gloves can now be contaminated by RNase or other previously amplified products that can cause false positives.'
-      check 'Put on a lab coat and "doubled" gloves now.'
-      note 'Throughout the protocol, please pay extra attention to the orange warning blocks.'
-      warning 'Warning blocks can contain vital saftey information.'
     end
   end
 
