@@ -231,6 +231,8 @@ end
 module OLALib
   include OLAConstants
   include NetworkRequests
+  include OLAGraphics
+  include FunctionalSVG
 
   String.prepend TextExtension
   Integer.prepend TextExtension
@@ -623,13 +625,13 @@ module OLALib
     end
   end
 
-  def clean_area(which_area)
+  def clean_area(area)
     show do
       disinfectant = '10% bleach'
-      title "Wipe down #{which_area.bold} with #{disinfectant.bold}."
-      note "Now you will wipe down your #{BENCH} and equipment with #{disinfectant.bold}."
-      check "Spray #{disinfectant.bold} onto a #{WIPE} and clean off pipettes and pipette tip boxes."
-      check "Spray a small amount of #{disinfectant.bold} on the bench surface. Clean bench with #{WIPE}."
+      title "Wipe down #{area} with #{disinfectant.bold}."
+      note "Now you will wipe down your #{area} space and equipment with #{disinfectant.bold}."
+      check "Spray #{disinfectant.bold} onto a #{WIPE_PRE} and clean off pipettes and pipette tip boxes."
+      check "Spray #{disinfectant.bold} onto a #{WIPE_PRE} and wipe down the bench surface."
       # check "Spray some #{disinfectant.bold} on a #{WIPE}, gently wipe down keyboard and mouse of this computer/tablet."
       warning "Do not spray #{disinfectant.bold} onto tablet or computer!"
       check "Finally, spray outside of gloves with #{disinfectant.bold}."
@@ -637,11 +639,10 @@ module OLALib
 
     show do
       disinfectant = '70% ethanol'
-      title "Wipe down #{which_area.bold} with #{disinfectant.bold}."
-      note "Now you will wipe down your #{BENCH} and equipment with #{disinfectant.bold}."
-      check "Spray #{disinfectant.bold} onto a #{WIPE} and clean off pipettes and pipette tip boxes."
-      check "Spray a small amount of #{disinfectant.bold} on the bench surface. Clean bench with #{WIPE}."
-      #   check "Spray a #{"small".bold} amount of #{disinfectant.bold} on a #{WIPE}. Gently wipe down keyboard and mouse of this computer/tablet."
+      title "Wipe down #{area} with #{disinfectant.bold}."
+      note "Now you will wipe down your #{area} space and equipment with #{disinfectant.bold}."
+      check "Spray #{disinfectant.bold} onto a #{WIPE_PRE} and clean off pipettes and pipette tip boxes."
+      check "Spray #{disinfectant.bold} onto a #{WIPE_PRE} and wipe down the bench surface."
       warning "Do not spray #{disinfectant.bold} onto tablet or computer!"
       check "Finally, spray outside of gloves with #{disinfectant.bold}."
     end
@@ -649,10 +650,10 @@ module OLALib
 
   def simple_clean(protocol)
     show do
-      title "Ensure Workspace is Clean"
-      note "#{protocol} is highly sensitive. If the workspace is not clean, this could lead to false positives. "
-      note 'Before proceeding with this protocol, check with your assigner if the space and pipettes have been cleaned.'
+      title 'Ensure Workspace is Clean'
+      note "#{protocol} is prone to contamination. False positives can occur when the area is not clean."
       check "If area is not clean, or you aren't sure, wipe down space with 10% bleach and 70% ethanol."
+      note 'Spray disinfectants onto wipes, not directly onto surfaces.'
     end
   end
 
@@ -662,24 +663,46 @@ module OLALib
     clean_area area
   end
 
-  def safety_warning **opts
+  def safety_warning(area = nil)
+    grid = SVGGrid.new(3, 1, 200, 100)
+    grid.add(gloves_svg, 0, 0)
+    grid.add(coat_svg, 1, 0)
+    img2 = SVGElement.new(children: [grid], boundx: 1000, boundy: 200)
     show do
-      title 'Review the safety warnings'
-      if opts[:area] == :pre_pcr
-        warning 'You will be working with infectious materials.'
-        note 'Do <b>ALL</b> work in a biosafety cabinet (BSC)'
+      title 'Review Safety Warnings'
+      note '<b>Always</b> pay attention to orange warning blocks throughout the protocol.'
+      if area && area == PRE_PCR
+        img1 = SVGElement.new(children: [bsc_svg], boundx: 200, boundy: 200)
+        warning '<b>INFECTIOUS MATERIALS</b>'
+        note 'You will be working with infectious materials.'
+        note 'Do <b>ALL</b> work in a biosafety cabinet (BSC).'
+        note display_svg(img1, 0.2)
       end
-
-      if opts[:protocol] == :rna_extraction
-        warning "Do not mix #{LYSIS_BUFFER} or #{WASH1} with bleach, as this will generate toxic cyanide gas. #{LYSIS_BUFFER} AND #{WASH1} waste must be discarded appropriately based on guidelines for GuSCN handling waste"
-      end
-      note 'Always pay special attention to the orange warning blocks.'
-      warning 'Orange highlighted blocks (like this) can contain vital saftey information.'
-      check 'lab coat'
-      check 'two layers of gloves'
-      note 'Make sure to use tight gloves. Tight gloves reduce the chance of the gloves getting caught on the tubes when closing their lids.'
-      note 'Change your outer layer of gloves after touching any common space surface (such as a refrigerator door handle) as your gloves can now be contaminated by RNase or other previously amplified products that can cause false positives.'
+      note '<b>PPE is required</b>'
+      note display_svg(img2, 0.2)
+      check 'Put on lab coat'
+      check 'Put on two layers of gloves.'
+      bullet 'Make sure to use tight gloves. Tight gloves reduce the chance of the gloves getting caught on the tubes when closing their lids.'
+      bullet 'Change your outer layer of gloves after touching any common space surface to reduce contamination (such as a refrigerator door handle).'
     end
+  end
+
+  def gloves_svg
+    icon_from_html(
+      '<svg><title>3_gloveson</title><path d="M413,353c0-2.8-1.1-12.4-4-17.3s-10.8-22.1-10-27.2,1.2-16.4-.4-21.7-3.2-14-3.2-14-2.5-6.4,1.1-6.6,10.5,3.9,12.1,10.5,2.6,16.2,4.8,20.6c0,0,14-18.4,14.8-22.7s9.7-26.5,9.8-28,7.1-20.2,11-22.6,5.9-3.4,7.2-1.7a13.26,13.26,0,0,1,1.6,5.3s4-11.7,6.2-11.7c0,0,5.5-3.9,7.2,1.6a20.58,20.58,0,0,1-.2,11.2l-2.3,11.9c1.9-5.5,4.5-12.7,6-12.7,2.2,0,8.6-4,6.5,5.7-1.8,8.7-5.3,22.8-6,25.6h0c2.1-5.7,4.4-6.8,8.3-8.7s1.6,12.5,1.6,14.6-5.4,20.3-5.7,30.5-7.2,29.6-10.5,34.5-14.4,31.2-16.3,36.2,1.8,21.2-1.6,27.2-39.9-12.9-39.9-12.9S413,355.8,413,353Z" transform="translate(-305.22 -213.96)" fill="#b4b9de"/><path d="M420.9,306.2s-4.7-4.5-6.9-8.9-3.2-14-4.8-20.6-8.5-10.7-12.1-10.5-1.1,6.6-1.1,6.6,1.7,8.7,3.2,14,1.1,16.6.4,21.7,7.1,22.2,10,27.2,4,14.5,4,17.3-2,27.8-2,27.8,36.4,18.9,39.9,12.9-.3-22.2,1.6-27.2,13-31.3,16.3-36.2,10.2-24.3,10.5-34.5,5.7-28.5,5.7-30.5,2.3-16.5-1.6-14.6-6.4,3-8.5,9.2-3.2,18.2-4.6,21.7-1.2,8.5-1.2,8.5" transform="translate(-305.22 -213.96)" fill="none" stroke="#2e3192" stroke-miterlimit="10"/><path d="M414,297.3s14-18.4,14.8-22.7,9.7-26.5,9.8-28,7.1-20.2,11-22.6,5.9-3.4,7.2-1.7a13.26,13.26,0,0,1,1.6,5.3,14.65,14.65,0,0,1-1.1,8c-2.4,4.7-10.6,26.7-11.5,32s-1.5,8.6-1.5,8.6" transform="translate(-305.22 -213.96)" fill="none" stroke="#2e3192" stroke-miterlimit="10"/><path d="M456.8,278.9s9.2-30.5,10.5-32.8,5.9-18.4,8.1-18.4,8.6-4,6.5,5.7-6.2,26.2-6.2,26.2" transform="translate(-305.22 -213.96)" fill="none" stroke="#2e3192" stroke-miterlimit="10"/><path d="M458.4,227.5s4-11.7,6.2-11.7c0,0,5.5-3.9,7.2,1.6a20.58,20.58,0,0,1-.2,11.2l-2.3,11.9" transform="translate(-305.22 -213.96)" fill="none" stroke="#2e3192" stroke-miterlimit="10"/><path d="M384.9,353.1c0-2.6,1.1-11.6,4.3-16s11.5-20,10.7-24.8-1.4-15.5.3-20.3a129.68,129.68,0,0,0,3.4-12.9s2.6-5.9-1.2-6.2-11.3,2.9-13,9-2.7,15.1-5.1,19c0,0-15.2-18.2-16-22.3s-10.6-25.5-10.6-27-7.7-19.5-11.9-22-6.3-3.6-7.7-2.1a10.09,10.09,0,0,0-1.7,4.8s-4.3-11.3-6.7-11.4c0,0-5.9-4-7.7,1s.3,10.5.3,10.5l2.5,11.3c-2.1-5.3-4.9-12.3-6.5-12.4-2.4-.2-9.2-4.4-7,4.9,2,8.3,5.8,21.8,6.6,24.5h0c-2.2-5.5-4.8-6.7-8.9-8.7-4.3-2.1-1.7,11.6-1.7,13.6s5.9,19.5,6.2,29.1,7.9,28.3,11.4,33.2,15.6,30.3,17.6,35.2-1.9,19.8,1.8,25.7,42.9-9.3,42.9-9.3S384.9,355.7,384.9,353.1Z" transform="translate(-305.22 -213.96)" fill="#b4b9de"/><path d="M376.2,308.6s5-3.9,7.4-7.9,3.5-12.9,5.1-19,9.1-9.4,13-9,1.2,6.2,1.2,6.2-1.8,8.1-3.4,12.9-1.1,15.5-.3,20.3-7.6,20.4-10.7,24.8-4.2,13.4-4.3,16,2.2,26.3,2.2,26.3-39.2,15.2-42.9,9.3.3-20.8-1.8-25.7-14.1-30.4-17.6-35.2-11.1-23.5-11.4-33.2-6.3-27.1-6.2-29.1-2.6-15.7,1.7-13.6,6.9,3.3,9.1,9.2,3.5,17.4,5,20.7,1.3,8.1,1.3,8.1" transform="translate(-305.22 -213.96)" fill="none" stroke="#2e3192" stroke-miterlimit="10"/><path d="M383.6,300.7s-15.2-18.2-16-22.3-10.6-25.5-10.6-27-7.7-19.5-11.9-22-6.3-3.6-7.7-2.1a10.09,10.09,0,0,0-1.7,4.8,12.13,12.13,0,0,0,1.3,7.6c2.6,4.6,11.5,25.8,12.5,30.9s1.7,8.2,1.7,8.2" transform="translate(-305.22 -213.96)" fill="none" stroke="#2e3192" stroke-miterlimit="10"/><path d="M337.5,280.5s-10-29.3-11.4-31.6-6.4-17.7-8.8-17.8-9.2-4.4-7,4.9,6.7,25,6.7,25" transform="translate(-305.22 -213.96)" fill="none" stroke="#2e3192" stroke-miterlimit="10"/><path d="M335.6,232.1s-4.3-11.3-6.7-11.4c0,0-5.9-4-7.7,1s.3,10.5.3,10.5l2.5,11.3" transform="translate(-305.22 -213.96)" fill="none" stroke="#2e3192" stroke-miterlimit="10"/></svg>'
+    )
+  end
+
+  def coat_svg
+    icon_from_html(
+      '<svg><title>3_labcoaton</title><path d="M365.7,206.7l-33.6,12.8s-10.5,4.2-10.5,12.6V349h27.9l.6,52.7H440V349.6l28.8-.7V235.1s-5.4-17.4-20.4-19.2L425,206.7H365.7Z" transform="translate(-320.6 -205.7)" fill="#abb2da" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><path d="M458.5,246.8a94.68,94.68,0,0,0-5-30.2,20.07,20.07,0,0,0-5.1-1.3L425,206.1H365.7l-33.6,12.8s-10.5,4.2-10.5,12.6V335.6a102.22,102.22,0,0,0,37.3,7C413.9,342.5,458.5,299.6,458.5,246.8Z" transform="translate(-320.6 -205.7)" fill="#d8def0"/><polyline points="45.1 1 74.6 45.5 104.4 1" fill="#919195" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><polyline points="34.4 5.1 36.4 28.5 53.1 31.4 53.1 43.2 74.7 71.1 94.8 45.5 94.8 31.4 110.5 25.5 112.5 5.1" fill="none" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><line x1="28.9" y1="143.2" x2="28.9" y2="51.9" fill="none" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><line x1="119.4" y1="143.8" x2="119.4" y2="51.9" fill="none" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><path d="M365.7,206.7l-33.6,12.8s-10.5,4.2-10.5,12.6V349h27.9l.6,52.7H440V349.6l28.8-.7V235.1s-5.4-17.4-20.4-19.2L425,206.7H365.7Z" transform="translate(-320.6 -205.7)" fill="none" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><line x1="74.6" y1="45.5" x2="74.6" y2="197.6" fill="none" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><line x1="40.3" y1="125.9" x2="60.3" y2="125.9" fill="none" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><line x1="88.8" y1="125.9" x2="109.4" y2="125.9" fill="none" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><line x1="40.3" y1="71.4" x2="60.3" y2="71.4" fill="none" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><path d="M376.8,223.4" transform="translate(-320.6 -205.7)" fill="none" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><polygon points="93.2 17.7 74.6 45.5 56.2 17.7 93.2 17.7" fill="#abb2da" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/></svg>'
+    )
+  end
+
+  def bsc_svg
+    icon_from_html(
+      '<svg><title>3_bsccabinet</title><path d="M481.7,319.3H309.3a7.17,7.17,0,0,1-7.2-7.2V222.6a7.17,7.17,0,0,1,7.2-7.2H481.7a7.17,7.17,0,0,1,7.2,7.2v89.5A7.3,7.3,0,0,1,481.7,319.3Z" transform="translate(-302.1 -215.4)" fill="#d8def0"/><path d="M462.7,233.3H331a7.17,7.17,0,0,1-7.2-7.2v-2.2a7.17,7.17,0,0,1,7.2-7.2H462.8a7.17,7.17,0,0,1,7.2,7.2v2.2A7.32,7.32,0,0,1,462.7,233.3Z" transform="translate(-302.1 -215.4)" fill="#262261" stroke="#2e3191" stroke-miterlimit="10"/><path d="M481.6,216.9H463.2c8,7.6,12.7,16.7,12.7,26.4,0,26.9-35.5,48.7-79.3,48.7s-79.3-21.8-79.3-48.7c0-9.7,4.7-18.8,12.7-26.4H309.3a7.17,7.17,0,0,0-7.2,7.2v89.5a7.17,7.17,0,0,0,7.2,7.2H481.7a7.17,7.17,0,0,0,7.2-7.2V224.1A7.39,7.39,0,0,0,481.6,216.9Z" transform="translate(-302.1 -215.4)" fill="#abb2da"/><rect x="10.2" y="103.9" width="7.5" height="76.1" fill="#abb2da"/><rect x="167.8" y="103.9" width="7.5" height="76.1" fill="#abb2da"/><polyline points="7.1 1.5 7.1 79.9 179.3 80.8 179.5 1.5" fill="none" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><line x1="40.4" y1="20.4" x2="27.8" y2="34.2" fill="none" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><line x1="69.8" y1="20.4" x2="64.4" y2="34.2" fill="none" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><line x1="117.9" y1="20.4" x2="122.1" y2="34.2" fill="none" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/><line x1="160.4" y1="20.4" x2="171.6" y2="30.9" fill="none" stroke="#2e3191" stroke-miterlimit="10" stroke-width="2"/></svg>'
+    )
   end
 
   ####################################
