@@ -125,6 +125,12 @@ var config = {
             },
           
             {
+              name: 'RNAExtractionResources',
+              path: 'libraries/RNAExtractionResources' + '.html',
+              type: "local-webpage"
+            },
+          
+            {
               name: 'SVGGraphics',
               path: 'libraries/SVGGraphics' + '.html',
               type: "local-webpage"
