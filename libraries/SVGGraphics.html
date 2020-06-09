@@ -1044,12 +1044,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1289
-1290
-1291</pre>
+1274
+1275
+1276</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1289</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1274</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_svg'>save_svg</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_svg'>svg</span><span class='rparen'>)</span>
   <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_svg'>svg</span><span class='period'>.</span><span class='id identifier rubyid_to_str'>to_str</span><span class='rparen'>)</span>
@@ -1301,28 +1301,6 @@ $(document).ready(function() {
 </li>
 
       
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#tube-instance_method" title="#tube (instance method)">#<strong>tube</strong>(opened: false, contents: &#39;empty&#39;)  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
     </ul>
   
 
@@ -1408,18 +1386,18 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-997
-998
-999
-1000
-1001
-1002
-1003
-1004
-1005</pre>
+982
+983
+984
+985
+986
+987
+988
+989
+990</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 997</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 982</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_draw_svg'>draw_svg</span><span class='lparen'>(</span><span class='id identifier rubyid_svg_func'>svg_func</span><span class='comma'>,</span> <span class='label'>svg_label:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>svg_label_initial_offset:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_opts'>opts</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
@@ -1450,14 +1428,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-986
-987
-988
-989
-990</pre>
+971
+972
+973
+974
+975</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 986</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 971</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_icon_from_html'>icon_from_html</span><span class='lparen'>(</span><span class='id identifier rubyid_html'>html</span><span class='rparen'>)</span>
   <span class='id identifier rubyid___svg'>__svg</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='int'>500</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='int'>500</span><span class='rparen'>)</span>
@@ -1484,17 +1462,17 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1008
-1009
-1010
-1011
-1012
-1013
-1014
-1015</pre>
+993
+994
+995
+996
+997
+998
+999
+1000</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1008</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 993</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_label_helper'>label_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_svg'>svg</span><span class='comma'>,</span> <span class='id identifier rubyid_labels'>labels</span><span class='comma'>,</span> <span class='id identifier rubyid_offsety'>offsety</span> <span class='op'>=</span> <span class='int'>0</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_l'>l</span> <span class='op'>=</span> <span class='id identifier rubyid_label'>label</span><span class='lparen'>(</span><span class='id identifier rubyid_labels'>labels</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>font-size</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='op'>=&gt;</span> <span class='int'>25</span><span class='rparen'>)</span>
@@ -1524,22 +1502,22 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1007
-1008
-1009
-1010
-1011
-1012
-1013
-1014
-1015
-1016
-1017
-1018
-1019</pre>
+992
+993
+994
+995
+996
+997
+998
+999
+1000
+1001
+1002
+1003
+1004</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1007</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 992</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_label_object'>label_object</span><span class='lparen'>(</span><span class='id identifier rubyid_svg'>svg</span><span class='comma'>,</span> <span class='id identifier rubyid__label'>_label</span><span class='comma'>,</span> <span class='id identifier rubyid_initial_offset'>initial_offset</span><span class='op'>=</span><span class='int'>0</span><span class='rparen'>)</span>
   <span class='kw'>def</span> <span class='id identifier rubyid_label_helper'>label_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_svg'>svg</span><span class='comma'>,</span> <span class='id identifier rubyid_labels'>labels</span><span class='comma'>,</span> <span class='id identifier rubyid_offsety'>offsety</span> <span class='op'>=</span> <span class='int'>0</span><span class='rparen'>)</span>
@@ -1718,71 +1696,19 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-980
-981
-982
-983
-984</pre>
+965
+966
+967
+968
+969</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 980</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 965</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_svg_from_html'>svg_from_html</span><span class='lparen'>(</span><span class='id identifier rubyid_html'>html</span><span class='comma'>,</span> <span class='id identifier rubyid_bx'>bx</span><span class='op'>=</span><span class='int'>50</span><span class='comma'>,</span> <span class='id identifier rubyid_by'>by</span><span class='op'>=</span><span class='int'>140</span><span class='rparen'>)</span>
   <span class='id identifier rubyid___svg'>__svg</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='id identifier rubyid_bx'>bx</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='id identifier rubyid_by'>by</span><span class='rparen'>)</span>
   <span class='id identifier rubyid___svg'>__svg</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span><span class='id identifier rubyid_html'>html</span><span class='rparen'>)</span>
   <span class='id identifier rubyid___svg'>__svg</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="tube-instance_method">
-  
-    #<strong>tube</strong>(opened: false, contents: &#39;empty&#39;)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-965
-966
-967
-968
-969
-970
-971
-972
-973
-974
-975
-976
-977
-978</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 965</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_tube'>tube</span><span class='lparen'>(</span><span class='label'>opened:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>contents:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_tube'>tube</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>46.92</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='int'>140</span><span class='rparen'>)</span>
-  
-  <span class='kw'>if</span> <span class='id identifier rubyid_contents'>contents</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_opened'>opened</span>
-    <span class='id identifier rubyid_tube'>tube</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span>
-      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;defs&gt;&lt;style&gt;.cls-1_tube{fill:#fff;}.cls-1_tube,.cls-2_tube{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2_tube{fill:none;}&lt;/style&gt;&lt;/defs&gt;&lt;rect class=&quot;cls-1_tube&quot; x=&quot;5.5&quot; y=&quot;2.53&quot; width=&quot;33.11&quot; height=&quot;9.82&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot;/&gt;&lt;rect class=&quot;cls-1_tube&quot; x=&quot;0.25&quot; y=&quot;0.25&quot; width=&quot;42.88&quot; height=&quot;7.39&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot;/&gt;&lt;path class=&quot;cls-2_tube&quot; d=&quot;M411.36,243.86&quot; transform=&quot;translate(-371.69 -233.08)&quot;/&gt;&lt;path class=&quot;cls-2_tube&quot; d=&quot;M412,245.43a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28&quot; transform=&quot;translate(-371.69 -233.08)&quot;/&gt;&lt;path class=&quot;cls-2_tube&quot; d=&quot;M412,247.27a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7&quot; transform=&quot;translate(-371.69 -233.08)&quot;/&gt;&lt;rect class=&quot;cls-1_tube&quot; x=&quot;0.53&quot; y=&quot;11.4&quot; width=&quot;42.32&quot; height=&quot;4.79&quot; rx=&quot;2.4&quot; ry=&quot;2.4&quot;/&gt;&lt;path class=&quot;cls-2_tube&quot; d=&quot;M374.62,249.27V304.5l11.32,68c.8,4.79,4.61,5.75,7.86,5.09s4.39-5.33,4.39-5.33l13.16-67.79V249.27Z&quot; transform=&quot;translate(-371.69 -233.08)&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
-      <span class='rparen'>)</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_contents'>contents</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_opened'>opened</span>
-    <span class='id identifier rubyid_tube'>tube</span><span class='period'>.</span><span class='id identifier rubyid_add_child'>add_child</span><span class='lparen'>(</span>
-      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;defs&gt;&lt;style&gt;.cls-1_tube{fill:none;}.cls-1_tube,.cls-2_tube{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2_tube{fill:#fff;}&lt;/style&gt;&lt;/defs&gt;&lt;title&gt;Untitled-1&lt;/title&gt;&lt;path class=&quot;cls-1_tube&quot; d=&quot;M410.51,263.07&quot; transform=&quot;translate(-371.13 -215.85)&quot;/&gt;&lt;path class=&quot;cls-1_tube&quot; d=&quot;M411.12,264.64a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28&quot; transform=&quot;translate(-371.13 -215.85)&quot;/&gt;&lt;path class=&quot;cls-1_tube&quot; d=&quot;M411.12,266.47a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7&quot; transform=&quot;translate(-371.13 -215.85)&quot;/&gt;&lt;rect class=&quot;cls-2_tube&quot; x=&quot;0.25&quot; y=&quot;47.83&quot; width=&quot;42.32&quot; height=&quot;4.79&quot; rx=&quot;2.4&quot; ry=&quot;2.4&quot;/&gt;&lt;path class=&quot;cls-1_tube&quot; d=&quot;M373.78,268.47V323.7l11.32,68c.8,4.79,4.61,5.75,7.86,5.09s4.39-5.33,4.39-5.33l13.16-67.79V268.47Z&quot; transform=&quot;translate(-371.13 -215.85)&quot;/&gt;&lt;rect class=&quot;cls-2_tube&quot; x=&quot;394.99&quot; y=&quot;233.39&quot; width=&quot;33.11&quot; height=&quot;9.82&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot; transform=&quot;translate(236.03 -411.02) rotate(84.22)&quot;/&gt;&lt;rect class=&quot;cls-2_tube&quot; x=&quot;393.55&quot; y=&quot;233.89&quot; width=&quot;42.88&quot; height=&quot;7.39&quot; rx=&quot;2.36&quot; ry=&quot;2.36&quot; transform=&quot;translate(238.41 -415.09) rotate(84.22)&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
-      <span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  <span class='id identifier rubyid_tube'>tube</span><span class='period'>.</span><span class='id identifier rubyid_translate!'>translate!</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span><span class='int'>70</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2394,12 +2320,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1023
-1024
-1025</pre>
+1008
+1009
+1010</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1023</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1008</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_closedlid'>closedlid</span>
   <span class='ivar'>@closedlid</span>
@@ -2437,12 +2363,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1023
-1024
-1025</pre>
+1008
+1009
+1010</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1023</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1008</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_closedtube'>closedtube</span>
   <span class='ivar'>@closedtube</span>
@@ -2480,12 +2406,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1023
-1024
-1025</pre>
+1008
+1009
+1010</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1023</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1008</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_detection_strip'>detection_strip</span>
   <span class='ivar'>@detection_strip</span>
@@ -2523,12 +2449,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1023
-1024
-1025</pre>
+1008
+1009
+1010</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1023</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1008</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_openlid'>openlid</span>
   <span class='ivar'>@openlid</span>
@@ -2566,12 +2492,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1023
-1024
-1025</pre>
+1008
+1009
+1010</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1023</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1008</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_opentube'>opentube</span>
   <span class='ivar'>@opentube</span>
@@ -2609,12 +2535,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1023
-1024
-1025</pre>
+1008
+1009
+1010</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1023</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1008</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_strip'>strip</span>
   <span class='ivar'>@strip</span>
@@ -2652,12 +2578,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1023
-1024
-1025</pre>
+1008
+1009
+1010</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1023</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1008</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_striplabel'>striplabel</span>
   <span class='ivar'>@striplabel</span>
@@ -2695,12 +2621,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1023
-1024
-1025</pre>
+1008
+1009
+1010</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1023</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1008</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tube'>tube</span>
   <span class='ivar'>@tube</span>
@@ -2732,16 +2658,16 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1255
-1256
-1257
-1258
-1259
-1260
-1261</pre>
+1240
+1241
+1242
+1243
+1244
+1245
+1246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1255</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1240</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_control_band'>control_band</span>
   <span class='id identifier rubyid_band'>band</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>83.1</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>247.45</span><span class='rparen'>)</span>
@@ -2770,12 +2696,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1044
-1045
-1046</pre>
+1029
+1030
+1031</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1044</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1029</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_downarrow'>downarrow</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_uparrow'>uparrow</span><span class='period'>.</span><span class='id identifier rubyid_mirror_vertical'>mirror_vertical</span><span class='period'>.</span><span class='id identifier rubyid_new_class'>new_class</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>downarrow</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -2800,20 +2726,20 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1214
-1215
-1216
-1217
-1218
-1219
-1220
-1221
-1222
-1223
-1224</pre>
+1199
+1200
+1201
+1202
+1203
+1204
+1205
+1206
+1207
+1208
+1209</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1214</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1199</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fluid_large'>fluid_large</span>
   <span class='id identifier rubyid_fluid'>fluid</span> <span class='op'>=</span> <span class='cvar'>@@tubebb</span><span class='period'>.</span><span class='id identifier rubyid_inst'>inst</span>
@@ -2846,20 +2772,20 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1202
-1203
-1204
-1205
-1206
-1207
-1208
-1209
-1210
-1211
-1212</pre>
+1187
+1188
+1189
+1190
+1191
+1192
+1193
+1194
+1195
+1196
+1197</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1202</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1187</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fluid_medium'>fluid_medium</span>
   <span class='id identifier rubyid_fluid'>fluid</span> <span class='op'>=</span> <span class='cvar'>@@tubebb</span><span class='period'>.</span><span class='id identifier rubyid_inst'>inst</span>
@@ -2892,20 +2818,20 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1190
-1191
-1192
-1193
-1194
-1195
-1196
-1197
-1198
-1199
-1200</pre>
+1175
+1176
+1177
+1178
+1179
+1180
+1181
+1182
+1183
+1184
+1185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1190</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1175</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fluid_small'>fluid_small</span>
   <span class='id identifier rubyid_fluid'>fluid</span> <span class='op'>=</span> <span class='cvar'>@@tubebb</span><span class='period'>.</span><span class='id identifier rubyid_inst'>inst</span>
@@ -2938,12 +2864,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1034
-1035
-1036</pre>
+1019
+1020
+1021</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1034</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1019</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_larrow'>larrow</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_rarrow'>rarrow</span><span class='period'>.</span><span class='id identifier rubyid_mirror_horizontal'>mirror_horizontal</span><span class='period'>.</span><span class='id identifier rubyid_new_class'>new_class</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>larrow</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -2968,16 +2894,16 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1271
-1272
-1273
-1274
-1275
-1276
-1277</pre>
+1256
+1257
+1258
+1259
+1260
+1261
+1262</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1271</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1256</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mut_band'>mut_band</span>
   <span class='id identifier rubyid_band'>band</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>83.1</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>247.45</span><span class='rparen'>)</span>
@@ -3006,21 +2932,21 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1226
-1227
-1228
-1229
-1230
-1231
-1232
-1233
-1234
-1235
-1236
-1237</pre>
+1211
+1212
+1213
+1214
+1215
+1216
+1217
+1218
+1219
+1220
+1221
+1222</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1226</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1211</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_powder'>powder</span>
   <span class='id identifier rubyid_powder'>powder</span> <span class='op'>=</span> <span class='cvar'>@@tubebb</span><span class='period'>.</span><span class='id identifier rubyid_inst'>inst</span>
@@ -3054,14 +2980,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1028
-1029
-1030
-1031
-1032</pre>
+1013
+1014
+1015
+1016
+1017</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1028</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1013</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rarrow'>rarrow</span>
   <span class='id identifier rubyid_arrow'>arrow</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>33.48</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>38.65</span><span class='rparen'>)</span>
@@ -3088,21 +3014,21 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1066
-1067
-1068
-1069
-1070
-1071
-1072
-1073
-1074
-1075
-1076
-1077</pre>
+1051
+1052
+1053
+1054
+1055
+1056
+1057
+1058
+1059
+1060
+1061
+1062</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1066</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1051</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tube2mL'>tube2mL</span>
   <span class='id identifier rubyid__tube'>_tube</span> <span class='op'>=</span> <span class='cvar'>@@tubebb</span><span class='period'>.</span><span class='id identifier rubyid_inst'>inst</span>
@@ -3136,14 +3062,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1038
-1039
-1040
-1041
-1042</pre>
+1023
+1024
+1025
+1026
+1027</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1038</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1023</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uparrow'>uparrow</span>
   <span class='id identifier rubyid_arrow'>arrow</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>38.65</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>33.48</span><span class='rparen'>)</span>
@@ -3170,16 +3096,16 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-1263
-1264
-1265
-1266
-1267
-1268
-1269</pre>
+1248
+1249
+1250
+1251
+1252
+1253
+1254</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1263</span>
+      <pre class="code"><span class="info file"># File 'SVGGraphics.rb', line 1248</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_wt_band'>wt_band</span>
   <span class='id identifier rubyid_band'>band</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Graphics::SVGElement (class)">SVGElement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Graphics::SVGElement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>boundx:</span> <span class='float'>83.1</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='float'>247.45</span><span class='rparen'>)</span>
