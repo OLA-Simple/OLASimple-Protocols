@@ -46,13 +46,15 @@ class Protocol
   include OLAConstants
   include JobComments
 
+  AREA = PRE_PCR
+
   OUTPUT = 'Patient Sample'
   PATIENT_ID_INPUT = 'Patient Sample Identifier'
   KIT_ID_INPUT = 'Kit Identifier'
 
   UNIT = 'S'
   OUTPUT_COMPONENT = ''
-  PLASMA_LOCATION = 'fridge'
+  PLASMA_LOCATION = '-20 freezer'
   SAMPLE_VOLUME = 350
 
   def main
@@ -60,7 +62,7 @@ class Protocol
     operations.each_with_index do |op, i|
       if debug
         op.temporary[OLAConstants::PATIENT_KEY] = "patientid#{i}"
-        op.temporary[OLAConstants::KIT_KEY] = '001'
+        op.temporary[OLAConstants::KIT_KEY] = 'K001'
       else
         op.temporary[OLAConstants::PATIENT_KEY] = op.input(PATIENT_ID_INPUT).value
         op.temporary[OLAConstants::KIT_KEY] = op.input(KIT_ID_INPUT).value
@@ -71,8 +73,9 @@ class Protocol
 
     introduction
     record_technician_id
-    safety_warning
-    simple_clean("OLASimple")
+    safety_warning(AREA)
+    required_equipment
+    clean_area(AREA)
 
     kit_groups.each do |kit_num, ops|
       next unless check_batch_size(ops)
@@ -87,13 +90,11 @@ class Protocol
       retrieve_plasma(ops)
       _, expected_plasma_samples = plasma_tubes(ops)
       sample_validation_with_multiple_tries(expected_plasma_samples)
+      wait_for_thaw
       transfer_plasma(ops)
     end
 
-    disinfect
     store
-    cleanup
-    wash_self
     accept_comments
     conclusion(operations)
     {}
@@ -150,17 +151,23 @@ class Protocol
     end
   end
 
-  def safety_warning
+  def required_equipment
     show do
-      title 'Review the safety warnings'
-      warning 'You will be working with infectious materials.'
-      note 'Do <b>ALL</b> work in a biosafety cabinet (BSC)'
-      note 'Always wear a lab coat and gloves for this protocol. We will use two layers of gloves for parts of this protocol.'
-      note 'Make sure to use tight gloves. Tight gloves reduce the chance of the gloves getting caught on the tubes when closing their lids.'
-      note 'Change your outer layer of gloves after touching any common space surface (such as a refrigerator door handle) as your gloves can now be contaminated by RNase or other previously amplified products that can cause false positives.'
-      check 'Put on a lab coat and "doubled" gloves now.'
-      note 'Throughout the protocol, please pay extra attention to the orange warning blocks.'
-      warning 'Warning blocks can contain vital saftey information.'
+      title 'Get required equipment'
+      note "You will need the following supplies in the BSC"
+      materials = [
+        'P1000 pipette and filter tips',
+        'P200 pipette and filter tips',
+        'P20 pipette and filter tips',
+        'Vortex mixer',
+        'Cold tube rack',
+        '70% v/v Ethanol spray for cleaning,',
+        '10% v/v Bleach speay for cleaning',
+        'Molecular grade ethanol'
+      ]
+      materials.each do |m|
+        check m
+      end
     end
   end
 
@@ -205,11 +212,23 @@ class Protocol
     end
   end
 
+  def wait_for_thaw
+    show do
+      title 'Wait for Plasma to thaw'
+      note 'Let plasma sit at room temperature to thaw for 5 minutes.'
+      check 'Set a timer.'
+      note 'Continue only once the plasma is thawed enough to begin pipetting.'
+    end
+  end
+
   def transfer_plasma(ops)
+    from_tubes_open, from_names = plasma_tubes_opened(ops)
+    to_tubes_open, to_names = kit_tubes_opened(ops)
     from_tubes, from_names = plasma_tubes(ops)
     to_tubes, to_names = kit_tubes(ops)
     ops.each_with_index do |_op, i|
-      transfer_img = make_transfer(from_tubes[i], to_tubes[i], 300, "#{SAMPLE_VOLUME}ul", "(#{P1000_PRE})").translate(100, 0)
+      pre_transfer_validation_with_multiple_tries(from_names[i], to_names[i], from_tubes[i], to_tubes[i])
+      transfer_img = make_transfer(from_tubes_open[i], to_tubes_open[i], 250, "#{SAMPLE_VOLUME}ul", "(#{P1000_PRE})").translate(100, 0)
       show do
         title "Transfer #{from_names[i]} to #{to_names[i]}"
         note "Use a #{P1000_PRE} pipette and set it to <b>[3 5 0]</b>."
@@ -223,7 +242,7 @@ class Protocol
     show do
       title 'Store Items'
       sample_tubes = sample_labels.map { |s| "#{UNIT}-#{s}" }
-      note "Store <b>#{sample_tubes.to_sentence}</b> in the fridge on a cold rack."
+      note "Leave <b>#{sample_tubes.to_sentence}</b> in the BSC for immediate continuation."
     end
   end
 
@@ -239,7 +258,7 @@ class Protocol
   def conclusion(_myops)
     show do
       title 'Thank you!'
-      note 'You may start the next protocol immediately.'
+      note 'You will start the next protocol immediately.'
     end
   end
 
@@ -247,7 +266,7 @@ class Protocol
     tube_names = ops.map { |op| "#{UNIT}-#{op.temporary[OLAConstants::SAMPLE_KEY]}" }
     tubes = []
     tube_names.each_with_index do |s, _i|
-      tubes << draw_svg(:roundedtube, svg_label: s.split('-').join("\n"), opened: false, contents: 'empty')
+      tubes << draw_svg(:empty_sxx, svg_label: s.split('-').join("\n"), svg_label_initial_offset: -25)
     end
     [tubes, tube_names]
   end
@@ -256,13 +275,52 @@ class Protocol
     plasma_ids = ops.map { |op| op.temporary[OLAConstants::PATIENT_KEY] }
     tubes = []
     plasma_ids.each_with_index do |s, _i|
-      tubes << draw_svg(:roundedtube, svg_label: "\n\n\n" + s, opened: false, contents: 'full')
+      tubes << draw_svg(:plasma_sample_closed, svg_label: "\n\n\n\n\n" + s)
+    end
+    [tubes, plasma_ids]
+  end
+
+  def kit_tubes_opened(ops)
+    tube_names = ops.map { |op| "#{UNIT}-#{op.temporary[OLAConstants::SAMPLE_KEY]}" }
+    tubes = []
+    tube_names.each_with_index do |s, _i|
+      tubes << draw_svg(:empty_sxx_opened, svg_label: s.split('-').join("\n"))
+    end
+    [tubes, tube_names]
+  end
+
+  def plasma_tubes_opened(ops)
+    plasma_ids = ops.map { |op| op.temporary[OLAConstants::PATIENT_KEY] }
+    tubes = []
+    plasma_ids.each_with_index do |s, _i|
+      tubes << draw_svg(:plasma_sample_opened, svg_label: "\n\n\n\n" + s)
     end
     [tubes, plasma_ids]
   end
 
   def sample_labels
     operations.map { |op| op.temporary[OLAConstants::SAMPLE_KEY] }
+  end
+
+  def empty_sxx
+    tube(opened: false)
+  end
+
+  def empty_sxx_opened
+    tube(opened: true)
+  end
+
+  def plasma_sample_closed
+    svg_from_html(
+      '<svg><defs><style>.cls-1{fill:#efe7a3;}.cls-2,.cls-3{fill:none;}.cls-3,.cls-4{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-4{fill:#fff;}</style></defs><title>Plasma_tube_closed_lid</title><path class="cls-1" d="M386.8,334.93a13.86,13.86,0,0,1-13.24-2v45a12,12,0,0,0,12,12h19.85a12,12,0,0,0,12-12V309.32C405.29,313.67,397.2,331.15,386.8,334.93Z" transform="translate(-373.31 -222.24)"/><path class="cls-2" d="M376.55,250.87" transform="translate(-373.31 -222.24)"/><path class="cls-3" d="M8.85,35.78H35.5a8.6,8.6,0,0,1,8.6,8.6v111a12,12,0,0,1-12,12H12.25a12,12,0,0,1-12-12v-111a8.6,8.6,0,0,1,8.6-8.6Z"/><path class="cls-4" d="M395.48,222.49c-12.11,0-21.93,3-21.93,6.74v28.22c0,3.72,9.82,6.74,21.93,6.74s21.93-3,21.93-6.74V229.23C417.41,225.51,407.59,222.49,395.48,222.49Z" transform="translate(-373.31 -222.24)"/><ellipse class="cls-4" cx="22.18" cy="6.87" rx="16.97" ry="4.01"/><line class="cls-3" x1="4.12" y1="12.2" x2="4.12" y2="35.31"/><line class="cls-3" x1="22.97" y1="16" x2="22.97" y2="39.11"/><line class="cls-3" x1="41.55" y1="10.88" x2="41.55" y2="33.99"/><line class="cls-3" x1="32.79" y1="14.89" x2="32.79" y2="38"/><line class="cls-3" x1="13.15" y1="14.89" x2="13.15" y2="38"/></svg>'
+    ).translate!(0,70)
+  end
+
+  def plasma_sample_opened
+    svg_from_html(
+      '<svg><defs><style>.cls-1{fill:#efe7a3;}.cls-2,.cls-3{fill:none;}.cls-2,.cls-4{stroke:#010101;stroke-miterlimit:10;stroke-width:0.5px;}.cls-4{fill:#fff;}</style></defs><title>Plasma_tube_open_lid</title><path class="cls-1" d="M359.1,326.3a13.89,13.89,0,0,1-13.2-2v45a12,12,0,0,0,12,12h19.9a12,12,0,0,0,12-12V300.7C377.6,305.1,369.5,322.5,359.1,326.3Z" transform="translate(-345.45 -230.85)"/><path class="cls-2" d="M384,249.9V237c0-3.3-7.3-5.9-16.3-5.9s-16.3,2.7-16.3,5.9v12.9a8.68,8.68,0,0,0-5.7,8.1V369a12,12,0,0,0,12,12h19.9a12,12,0,0,0,12-12V258A8.55,8.55,0,0,0,384,249.9Z" transform="translate(-345.45 -230.85)"/><path class="cls-3" d="M348.8,242.2" transform="translate(-345.45 -230.85)"/><path class="cls-4" d="M423.4,340.1c-12.1,0-21.9,3-21.9,6.7V375c0,3.7,9.8,6.7,21.9,6.7s21.9-3,21.9-6.7V346.8C445.3,343.1,435.5,340.1,423.4,340.1Z" transform="translate(-345.45 -230.85)"/><ellipse class="cls-4" cx="77.95" cy="115.85" rx="17" ry="4"/><line class="cls-2" x1="59.95" y1="121.15" x2="59.95" y2="144.25"/><line class="cls-2" x1="78.75" y1="124.95" x2="78.75" y2="148.05"/><line class="cls-2" x1="97.35" y1="119.85" x2="97.35" y2="142.95"/><line class="cls-2" x1="88.55" y1="123.85" x2="88.55" y2="146.95"/><line class="cls-2" x1="68.95" y1="123.85" x2="68.95" y2="146.95"/><ellipse class="cls-4" cx="22.35" cy="6.05" rx="12.6" ry="3.5"/></svg>',
+      100
+    ).translate!(0,70)
   end
 end
 
