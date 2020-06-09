@@ -911,7 +911,7 @@ module Graphics
 
   module FunctionalSVG
     def roundedtube(opened: false, contents: 'empty')
-      _roundedtube = SVGElement.new(boundx: 46.92, boundy: 132.74)
+      _roundedtube = SVGElement.new(boundx: 46.92, boundy: 140)
       if contents == 'full'
         _roundedtube.add_child(
               '<svg><defs><style>.cls-1{fill:#26afe5;}.cls-2{fill:#fff;}.cls-2,.cls-3{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-3{fill:none;}</style></defs><title>Untitled-18</title><path class="cls-1" d="M412.76,285.62c-8.82,5.75-17.91,3.62-26.54.87l-10.47,3v45.4c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.67,2.67,0,0,0,0-.37Z" transform="translate(-372.39 -241.25)"/><path class="cls-1" d="M383.88,285.72a15.52,15.52,0,0,0-8.13-.66v4.44l10.47-3Z" transform="translate(-372.39 -241.25)"/><rect class="cls-2" x="5.5" y="2.53" width="33.11" height="9.82" rx="2.36" ry="2.36"/><rect class="cls-2" x="0.25" y="0.25" width="42.88" height="7.39" rx="2.36" ry="2.36"/><path class="cls-3" d="M412.06,252" transform="translate(-372.39 -241.25)"/><path class="cls-3" d="M412.67,253.6a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28" transform="translate(-372.39 -241.25)"/><path class="cls-3" d="M412.67,255.44a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7" transform="translate(-372.39 -241.25)"/><path class="cls-3" d="M375.39,257.57v77.6c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.66,2.66,0,0,0,0-.37l-.61-78.29a2.52,2.52,0,0,0-2.52-2.5H377.91A2.52,2.52,0,0,0,375.39,257.57Z" transform="translate(-372.39 -241.25)"/><rect class="cls-2" x="0.53" y="11.4" width="42.32" height="4.79" rx="2.4" ry="2.4"/></svg>'
@@ -927,14 +927,14 @@ module Graphics
     end
 
     def screwbottle(opened: false, contents: 'empty')
-      _screwbottle = SVGElement.new(boundx: 46.92, boundy: 132.74)
+      _screwbottle = SVGElement.new(boundx: 46.92, boundy: 140)
       _screwbottle.add_child(
           '<svg><defs><style>.cls-1{fill:#26afe5;}.cls-2,.cls-3{fill:none;}.cls-3,.cls-4{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-4{fill:#fff;}</style></defs><path class="cls-1" d="M377.92,325.7c-4.23-1-8.46.27-11.89,2v31.86a8.73,8.73,0,0,0,8.71,8.71h41.68a8.73,8.73,0,0,0,8.71-8.71V328.25c-9.24.24-7.87,3.46-19.44,7.63S387.64,328,377.92,325.7Z" transform="translate(-365.78 -243.8)"/><path class="cls-2" d="M369,280.29" transform="translate(-365.78 -243.8)"/><rect class="cls-3" x="0.25" y="43.66" width="59.09" height="80.08" rx="8.6" ry="8.6"/><path class="cls-4" d="M395.58,244c-16.32,0-29.55,3.59-29.55,8V285.6c0,4.42,13.23,8,29.55,8s29.55-3.59,29.55-8V252.05C425.12,247.63,411.89,244,395.58,244Z" transform="translate(-365.78 -243.8)"/><ellipse class="cls-4" cx="29.8" cy="8.12" rx="22.86" ry="4.76"/><line class="cls-3" x1="5.46" y1="14.46" x2="5.46" y2="41.93"/><line class="cls-3" x1="30.86" y1="18.98" x2="30.86" y2="46.45"/><line class="cls-3" x1="55.9" y1="12.89" x2="55.9" y2="40.36"/><line class="cls-3" x1="44.1" y1="17.66" x2="44.1" y2="45.13"/><line class="cls-3" x1="17.63" y1="17.66" x2="17.63" y2="45.13"/></svg>'
           ).translate!(0, 70)
     end
     
     def samplecolumn(opened: false, contents: 'empty')
-      column =  SVGElement.new(boundx: 46.92, boundy: 132.74)
+      column =  SVGElement.new(boundx: 46.92, boundy: 140)
       if contents == 'empty' && !opened
         column.add_child(
           '<svg><defs><style>.cls-1_sc{fill:#fff;}.cls-1_sc,.cls-2_sc{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2_sc{fill:none;}</style></defs><path class="cls-1_sc" d="M375.23,260.43V338c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.66,2.66,0,0,0,0-.37L412,260.41a2.52,2.52,0,0,0-2.52-2.5H377.75A2.52,2.52,0,0,0,375.23,260.43Z" transform="translate(-371.72 -237.72)"/><rect class="cls-1_sc" x="5.5" y="2.53" width="33.11" height="9.82" rx="2.36" ry="2.36"/><rect class="cls-1_sc" x="3.51" y="9.99" width="36.77" height="4.72" rx="1.19" ry="1.19"/><path class="cls-1_sc" d="M377.22,252.44v51.26a1.65,1.65,0,0,0,.85,1.44l5.56,3.06a1.65,1.65,0,0,1,.85,1.44v7.3a1.65,1.65,0,0,0,1.65,1.65h14.54a1.65,1.65,0,0,0,1.65-1.65v-7.25a1.65,1.65,0,0,1,.91-1.48l6.18-3.09a1.65,1.65,0,0,0,.91-1.48V252.44" transform="translate(-371.72 -237.72)"/><rect class="cls-1_sc" x="14.16" y="70.95" width="15.06" height="6.09" rx="0.98" ry="0.98"/><rect class="cls-1_sc" x="0.25" y="0.25" width="42.88" height="7.39" rx="2.36" ry="2.36"/><path class="cls-2_sc" d="M416.1,248" transform="translate(-371.72 -237.72)"/><path class="cls-2_sc" d="M411.38,248.51" transform="translate(-371.72 -237.72)"/><path class="cls-2_sc" d="M412,250.08a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28" transform="translate(-371.72 -237.72)"/><path class="cls-2_sc" d="M412,251.91a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7" transform="translate(-371.72 -237.72)"/><rect class="cls-1_sc" x="1.05" y="17.78" width="42.32" height="4.79" rx="2.4" ry="2.4"/></svg>'
@@ -950,7 +950,7 @@ module Graphics
     end
     
     def collectiontube(contents: 'empty')
-      ctube = SVGElement.new(boundx: 46.92, boundy: 132.74)
+      ctube = SVGElement.new(boundx: 46.92, boundy: 140)
       if contents == 'empty'
         ctube.add_child(
           '<svg><defs><style>.cls-1_collection_tube{fill:none;stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}</style></defs><path class="cls-1_collection_tube" d="M377.69,251.62v77.6c0,.05,0,.1,0,.15.12,1.91,4.52,35.39,19.95,31.76,0,0,12.62,4.63,17.42-30.86a2.66,2.66,0,0,0,0-.37l-.61-78.29a2.52,2.52,0,0,0-2.52-2.5H380.21A2.52,2.52,0,0,0,377.69,251.62Z" transform="translate(-374.97 -246.46)"/><rect class="cls-1_collection_tube" x="0.25" y="0.25" width="42.32" height="4.79" rx="2.4" ry="2.4"/></svg>'
@@ -963,7 +963,7 @@ module Graphics
     end
     
     def tube(opened: false, contents: 'empty')
-      tube = SVGElement.new(boundx: 46.92, boundy: 132.74)
+      tube = SVGElement.new(boundx: 46.92, boundy: 140)
       
       if contents == 'empty' && !opened
         tube.add_child(
@@ -977,18 +977,34 @@ module Graphics
       tube.translate!(0,70)
     end
     
+    def svg_from_html(html, bx=50, by=140)
+      __svg = SVGElement.new(boundx: bx, boundy: by)
+      __svg.add_child(html)
+      __svg
+    end
+
+    def icon_from_html(html)
+      __svg = SVGElement.new(boundx: 500, boundy: 500)
+      __svg.add_child(html)
+      __svg
+    end
+
     # svg_func: a symbol method name for a function that returns an SVGElement
     # svg_label: label for svg
     # opts: option hash to be applied to svg_func as named parameters
     #
     # example: svg = draw_svg(:tube, svg_label: "Hello\nWorld", opened: true, full: true)
-    def draw_svg(svg_func, svg_label: nil, **opts)
-      svg = method(svg_func).call(**opts)
-      svg = label_object(svg, svg_label) if svg_label
+    def draw_svg(svg_func, svg_label: nil, svg_label_initial_offset: 0, **opts)
+      if opts.any?
+        svg = method(svg_func).call(**opts)
+      else
+        svg = method(svg_func).call
+      end
+      svg = label_object(svg, svg_label, svg_label_initial_offset) if svg_label
       svg
     end
-    
-    def label_object(svg, _label)
+
+    def label_object(svg, _label, initial_offset=0)
       def label_helper(svg, labels, offsety = 0)
         l = label(labels.shift, "font-size".to_sym => 25)
         l.align!('center-center')
@@ -997,9 +1013,9 @@ module Graphics
         return label_helper(svg, labels, offsety + 25) unless labels.empty?
         return svg
       end
-      
+
       labels = _label.split("\n")
-      return label_helper(svg, labels, 0)
+      return labels.empty? ? svg : label_helper(svg, labels, initial_offset)
     end
   end
 
