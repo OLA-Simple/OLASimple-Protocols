@@ -322,6 +322,21 @@ class Protocol
       100
     ).translate!(0,70)
   end
+
+  def tube(opened: false, contents: 'empty')
+    tube = SVGElement.new(boundx: 46.92, boundy: 140)
+    
+    if contents == 'empty' && !opened
+      tube.add_child(
+        '<svg><defs><style>.cls-1_tube{fill:#fff;}.cls-1_tube,.cls-2_tube{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2_tube{fill:none;}</style></defs><rect class="cls-1_tube" x="5.5" y="2.53" width="33.11" height="9.82" rx="2.36" ry="2.36"/><rect class="cls-1_tube" x="0.25" y="0.25" width="42.88" height="7.39" rx="2.36" ry="2.36"/><path class="cls-2_tube" d="M411.36,243.86" transform="translate(-371.69 -233.08)"/><path class="cls-2_tube" d="M412,245.43a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28" transform="translate(-371.69 -233.08)"/><path class="cls-2_tube" d="M412,247.27a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7" transform="translate(-371.69 -233.08)"/><rect class="cls-1_tube" x="0.53" y="11.4" width="42.32" height="4.79" rx="2.4" ry="2.4"/><path class="cls-2_tube" d="M374.62,249.27V304.5l11.32,68c.8,4.79,4.61,5.75,7.86,5.09s4.39-5.33,4.39-5.33l13.16-67.79V249.27Z" transform="translate(-371.69 -233.08)"/></svg>'
+        )
+    elsif contents == 'empty' && opened
+      tube.add_child(
+        '<svg><defs><style>.cls-1_tube{fill:none;}.cls-1_tube,.cls-2_tube{stroke:#231f20;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2_tube{fill:#fff;}</style></defs><title>Untitled-1</title><path class="cls-1_tube" d="M410.51,263.07" transform="translate(-371.13 -215.85)"/><path class="cls-1_tube" d="M411.12,264.64a3.88,3.88,0,0,0,3.29-2.79,4.85,4.85,0,0,0-.42-4.28" transform="translate(-371.13 -215.85)"/><path class="cls-1_tube" d="M411.12,266.47a6,6,0,0,0,6.16-4.86,5.79,5.79,0,0,0-3.17-7" transform="translate(-371.13 -215.85)"/><rect class="cls-2_tube" x="0.25" y="47.83" width="42.32" height="4.79" rx="2.4" ry="2.4"/><path class="cls-1_tube" d="M373.78,268.47V323.7l11.32,68c.8,4.79,4.61,5.75,7.86,5.09s4.39-5.33,4.39-5.33l13.16-67.79V268.47Z" transform="translate(-371.13 -215.85)"/><rect class="cls-2_tube" x="394.99" y="233.39" width="33.11" height="9.82" rx="2.36" ry="2.36" transform="translate(236.03 -411.02) rotate(84.22)"/><rect class="cls-2_tube" x="393.55" y="233.89" width="42.88" height="7.39" rx="2.36" ry="2.36" transform="translate(238.41 -415.09) rotate(84.22)"/></svg>'
+        )
+    end
+    tube.translate!(0,70)
+  end
 end
 
 ```
