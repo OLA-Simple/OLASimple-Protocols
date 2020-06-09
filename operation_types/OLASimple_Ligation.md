@@ -195,18 +195,6 @@ class Protocol
     end
   end
 
-  def safety_warning
-    show do
-      title 'Review the safety warnings'
-      note 'Always wear a lab coat and gloves for this protocol. We will use two layers of gloves for parts of this protocol.'
-      note 'Change your outer layer of gloves after touching any common space surface (such as a refrigerator door handle) as your gloves can now be contaminated by RNase or other previously amplified products that can cause false positives.'
-      note 'Make sure to use tight gloves. Tight gloves reduce the chance of the gloves getting caught on the tubes when closing their lids.'
-      check 'Put on a lab coat and "doubled" gloves now.'
-      note 'Throughout the protocol, please pay extra attention to the orange warning blocks.'
-      warning 'Warning blocks can contain vital saftey information.'
-    end
-  end
-
   def get_ligation_packages(myops)
     gops = myops.group_by { |op| op.temporary[:output_kit_and_unit] }
     show do
