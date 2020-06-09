@@ -157,7 +157,7 @@ class Protocol
     # make an alias for the inputs
     if debug
       ops.each_with_index do |op, i|
-        kit_num = '001'
+        kit_num = 'K001'
         sample_num = sample_num_to_id(i + 1)
         make_alias(op.input(INPUT).item, kit_num, PREV_UNIT, PREV_COMPONENT, 'a patient id', sample_num)
       end
@@ -306,7 +306,7 @@ class Protocol
   end
 
   def validate_ligation_inputs(myops)
-    expected_inputs = myops.map { |op| ref(op.input(INPUT).item).sub('-', '') }
+    expected_inputs = myops.map { |op| ref(op.input(INPUT).item) }
     sample_validation_with_multiple_tries(expected_inputs)
   end
 
