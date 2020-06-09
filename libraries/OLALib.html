@@ -2895,7 +2895,7 @@ $(document).ready(function() {
   
   <dl>
       <dt>Includes:</dt>
-      <dd>NetworkRequests, OLAConstants</dd>
+      <dd>FunctionalSVG, NetworkRequests, OLAConstants, OLAGraphics</dd>
   </dl>
   
   
@@ -3042,6 +3042,28 @@ $(document).ready(function() {
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#bsc_svg-instance_method" title="#bsc_svg (instance method)">#<strong>bsc_svg</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#centrifuge_helper-instance_method" title="#centrifuge_helper (instance method)">#<strong>centrifuge_helper</strong>(sample_identifier, sample_labels, time, reason, area, mynote = nil)  &#x21d2; Object </a>
     
 
@@ -3108,7 +3130,29 @@ $(document).ready(function() {
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#clean_area-instance_method" title="#clean_area (instance method)">#<strong>clean_area</strong>(which_area)  &#x21d2; Object </a>
+      <a href="#clean_area-instance_method" title="#clean_area (instance method)">#<strong>clean_area</strong>(area)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#coat_svg-instance_method" title="#coat_svg (instance method)">#<strong>coat_svg</strong>  &#x21d2; Object </a>
     
 
     
@@ -3331,6 +3375,28 @@ $(document).ready(function() {
   <span class="summary_signature">
     
       <a href="#get_technician_name-instance_method" title="#get_technician_name (instance method)">#<strong>get_technician_name</strong>(job_id)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#gloves_svg-instance_method" title="#gloves_svg (instance method)">#<strong>gloves_svg</strong>  &#x21d2; Object </a>
     
 
     
@@ -3580,7 +3646,7 @@ $(document).ready(function() {
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#safety_warning-instance_method" title="#safety_warning (instance method)">#<strong>safety_warning</strong>(**opts)  &#x21d2; Object </a>
+      <a href="#safety_warning-instance_method" title="#safety_warning (instance method)">#<strong>safety_warning</strong>(area = nil)  &#x21d2; Object </a>
     
 
     
@@ -3869,6 +3935,8 @@ $(document).ready(function() {
 
   
   
+  
+  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -3889,8 +3957,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-609
-610
 611
 612
 613
@@ -3904,10 +3970,12 @@ $(document).ready(function() {
 621
 622
 623
-624</pre>
+624
+625
+626</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 609</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 611</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_to_thermocycler'>add_to_thermocycler</span><span class='lparen'>(</span><span class='id identifier rubyid_sample_identifier'>sample_identifier</span><span class='comma'>,</span> <span class='id identifier rubyid_sample_labels'>sample_labels</span><span class='comma'>,</span> <span class='id identifier rubyid_program_name'>program_name</span><span class='comma'>,</span> <span class='id identifier rubyid_program_table'>program_table</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_len'>len</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_sample_labels'>sample_labels</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
@@ -3956,17 +4024,17 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-281
-282
 283
 284
 285
 286
 287
-288</pre>
+288
+289
+290</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 281</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 283</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_alias_helper'>alias_helper</span><span class='lparen'>(</span><span class='id identifier rubyid__kit'>_kit</span><span class='comma'>,</span> <span class='id identifier rubyid_unit'>unit</span><span class='comma'>,</span> <span class='id identifier rubyid_component'>component</span><span class='comma'>,</span> <span class='id identifier rubyid_sample'>sample</span><span class='rparen'>)</span>
   <span class='comment'># returns the label given kit, unit, comp and sample
@@ -3996,8 +4064,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-492
-493
 494
 495
 496
@@ -4007,10 +4073,12 @@ $(document).ready(function() {
 500
 501
 502
-503</pre>
+503
+504
+505</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 492</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 494</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_area_preparation'>area_preparation</span><span class='lparen'>(</span><span class='id identifier rubyid_which_area'>which_area</span><span class='comma'>,</span> <span class='id identifier rubyid_materials'>materials</span><span class='comma'>,</span> <span class='id identifier rubyid_other_area'>other_area</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
@@ -4044,14 +4112,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-659
 660
 661
 662
-663</pre>
+663
+664</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 659</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 660</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_area_setup'>area_setup</span><span class='lparen'>(</span><span class='id identifier rubyid_area'>area</span><span class='comma'>,</span> <span class='id identifier rubyid_materials'>materials</span><span class='comma'>,</span> <span class='id identifier rubyid_other_area'>other_area</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_area_preparation'>area_preparation</span> <span class='id identifier rubyid_area'>area</span><span class='comma'>,</span> <span class='id identifier rubyid_materials'>materials</span><span class='comma'>,</span> <span class='id identifier rubyid_other_area'>other_area</span>
@@ -4089,17 +4157,17 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-457
-458
 459
 460
 461
 462
 463
-464</pre>
+464
+465
+466</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 457</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 459</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ask_if_expert'>ask_if_expert</span>
   <span class='id identifier rubyid_resp'>resp</span> <span class='op'>=</span> <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
@@ -4108,6 +4176,40 @@ $(document).ready(function() {
     <span class='id identifier rubyid_select'>select</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Continue in normal mode</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Enable expert mode</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>var:</span> <span class='symbol'>:choice</span><span class='comma'>,</span> <span class='label'>label:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Expert Mode?</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>default:</span> <span class='int'>0</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_resp'>resp</span><span class='lbracket'>[</span><span class='symbol'>:choice</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Enable expert mode</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="bsc_svg-instance_method">
+  
+    #<strong>bsc_svg</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+702
+703
+704
+705
+706</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 702</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_bsc_svg'>bsc_svg</span>
+  <span class='id identifier rubyid_icon_from_html'>icon_from_html</span><span class='lparen'>(</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;title&gt;3_bsccabinet&lt;/title&gt;&lt;path d=&quot;M481.7,319.3H309.3a7.17,7.17,0,0,1-7.2-7.2V222.6a7.17,7.17,0,0,1,7.2-7.2H481.7a7.17,7.17,0,0,1,7.2,7.2v89.5A7.3,7.3,0,0,1,481.7,319.3Z&quot; transform=&quot;translate(-302.1 -215.4)&quot; fill=&quot;#d8def0&quot;/&gt;&lt;path d=&quot;M462.7,233.3H331a7.17,7.17,0,0,1-7.2-7.2v-2.2a7.17,7.17,0,0,1,7.2-7.2H462.8a7.17,7.17,0,0,1,7.2,7.2v2.2A7.32,7.32,0,0,1,462.7,233.3Z&quot; transform=&quot;translate(-302.1 -215.4)&quot; fill=&quot;#262261&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot;/&gt;&lt;path d=&quot;M481.6,216.9H463.2c8,7.6,12.7,16.7,12.7,26.4,0,26.9-35.5,48.7-79.3,48.7s-79.3-21.8-79.3-48.7c0-9.7,4.7-18.8,12.7-26.4H309.3a7.17,7.17,0,0,0-7.2,7.2v89.5a7.17,7.17,0,0,0,7.2,7.2H481.7a7.17,7.17,0,0,0,7.2-7.2V224.1A7.39,7.39,0,0,0,481.6,216.9Z&quot; transform=&quot;translate(-302.1 -215.4)&quot; fill=&quot;#abb2da&quot;/&gt;&lt;rect x=&quot;10.2&quot; y=&quot;103.9&quot; width=&quot;7.5&quot; height=&quot;76.1&quot; fill=&quot;#abb2da&quot;/&gt;&lt;rect x=&quot;167.8&quot; y=&quot;103.9&quot; width=&quot;7.5&quot; height=&quot;76.1&quot; fill=&quot;#abb2da&quot;/&gt;&lt;polyline points=&quot;7.1 1.5 7.1 79.9 179.3 80.8 179.5 1.5&quot; fill=&quot;none&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;line x1=&quot;40.4&quot; y1=&quot;20.4&quot; x2=&quot;27.8&quot; y2=&quot;34.2&quot; fill=&quot;none&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;line x1=&quot;69.8&quot; y1=&quot;20.4&quot; x2=&quot;64.4&quot; y2=&quot;34.2&quot; fill=&quot;none&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;line x1=&quot;117.9&quot; y1=&quot;20.4&quot; x2=&quot;122.1&quot; y2=&quot;34.2&quot; fill=&quot;none&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;line x1=&quot;160.4&quot; y1=&quot;20.4&quot; x2=&quot;171.6&quot; y2=&quot;30.9&quot; fill=&quot;none&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -4129,18 +4231,18 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-570
-571
 572
 573
 574
 575
 576
 577
-578</pre>
+578
+579
+580</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 570</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 572</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_centrifuge_helper'>centrifuge_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_sample_identifier'>sample_identifier</span><span class='comma'>,</span> <span class='id identifier rubyid_sample_labels'>sample_labels</span><span class='comma'>,</span> <span class='id identifier rubyid_time'>time</span><span class='comma'>,</span> <span class='id identifier rubyid_reason'>reason</span><span class='comma'>,</span> <span class='id identifier rubyid_area'>area</span><span class='comma'>,</span> <span class='id identifier rubyid_mynote'>mynote</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_sample_labels'>sample_labels</span> <span class='op'>=</span> <span class='id identifier rubyid_sample_labels'>sample_labels</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
@@ -4171,8 +4273,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-539
-540
 541
 542
 543
@@ -4191,10 +4291,12 @@ $(document).ready(function() {
 556
 557
 558
-559</pre>
+559
+560
+561</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 539</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 541</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_centrifuge_proc'>centrifuge_proc</span><span class='lparen'>(</span><span class='id identifier rubyid_sample_identifier'>sample_identifier</span><span class='comma'>,</span> <span class='id identifier rubyid_sample_labels'>sample_labels</span><span class='comma'>,</span> <span class='id identifier rubyid_time'>time</span><span class='comma'>,</span> <span class='id identifier rubyid_reason'>reason</span><span class='comma'>,</span> <span class='id identifier rubyid_area'>area</span><span class='comma'>,</span> <span class='id identifier rubyid_balance'>balance</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_area'>area</span> <span class='op'>==</span> <span class='const'>PRE_PCR</span>
@@ -4237,8 +4339,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-473
-474
 475
 476
 477
@@ -4254,10 +4354,12 @@ $(document).ready(function() {
 487
 488
 489
-490</pre>
+490
+491
+492</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 473</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 475</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_tube_defects'>check_for_tube_defects</span><span class='lparen'>(</span><span class='id identifier rubyid__myops'>_myops</span><span class='rparen'>)</span>
   <span class='comment'># show do
@@ -4285,7 +4387,7 @@ $(document).ready(function() {
       <div class="method_details ">
   <h3 class="signature " id="clean_area-instance_method">
   
-    #<strong>clean_area</strong>(which_area)  &#x21d2; <tt>Object</tt> 
+    #<strong>clean_area</strong>(area)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -4297,8 +4399,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-626
-627
 628
 629
 630
@@ -4319,18 +4419,19 @@ $(document).ready(function() {
 645
 646
 647
-648</pre>
+648
+649</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 626</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 628</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_clean_area'>clean_area</span><span class='lparen'>(</span><span class='id identifier rubyid_which_area'>which_area</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_clean_area'>clean_area</span><span class='lparen'>(</span><span class='id identifier rubyid_area'>area</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_disinfectant'>disinfectant</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>10% bleach</span><span class='tstring_end'>&#39;</span></span>
-    <span class='id identifier rubyid_title'>title</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Wipe down </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_which_area'>which_area</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Now you will wipe down your </span><span class='embexpr_beg'>#{</span><span class='const'>BENCH</span><span class='embexpr_end'>}</span><span class='tstring_content'> and equipment with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto a </span><span class='embexpr_beg'>#{</span><span class='const'>WIPE</span><span class='embexpr_end'>}</span><span class='tstring_content'> and clean off pipettes and pipette tip boxes.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Spray a small amount of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> on the bench surface. Clean bench with </span><span class='embexpr_beg'>#{</span><span class='const'>WIPE</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_title'>title</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Wipe down </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_area'>area</span><span class='embexpr_end'>}</span><span class='tstring_content'> with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Now you will wipe down your </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_area'>area</span><span class='embexpr_end'>}</span><span class='tstring_content'> space and equipment with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto a </span><span class='embexpr_beg'>#{</span><span class='const'>WIPE_PRE</span><span class='embexpr_end'>}</span><span class='tstring_content'> and clean off pipettes and pipette tip boxes.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto a </span><span class='embexpr_beg'>#{</span><span class='const'>WIPE_PRE</span><span class='embexpr_end'>}</span><span class='tstring_content'> and wipe down the bench surface.</span><span class='tstring_end'>&quot;</span></span>
     <span class='comment'># check &quot;Spray some #{disinfectant.bold} on a #{WIPE}, gently wipe down keyboard and mouse of this computer/tablet.&quot;
 </span>    <span class='id identifier rubyid_warning'>warning</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto tablet or computer!</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Finally, spray outside of gloves with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
@@ -4338,14 +4439,47 @@ $(document).ready(function() {
 
   <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_disinfectant'>disinfectant</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>70% ethanol</span><span class='tstring_end'>&#39;</span></span>
-    <span class='id identifier rubyid_title'>title</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Wipe down </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_which_area'>which_area</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Now you will wipe down your </span><span class='embexpr_beg'>#{</span><span class='const'>BENCH</span><span class='embexpr_end'>}</span><span class='tstring_content'> and equipment with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto a </span><span class='embexpr_beg'>#{</span><span class='const'>WIPE</span><span class='embexpr_end'>}</span><span class='tstring_content'> and clean off pipettes and pipette tip boxes.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Spray a small amount of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> on the bench surface. Clean bench with </span><span class='embexpr_beg'>#{</span><span class='const'>WIPE</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='comment'>#   check &quot;Spray a #{&quot;small&quot;.bold} amount of #{disinfectant.bold} on a #{WIPE}. Gently wipe down keyboard and mouse of this computer/tablet.&quot;
-</span>    <span class='id identifier rubyid_warning'>warning</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto tablet or computer!</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_title'>title</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Wipe down </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_area'>area</span><span class='embexpr_end'>}</span><span class='tstring_content'> with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Now you will wipe down your </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_area'>area</span><span class='embexpr_end'>}</span><span class='tstring_content'> space and equipment with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto a </span><span class='embexpr_beg'>#{</span><span class='const'>WIPE_PRE</span><span class='embexpr_end'>}</span><span class='tstring_content'> and clean off pipettes and pipette tip boxes.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto a </span><span class='embexpr_beg'>#{</span><span class='const'>WIPE_PRE</span><span class='embexpr_end'>}</span><span class='tstring_content'> and wipe down the bench surface.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_warning'>warning</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto tablet or computer!</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Finally, spray outside of gloves with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="coat_svg-instance_method">
+  
+    #<strong>coat_svg</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+696
+697
+698
+699
+700</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 696</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_coat_svg'>coat_svg</span>
+  <span class='id identifier rubyid_icon_from_html'>icon_from_html</span><span class='lparen'>(</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;title&gt;3_labcoaton&lt;/title&gt;&lt;path d=&quot;M365.7,206.7l-33.6,12.8s-10.5,4.2-10.5,12.6V349h27.9l.6,52.7H440V349.6l28.8-.7V235.1s-5.4-17.4-20.4-19.2L425,206.7H365.7Z&quot; transform=&quot;translate(-320.6 -205.7)&quot; fill=&quot;#abb2da&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M458.5,246.8a94.68,94.68,0,0,0-5-30.2,20.07,20.07,0,0,0-5.1-1.3L425,206.1H365.7l-33.6,12.8s-10.5,4.2-10.5,12.6V335.6a102.22,102.22,0,0,0,37.3,7C413.9,342.5,458.5,299.6,458.5,246.8Z&quot; transform=&quot;translate(-320.6 -205.7)&quot; fill=&quot;#d8def0&quot;/&gt;&lt;polyline points=&quot;45.1 1 74.6 45.5 104.4 1&quot; fill=&quot;#919195&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;polyline points=&quot;34.4 5.1 36.4 28.5 53.1 31.4 53.1 43.2 74.7 71.1 94.8 45.5 94.8 31.4 110.5 25.5 112.5 5.1&quot; fill=&quot;none&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;line x1=&quot;28.9&quot; y1=&quot;143.2&quot; x2=&quot;28.9&quot; y2=&quot;51.9&quot; fill=&quot;none&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;line x1=&quot;119.4&quot; y1=&quot;143.8&quot; x2=&quot;119.4&quot; y2=&quot;51.9&quot; fill=&quot;none&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M365.7,206.7l-33.6,12.8s-10.5,4.2-10.5,12.6V349h27.9l.6,52.7H440V349.6l28.8-.7V235.1s-5.4-17.4-20.4-19.2L425,206.7H365.7Z&quot; transform=&quot;translate(-320.6 -205.7)&quot; fill=&quot;none&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;line x1=&quot;74.6&quot; y1=&quot;45.5&quot; x2=&quot;74.6&quot; y2=&quot;197.6&quot; fill=&quot;none&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;line x1=&quot;40.3&quot; y1=&quot;125.9&quot; x2=&quot;60.3&quot; y2=&quot;125.9&quot; fill=&quot;none&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;line x1=&quot;88.8&quot; y1=&quot;125.9&quot; x2=&quot;109.4&quot; y2=&quot;125.9&quot; fill=&quot;none&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;line x1=&quot;40.3&quot; y1=&quot;71.4&quot; x2=&quot;60.3&quot; y2=&quot;71.4&quot; fill=&quot;none&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M376.8,223.4&quot; transform=&quot;translate(-320.6 -205.7)&quot; fill=&quot;none&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;polygon points=&quot;93.2 17.7 74.6 45.5 56.2 17.7 93.2 17.7&quot; fill=&quot;#abb2da&quot; stroke=&quot;#2e3191&quot; stroke-miterlimit=&quot;10&quot; stroke-width=&quot;2&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -4367,16 +4501,16 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-531
-532
 533
 534
 535
 536
-537</pre>
+537
+538
+539</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 531</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 533</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_disinfect'>disinfect</span>
   <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
@@ -4405,24 +4539,24 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-753
-754
-755
-756
-757
-758
-759
-760
-761
-762
-763
-764
-765
-766
-767</pre>
+776
+777
+778
+779
+780
+781
+782
+783
+784
+785
+786
+787
+788
+789
+790</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 753</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 776</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_strip_section'>display_strip_section</span><span class='lparen'>(</span><span class='id identifier rubyid_upload'>upload</span><span class='comma'>,</span> <span class='id identifier rubyid_display_section'>display_section</span><span class='comma'>,</span> <span class='id identifier rubyid_num_sections'>num_sections</span><span class='comma'>,</span> <span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_p'>p</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span>
@@ -4459,15 +4593,15 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-746
-747
-748
-749
-750
-751</pre>
+769
+770
+771
+772
+773
+774</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 746</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 769</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_upload'>display_upload</span><span class='lparen'>(</span><span class='id identifier rubyid_upload'>upload</span><span class='comma'>,</span> <span class='id identifier rubyid_size'>size</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>100%</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_p'>p</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span>
@@ -4506,14 +4640,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-688
-689
-690
-691
-692</pre>
+711
+712
+713
+714
+715</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 688</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 711</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_extract_basename'>extract_basename</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ext'>ext</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_extname'>extname</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
@@ -4540,12 +4674,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-301
-302
-303</pre>
+303
+304
+305</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 301</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 303</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_alias_array'>get_alias_array</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span>
   <span class='lbracket'>[</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>KIT_KEY</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>UNIT_KEY</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>COMPONENT_KEY</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>SAMPLE_KEY</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>PATIENT_KEY</span><span class='rparen'>)</span><span class='rbracket'>]</span>
@@ -4570,12 +4704,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-354
-355
-356</pre>
+356
+357
+358</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 354</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 356</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_array_association'>get_array_association</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='comma'>,</span> <span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_label'>label</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_i'>i</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span>
@@ -4600,14 +4734,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-377
-378
 379
 380
-381</pre>
+381
+382
+383</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 377</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 379</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_component_dictionary'>get_component_dictionary</span><span class='lparen'>(</span><span class='id identifier rubyid_package_sample'>package_sample</span><span class='rparen'>)</span>
   <span class='comment'># parses all of the components in a OLASimple Package
@@ -4634,8 +4768,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-393
-394
 395
 396
 397
@@ -4644,10 +4776,12 @@ $(document).ready(function() {
 400
 401
 402
-403</pre>
+403
+404
+405</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 393</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 395</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_kit_hash'>get_kit_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_op'>op</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_kit_hash'>kit_hash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -4680,18 +4814,18 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-383
-384
 385
 386
 387
 388
 389
 390
-391</pre>
+391
+392
+393</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 383</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 385</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_pack_hash'>get_pack_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_sample'>sample</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_pack_hash'>pack_hash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -4722,16 +4856,16 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-269
-270
 271
 272
 273
 274
-275</pre>
+275
+276
+277</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 269</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 271</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_technician_name'>get_technician_name</span><span class='lparen'>(</span><span class='id identifier rubyid_job_id'>job_id</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_job'>job</span> <span class='op'>=</span> <span class='const'>Job</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_job_id'>job_id</span><span class='rparen'>)</span>
@@ -4739,6 +4873,40 @@ $(document).ready(function() {
   <span class='id identifier rubyid_username'>username</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&quot;unknown user&quot;</span><span class='tstring_end'>&#39;</span></span>
   <span class='id identifier rubyid_username'>username</span> <span class='op'>=</span> <span class='const'>User</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_job'>job</span><span class='period'>.</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='kw'>unless</span> <span class='id identifier rubyid_user_id'>user_id</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
   <span class='id identifier rubyid_username'>username</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="gloves_svg-instance_method">
+  
+    #<strong>gloves_svg</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+690
+691
+692
+693
+694</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 690</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_gloves_svg'>gloves_svg</span>
+  <span class='id identifier rubyid_icon_from_html'>icon_from_html</span><span class='lparen'>(</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;title&gt;3_gloveson&lt;/title&gt;&lt;path d=&quot;M413,353c0-2.8-1.1-12.4-4-17.3s-10.8-22.1-10-27.2,1.2-16.4-.4-21.7-3.2-14-3.2-14-2.5-6.4,1.1-6.6,10.5,3.9,12.1,10.5,2.6,16.2,4.8,20.6c0,0,14-18.4,14.8-22.7s9.7-26.5,9.8-28,7.1-20.2,11-22.6,5.9-3.4,7.2-1.7a13.26,13.26,0,0,1,1.6,5.3s4-11.7,6.2-11.7c0,0,5.5-3.9,7.2,1.6a20.58,20.58,0,0,1-.2,11.2l-2.3,11.9c1.9-5.5,4.5-12.7,6-12.7,2.2,0,8.6-4,6.5,5.7-1.8,8.7-5.3,22.8-6,25.6h0c2.1-5.7,4.4-6.8,8.3-8.7s1.6,12.5,1.6,14.6-5.4,20.3-5.7,30.5-7.2,29.6-10.5,34.5-14.4,31.2-16.3,36.2,1.8,21.2-1.6,27.2-39.9-12.9-39.9-12.9S413,355.8,413,353Z&quot; transform=&quot;translate(-305.22 -213.96)&quot; fill=&quot;#b4b9de&quot;/&gt;&lt;path d=&quot;M420.9,306.2s-4.7-4.5-6.9-8.9-3.2-14-4.8-20.6-8.5-10.7-12.1-10.5-1.1,6.6-1.1,6.6,1.7,8.7,3.2,14,1.1,16.6.4,21.7,7.1,22.2,10,27.2,4,14.5,4,17.3-2,27.8-2,27.8,36.4,18.9,39.9,12.9-.3-22.2,1.6-27.2,13-31.3,16.3-36.2,10.2-24.3,10.5-34.5,5.7-28.5,5.7-30.5,2.3-16.5-1.6-14.6-6.4,3-8.5,9.2-3.2,18.2-4.6,21.7-1.2,8.5-1.2,8.5&quot; transform=&quot;translate(-305.22 -213.96)&quot; fill=&quot;none&quot; stroke=&quot;#2e3192&quot; stroke-miterlimit=&quot;10&quot;/&gt;&lt;path d=&quot;M414,297.3s14-18.4,14.8-22.7,9.7-26.5,9.8-28,7.1-20.2,11-22.6,5.9-3.4,7.2-1.7a13.26,13.26,0,0,1,1.6,5.3,14.65,14.65,0,0,1-1.1,8c-2.4,4.7-10.6,26.7-11.5,32s-1.5,8.6-1.5,8.6&quot; transform=&quot;translate(-305.22 -213.96)&quot; fill=&quot;none&quot; stroke=&quot;#2e3192&quot; stroke-miterlimit=&quot;10&quot;/&gt;&lt;path d=&quot;M456.8,278.9s9.2-30.5,10.5-32.8,5.9-18.4,8.1-18.4,8.6-4,6.5,5.7-6.2,26.2-6.2,26.2&quot; transform=&quot;translate(-305.22 -213.96)&quot; fill=&quot;none&quot; stroke=&quot;#2e3192&quot; stroke-miterlimit=&quot;10&quot;/&gt;&lt;path d=&quot;M458.4,227.5s4-11.7,6.2-11.7c0,0,5.5-3.9,7.2,1.6a20.58,20.58,0,0,1-.2,11.2l-2.3,11.9&quot; transform=&quot;translate(-305.22 -213.96)&quot; fill=&quot;none&quot; stroke=&quot;#2e3192&quot; stroke-miterlimit=&quot;10&quot;/&gt;&lt;path d=&quot;M384.9,353.1c0-2.6,1.1-11.6,4.3-16s11.5-20,10.7-24.8-1.4-15.5.3-20.3a129.68,129.68,0,0,0,3.4-12.9s2.6-5.9-1.2-6.2-11.3,2.9-13,9-2.7,15.1-5.1,19c0,0-15.2-18.2-16-22.3s-10.6-25.5-10.6-27-7.7-19.5-11.9-22-6.3-3.6-7.7-2.1a10.09,10.09,0,0,0-1.7,4.8s-4.3-11.3-6.7-11.4c0,0-5.9-4-7.7,1s.3,10.5.3,10.5l2.5,11.3c-2.1-5.3-4.9-12.3-6.5-12.4-2.4-.2-9.2-4.4-7,4.9,2,8.3,5.8,21.8,6.6,24.5h0c-2.2-5.5-4.8-6.7-8.9-8.7-4.3-2.1-1.7,11.6-1.7,13.6s5.9,19.5,6.2,29.1,7.9,28.3,11.4,33.2,15.6,30.3,17.6,35.2-1.9,19.8,1.8,25.7,42.9-9.3,42.9-9.3S384.9,355.7,384.9,353.1Z&quot; transform=&quot;translate(-305.22 -213.96)&quot; fill=&quot;#b4b9de&quot;/&gt;&lt;path d=&quot;M376.2,308.6s5-3.9,7.4-7.9,3.5-12.9,5.1-19,9.1-9.4,13-9,1.2,6.2,1.2,6.2-1.8,8.1-3.4,12.9-1.1,15.5-.3,20.3-7.6,20.4-10.7,24.8-4.2,13.4-4.3,16,2.2,26.3,2.2,26.3-39.2,15.2-42.9,9.3.3-20.8-1.8-25.7-14.1-30.4-17.6-35.2-11.1-23.5-11.4-33.2-6.3-27.1-6.2-29.1-2.6-15.7,1.7-13.6,6.9,3.3,9.1,9.2,3.5,17.4,5,20.7,1.3,8.1,1.3,8.1&quot; transform=&quot;translate(-305.22 -213.96)&quot; fill=&quot;none&quot; stroke=&quot;#2e3192&quot; stroke-miterlimit=&quot;10&quot;/&gt;&lt;path d=&quot;M383.6,300.7s-15.2-18.2-16-22.3-10.6-25.5-10.6-27-7.7-19.5-11.9-22-6.3-3.6-7.7-2.1a10.09,10.09,0,0,0-1.7,4.8,12.13,12.13,0,0,0,1.3,7.6c2.6,4.6,11.5,25.8,12.5,30.9s1.7,8.2,1.7,8.2&quot; transform=&quot;translate(-305.22 -213.96)&quot; fill=&quot;none&quot; stroke=&quot;#2e3192&quot; stroke-miterlimit=&quot;10&quot;/&gt;&lt;path d=&quot;M337.5,280.5s-10-29.3-11.4-31.6-6.4-17.7-8.8-17.8-9.2-4.4-7,4.9,6.7,25,6.7,25&quot; transform=&quot;translate(-305.22 -213.96)&quot; fill=&quot;none&quot; stroke=&quot;#2e3192&quot; stroke-miterlimit=&quot;10&quot;/&gt;&lt;path d=&quot;M335.6,232.1s-4.3-11.3-6.7-11.4c0,0-5.9-4-7.7,1s.3,10.5.3,10.5l2.5,11.3&quot; transform=&quot;translate(-305.22 -213.96)&quot; fill=&quot;none&quot; stroke=&quot;#2e3192&quot; stroke-miterlimit=&quot;10&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -4760,12 +4928,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-265
-266
-267</pre>
+267
+268
+269</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 265</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 267</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_group_by_unit'>group_by_unit</span><span class='lparen'>(</span><span class='id identifier rubyid_ops'>ops</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ops'>ops</span><span class='period'>.</span><span class='id identifier rubyid_running'>running</span><span class='period'>.</span><span class='id identifier rubyid_group_by'>group_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_temporary'>temporary</span><span class='lbracket'>[</span><span class='symbol'>:unit</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
@@ -4790,12 +4958,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-338
-339
-340</pre>
+340
+341
+342</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 338</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 340</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_group_packages'>group_packages</span><span class='lparen'>(</span><span class='id identifier rubyid_myops'>myops</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_myops'>myops</span><span class='period'>.</span><span class='id identifier rubyid_group_by'>group_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_temporary'>temporary</span><span class='lbracket'>[</span><span class='symbol'>:output_kit</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_temporary'>temporary</span><span class='lbracket'>[</span><span class='symbol'>:output_unit</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -4820,13 +4988,13 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-405
-406
 407
-408</pre>
+408
+409
+410</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 405</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 407</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_kit_hash_to_json'>kit_hash_to_json</span><span class='lparen'>(</span><span class='id identifier rubyid_kit_hash'>kit_hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='id identifier rubyid_kit_hash'>kit_hash</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid__val'>_val</span><span class='op'>|</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>==</span> <span class='const'>KIT_FIELD_VALUE</span> <span class='rbrace'>}</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
@@ -4852,8 +5020,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-290
-291
 292
 293
 294
@@ -4861,10 +5027,12 @@ $(document).ready(function() {
 296
 297
 298
-299</pre>
+299
+300
+301</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 290</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 292</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_make_alias'>make_alias</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='comma'>,</span> <span class='id identifier rubyid_kit'>kit</span><span class='comma'>,</span> <span class='id identifier rubyid_unit'>unit</span><span class='comma'>,</span> <span class='id identifier rubyid_component'>component</span><span class='comma'>,</span> <span class='id identifier rubyid_patient'>patient</span><span class='comma'>,</span> <span class='id identifier rubyid_sample'>sample</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_sample'>sample</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
@@ -4907,16 +5075,16 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-346
-347
 348
 349
 350
 351
-352</pre>
+352
+353
+354</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 346</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 348</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_make_array_association'>make_array_association</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='comma'>,</span> <span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>must be an item not a collection for array associations</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Item</span><span class='rparen'>)</span>
@@ -4956,13 +5124,13 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-246
-247
 248
-249</pre>
+249
+250
+251</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 248</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_make_calls_from_image'>make_calls_from_image</span><span class='lparen'>(</span><span class='id identifier rubyid_image_upload'>image_upload</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_res'>res</span> <span class='op'>=</span> <span class='id identifier rubyid_post_file'>post_file</span><span class='lparen'>(</span><span class='const'>OLA_IP_API_URL</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>file</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_image_upload'>image_upload</span><span class='rparen'>)</span>
@@ -4999,8 +5167,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-362
-363
 364
 365
 366
@@ -5012,10 +5178,12 @@ $(document).ready(function() {
 372
 373
 374
-375</pre>
+375
+376
+377</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 362</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 364</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_component'>parse_component</span><span class='lparen'>(</span><span class='id identifier rubyid_component_string'>component_string</span><span class='rparen'>)</span>
   <span class='comment'># parses the component value for a OLASimple Package sample
@@ -5062,18 +5230,18 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-255
-256
 257
 258
 259
 260
 261
 262
-263</pre>
+263
+264
+265</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 255</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 257</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pluralizer'>pluralizer</span><span class='lparen'>(</span><span class='id identifier rubyid_noun'>noun</span><span class='comma'>,</span> <span class='id identifier rubyid_num'>num</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_num'>num</span> <span class='op'>==</span> <span class='int'>1</span>
@@ -5104,18 +5272,18 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-505
-506
 507
 508
 509
 510
 511
 512
-513</pre>
+513
+514
+515</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 505</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 507</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_put_on_ppe'>put_on_ppe</span><span class='lparen'>(</span><span class='id identifier rubyid_which_area'>which_area</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
@@ -5146,12 +5314,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-305
-306
-307</pre>
+307
+308
+309</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 305</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 307</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ref'>ref</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>UNIT_KEY</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>COMPONENT_KEY</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>SAMPLE_KEY</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -5164,7 +5332,7 @@ $(document).ready(function() {
       <div class="method_details ">
   <h3 class="signature " id="safety_warning-instance_method">
   
-    #<strong>safety_warning</strong>(**opts)  &#x21d2; <tt>Object</tt> 
+    #<strong>safety_warning</strong>(area = nil)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -5176,7 +5344,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-665
 666
 667
 668
@@ -5194,28 +5361,37 @@ $(document).ready(function() {
 680
 681
 682
-683</pre>
+683
+684
+685
+686
+687
+688</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 665</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 666</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_safety_warning'>safety_warning</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_safety_warning'>safety_warning</span><span class='lparen'>(</span><span class='id identifier rubyid_area'>area</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_grid'>grid</span> <span class='op'>=</span> <span class='const'>SVGGrid</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>3</span><span class='comma'>,</span> <span class='int'>1</span><span class='comma'>,</span> <span class='int'>200</span><span class='comma'>,</span> <span class='int'>100</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_grid'>grid</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_gloves_svg'>gloves_svg</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_grid'>grid</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_coat_svg'>coat_svg</span><span class='comma'>,</span> <span class='int'>1</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_img2'>img2</span> <span class='op'>=</span> <span class='const'>SVGElement</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>children:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_grid'>grid</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>boundx:</span> <span class='int'>1000</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='int'>200</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_title'>title</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Review the safety warnings</span><span class='tstring_end'>&#39;</span></span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:area</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:pre_pcr</span>
-      <span class='id identifier rubyid_warning'>warning</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>You will be working with infectious materials.</span><span class='tstring_end'>&#39;</span></span>
-      <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Do &lt;b&gt;ALL&lt;/b&gt; work in a biosafety cabinet (BSC)</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_title'>title</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Review Safety Warnings</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;b&gt;Always&lt;/b&gt; pay attention to orange warning blocks throughout the protocol.</span><span class='tstring_end'>&#39;</span></span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_area'>area</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_area'>area</span> <span class='op'>==</span> <span class='const'>PRE_PCR</span>
+      <span class='id identifier rubyid_img1'>img1</span> <span class='op'>=</span> <span class='const'>SVGElement</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>children:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_bsc_svg'>bsc_svg</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>boundx:</span> <span class='int'>200</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='int'>200</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_warning'>warning</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;b&gt;INFECTIOUS MATERIALS&lt;/b&gt;</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>You will be working with infectious materials.</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Do &lt;b&gt;ALL&lt;/b&gt; work in a biosafety cabinet (BSC).</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_note'>note</span> <span class='id identifier rubyid_display_svg'>display_svg</span><span class='lparen'>(</span><span class='id identifier rubyid_img1'>img1</span><span class='comma'>,</span> <span class='float'>0.2</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
-
-    <span class='kw'>if</span> <span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:protocol</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:rna_extraction</span>
-      <span class='id identifier rubyid_warning'>warning</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not mix </span><span class='embexpr_beg'>#{</span><span class='const'>LYSIS_BUFFER</span><span class='embexpr_end'>}</span><span class='tstring_content'> or </span><span class='embexpr_beg'>#{</span><span class='const'>WASH1</span><span class='embexpr_end'>}</span><span class='tstring_content'> with bleach, as this will generate toxic cyanide gas. </span><span class='embexpr_beg'>#{</span><span class='const'>LYSIS_BUFFER</span><span class='embexpr_end'>}</span><span class='tstring_content'> AND </span><span class='embexpr_beg'>#{</span><span class='const'>WASH1</span><span class='embexpr_end'>}</span><span class='tstring_content'> waste must be discarded appropriately based on guidelines for GuSCN handling waste</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
-    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Always pay special attention to the orange warning blocks.</span><span class='tstring_end'>&#39;</span></span>
-    <span class='id identifier rubyid_warning'>warning</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Orange highlighted blocks (like this) can contain vital saftey information.</span><span class='tstring_end'>&#39;</span></span>
-    <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>lab coat</span><span class='tstring_end'>&#39;</span></span>
-    <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>two layers of gloves</span><span class='tstring_end'>&#39;</span></span>
-    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Make sure to use tight gloves. Tight gloves reduce the chance of the gloves getting caught on the tubes when closing their lids.</span><span class='tstring_end'>&#39;</span></span>
-    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Change your outer layer of gloves after touching any common space surface (such as a refrigerator door handle) as your gloves can now be contaminated by RNase or other previously amplified products that can cause false positives.</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;b&gt;PPE is required&lt;/b&gt;</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_note'>note</span> <span class='id identifier rubyid_display_svg'>display_svg</span><span class='lparen'>(</span><span class='id identifier rubyid_img2'>img2</span><span class='comma'>,</span> <span class='float'>0.2</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Put on lab coat</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Put on two layers of gloves.</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_bullet'>bullet</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Make sure to use tight gloves. Tight gloves reduce the chance of the gloves getting caught on the tubes when closing their lids.</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_bullet'>bullet</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Change your outer layer of gloves after touching any common space surface to reduce contamination (such as a refrigerator door handle).</span><span class='tstring_end'>&#39;</span></span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -5238,14 +5414,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-322
-323
 324
 325
-326</pre>
+326
+327
+328</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 322</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 324</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_pack_hash'>save_pack_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_ops'>ops</span><span class='comma'>,</span> <span class='id identifier rubyid_pack'>pack</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ops'>ops</span><span class='period'>.</span><span class='id identifier rubyid_running'>running</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span>
@@ -5272,8 +5448,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-309
-310
 311
 312
 313
@@ -5283,10 +5457,12 @@ $(document).ready(function() {
 317
 318
 319
-320</pre>
+320
+321
+322</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 309</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 311</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_temporary_input_values'>save_temporary_input_values</span><span class='lparen'>(</span><span class='id identifier rubyid_ops'>ops</span><span class='comma'>,</span> <span class='id identifier rubyid_input'>input</span><span class='rparen'>)</span>
   <span class='comment'># get the aliases from the inputs
@@ -5320,18 +5496,18 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-328
-329
 330
 331
 332
 333
 334
 335
-336</pre>
+336
+337
+338</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 328</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 330</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_temporary_output_values'>save_temporary_output_values</span><span class='lparen'>(</span><span class='id identifier rubyid_myops'>myops</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_myops'>myops</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span>
@@ -5362,17 +5538,17 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-522
-523
 524
 525
 526
 527
 528
-529</pre>
+529
+530
+531</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 522</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 524</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show_open_package'>show_open_package</span><span class='lparen'>(</span><span class='id identifier rubyid_kit'>kit</span><span class='comma'>,</span> <span class='id identifier rubyid_unit'>unit</span><span class='comma'>,</span> <span class='id identifier rubyid_num_sub_packages'>num_sub_packages</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
@@ -5402,29 +5578,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-694
-695
-696
-697
-698
-699
-700
-701
-702
-703
-704
-705
-706
-707
-708
-709
-710
-711
-712
-713
-714
-715
-716
 717
 718
 719
@@ -5452,10 +5605,33 @@ $(document).ready(function() {
 741
 742
 743
-744</pre>
+744
+745
+746
+747
+748
+749
+750
+751
+752
+753
+754
+755
+756
+757
+758
+759
+760
+761
+762
+763
+764
+765
+766
+767</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 694</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 717</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show_with_expected_uploads'>show_with_expected_uploads</span><span class='lparen'>(</span><span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_save_key'>save_key</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_num_tries'>num_tries</span> <span class='op'>=</span> <span class='int'>5</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_upload_hashes'>upload_hashes</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -5528,24 +5704,24 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-650
 651
 652
 653
 654
 655
 656
-657</pre>
+657
+658</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 650</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 651</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_simple_clean'>simple_clean</span><span class='lparen'>(</span><span class='id identifier rubyid_protocol'>protocol</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_title'>title</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ensure Workspace is Clean</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_protocol'>protocol</span><span class='embexpr_end'>}</span><span class='tstring_content'> is highly sensitive. If the workspace is not clean, this could lead to false positives. </span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Before proceeding with this protocol, check with your assigner if the space and pipettes have been cleaned.</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_title'>title</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Ensure Workspace is Clean</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_protocol'>protocol</span><span class='embexpr_end'>}</span><span class='tstring_content'> is prone to contamination. False positives can occur when the area is not clean.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If area is not clean, or you aren&#39;t sure, wipe down space with 10% bleach and 70% ethanol.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Spray disinfectants onto wipes, not directly onto surfaces.</span><span class='tstring_end'>&#39;</span></span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -5568,15 +5744,15 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-515
-516
 517
 518
 519
-520</pre>
+520
+521
+522</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 515</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 517</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_transfer_title_proc'>transfer_title_proc</span><span class='lparen'>(</span><span class='id identifier rubyid_vol'>vol</span><span class='comma'>,</span> <span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_p'>p</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span>
@@ -5604,8 +5780,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-410
-411
 412
 413
 414
@@ -5645,10 +5819,12 @@ $(document).ready(function() {
 448
 449
 450
-451</pre>
+451
+452
+453</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 410</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 412</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate_kit_hash'>validate_kit_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_kit_hash'>kit_hash</span><span class='rparen'>)</span>
   <span class='comment'># validates the kit hash
@@ -5712,8 +5888,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-593
-594
 595
 596
 597
@@ -5726,10 +5900,12 @@ $(document).ready(function() {
 604
 605
 606
-607</pre>
+607
+608
+609</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 593</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 595</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_vortex_and_centrifuge_helper'>vortex_and_centrifuge_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_sample_identifier'>sample_identifier</span><span class='comma'>,</span>
                                  <span class='id identifier rubyid_sample_labels'>sample_labels</span><span class='comma'>,</span>
@@ -5766,8 +5942,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-580
-581
 582
 583
 584
@@ -5777,10 +5951,12 @@ $(document).ready(function() {
 588
 589
 590
-591</pre>
+591
+592
+593</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 580</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 582</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_vortex_helper'>vortex_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_sample_identifier'>sample_identifier</span><span class='comma'>,</span>
                   <span class='id identifier rubyid_sample_labels'>sample_labels</span><span class='comma'>,</span>
@@ -5814,17 +5990,17 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-561
-562
 563
 564
 565
 566
 567
-568</pre>
+568
+569
+570</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 561</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 563</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_vortex_proc'>vortex_proc</span><span class='lparen'>(</span><span class='id identifier rubyid_sample_identifier'>sample_identifier</span><span class='comma'>,</span> <span class='id identifier rubyid_sample_labels'>sample_labels</span><span class='comma'>,</span> <span class='id identifier rubyid_time'>time</span><span class='comma'>,</span> <span class='id identifier rubyid_reason'>reason</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_p'>p</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span>
@@ -5854,15 +6030,15 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-466
-467
 468
 469
 470
-471</pre>
+471
+472
+473</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 466</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 468</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_wash_self'>wash_self</span>
   <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
