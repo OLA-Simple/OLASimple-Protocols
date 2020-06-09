@@ -881,6 +881,11 @@ $(document).ready(function() {
   
   
   
+  <dl>
+      <dt>Includes:</dt>
+      <dd>OLAGraphics</dd>
+  </dl>
+  
   
 
   
@@ -1013,28 +1018,6 @@ $(document).ready(function() {
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#intake_ids-instance_method" title="#intake_ids (instance method)">#<strong>intake_ids</strong>(this_package, expected_inputs)  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#kit_num_from_sample_num-instance_method" title="#kit_num_from_sample_num (instance method)">#<strong>kit_num_from_sample_num</strong>(sample_num)  &#x21d2; Object </a>
     
 
@@ -1128,6 +1111,50 @@ $(document).ready(function() {
   <span class="summary_signature">
     
       <a href="#populate_temporary_values_from_input_associations-instance_method" title="#populate_temporary_values_from_input_associations (instance method)">#<strong>populate_temporary_values_from_input_associations</strong>(ops, input_name, keys, propogated_keys)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pre_transfer_validate-instance_method" title="#pre_transfer_validate (instance method)">#<strong>pre_transfer_validate</strong>(expected_object_ids, svgs)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pre_transfer_validation_with_multiple_tries-instance_method" title="#pre_transfer_validation_with_multiple_tries (instance method)">#<strong>pre_transfer_validation_with_multiple_tries</strong>(from_name, to_name, from_svg = nil, to_svg = nil)  &#x21d2; Object </a>
     
 
     
@@ -1265,7 +1292,7 @@ $(document).ready(function() {
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#sample_validation_with_multiple_tries-instance_method" title="#sample_validation_with_multiple_tries (instance method)">#<strong>sample_validation_with_multiple_tries</strong>(expected_sample_ids)  &#x21d2; Object </a>
+      <a href="#sample_validation_with_multiple_tries-instance_method" title="#sample_validation_with_multiple_tries (instance method)">#<strong>sample_validation_with_multiple_tries</strong>(expected_object_ids, expected_svgs = nil)  &#x21d2; Object </a>
     
 
     
@@ -1311,6 +1338,28 @@ $(document).ready(function() {
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#technician_id_svg-instance_method" title="#technician_id_svg (instance method)">#<strong>technician_id_svg</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#validate_package-instance_method" title="#validate_package (instance method)">#<strong>validate_package</strong>(this_package)  &#x21d2; Object </a>
     
 
@@ -1333,7 +1382,7 @@ $(document).ready(function() {
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#validate_samples-instance_method" title="#validate_samples (instance method)">#<strong>validate_samples</strong>(expected_sample_ids)  &#x21d2; Object </a>
+      <a href="#validate_samples-instance_method" title="#validate_samples (instance method)">#<strong>validate_samples</strong>(expected_object_ids, svgs)  &#x21d2; Object </a>
     
 
     
@@ -1356,6 +1405,7 @@ $(document).ready(function() {
   
 
 
+  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -1376,12 +1426,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-11
-12
-13</pre>
+15
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_extract_kit_number'>extract_kit_number</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_chars'>chars</span><span class='lbracket'>[</span><span class='op'>-</span><span class='const'><span class='object_link'><a href="#KIT_NUM_DIGITS-constant" title="OLAKitIDs::KIT_NUM_DIGITS (constant)">KIT_NUM_DIGITS</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#KIT_NUM_DIGITS-constant" title="OLAKitIDs::KIT_NUM_DIGITS (constant)">KIT_NUM_DIGITS</a></span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_chars'>chars</span><span class='lbracket'>[</span><span class='op'>-</span><span class='const'><span class='object_link'><a href="#KIT_NUM_DIGITS-constant" title="OLAKitIDs::KIT_NUM_DIGITS (constant)">KIT_NUM_DIGITS</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#KIT_NUM_DIGITS-constant" title="OLAKitIDs::KIT_NUM_DIGITS (constant)">KIT_NUM_DIGITS</a></span></span><span class='rbracket'>]</span>
@@ -1406,93 +1456,15 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-15
-16
-17</pre>
+19
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_extract_sample_number'>extract_sample_number</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_chars'>chars</span><span class='lbracket'>[</span><span class='op'>-</span><span class='const'><span class='object_link'><a href="#SAMPLE_NUM_DIGITS-constant" title="OLAKitIDs::SAMPLE_NUM_DIGITS (constant)">SAMPLE_NUM_DIGITS</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#SAMPLE_NUM_DIGITS-constant" title="OLAKitIDs::SAMPLE_NUM_DIGITS (constant)">SAMPLE_NUM_DIGITS</a></span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_chars'>chars</span><span class='lbracket'>[</span><span class='op'>-</span><span class='const'><span class='object_link'><a href="#SAMPLE_NUM_DIGITS-constant" title="OLAKitIDs::SAMPLE_NUM_DIGITS (constant)">SAMPLE_NUM_DIGITS</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#SAMPLE_NUM_DIGITS-constant" title="OLAKitIDs::SAMPLE_NUM_DIGITS (constant)">SAMPLE_NUM_DIGITS</a></span></span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="intake_ids-instance_method">
-  
-    #<strong>intake_ids</strong>(this_package, expected_inputs)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 42</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_intake_ids'>intake_ids</span><span class='lparen'>(</span><span class='id identifier rubyid_this_package'>this_package</span><span class='comma'>,</span> <span class='id identifier rubyid_expected_inputs'>expected_inputs</span><span class='rparen'>)</span>
-  <span class='int'>5</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_resp'>resp</span> <span class='op'>=</span> <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_title'>title</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Scan In the Following Barcodes</span><span class='tstring_end'>&#39;</span></span>
-
-      <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Your Technician ID card</span><span class='tstring_end'>&quot;</span></span>
-      <span class='id identifier rubyid_get'>get</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>text</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>var:</span> <span class='symbol'>:tech</span><span class='comma'>,</span> <span class='label'>label:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Technician ID</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
-
-
-      <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Input sample IDs </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_expected_inputs'>expected_inputs</span><span class='period'>.</span><span class='id identifier rubyid_to_sentence'>to_sentence</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-      <span class='id identifier rubyid_expected_inputs'>expected_inputs</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
-        <span class='id identifier rubyid_get'>get</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>text</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>var:</span> <span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='label'>label:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
-      <span class='kw'>end</span>
-    <span class='kw'>end</span>
-    <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span>
-      <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_associate'>associate</span><span class='lparen'>(</span><span class='const'>OLAConstants</span><span class='op'>::</span><span class='const'>TECH_KEY</span><span class='comma'>,</span> <span class='id identifier rubyid_resp'>resp</span><span class='lbracket'>[</span><span class='symbol'>:tech</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-
-    <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_resp'>resp</span><span class='lbracket'>[</span><span class='symbol'>:package</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_this_package'>this_package</span>
-      <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
-
-      <span class='kw'>end</span>
-      <span class='kw'>next</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1525,12 +1497,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-28
-29
-30</pre>
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_kit_num_from_sample_num'>kit_num_from_sample_num</span><span class='lparen'>(</span><span class='id identifier rubyid_sample_num'>sample_num</span><span class='rparen'>)</span>
   <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_sample_num'>sample_num</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>/</span> <span class='const'><span class='object_link'><a href="#BATCH_SIZE-constant" title="OLAKitIDs::BATCH_SIZE (constant)">BATCH_SIZE</a></span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_floor'>floor</span> <span class='op'>+</span> <span class='int'>1</span>
@@ -1555,12 +1527,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-23
-24
-25</pre>
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_kit_num_to_id'>kit_num_to_id</span><span class='lparen'>(</span><span class='id identifier rubyid_num'>num</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_num'>num</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_rjust'>rjust</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#KIT_NUM_DIGITS-constant" title="OLAKitIDs::KIT_NUM_DIGITS (constant)">KIT_NUM_DIGITS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -1585,26 +1557,26 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97</pre>
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_package_validation_with_multiple_tries'>package_validation_with_multiple_tries</span><span class='lparen'>(</span><span class='id identifier rubyid_this_package'>this_package</span><span class='rparen'>)</span>
   <span class='int'>5</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span> <span class='kw'>do</span>
@@ -1654,24 +1626,24 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165</pre>
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 170</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_populate_temporary_kit_info_from_input_associations'>populate_temporary_kit_info_from_input_associations</span><span class='lparen'>(</span><span class='id identifier rubyid_ops'>ops</span><span class='comma'>,</span> <span class='id identifier rubyid_input_name'>input_name</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_debug'>debug</span>
@@ -1708,19 +1680,19 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176</pre>
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 167</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 186</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_populate_temporary_values_from_input_associations'>populate_temporary_values_from_input_associations</span><span class='lparen'>(</span><span class='id identifier rubyid_ops'>ops</span><span class='comma'>,</span> <span class='id identifier rubyid_input_name'>input_name</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_propogated_keys'>propogated_keys</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ops'>ops</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span>
@@ -1731,6 +1703,138 @@ $(document).ready(function() {
       <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_temporary'>temporary</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>output_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_da'>da</span><span class='period'>.</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_da'>da</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="#PROPOGATION_KEYS-constant" title="OLAKitIDs::PROPOGATION_KEYS (constant)">PROPOGATION_KEYS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_da'>da</span><span class='period'>.</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pre_transfer_validate-instance_method">
+  
+    #<strong>pre_transfer_validate</strong>(expected_object_ids, svgs)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 93</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_pre_transfer_validate'>pre_transfer_validate</span><span class='lparen'>(</span><span class='id identifier rubyid_expected_object_ids'>expected_object_ids</span><span class='comma'>,</span> <span class='id identifier rubyid_svgs'>svgs</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_grid'>grid</span> <span class='op'>=</span> <span class='const'>SVGGrid</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_svgs'>svgs</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='comma'>,</span> <span class='int'>1</span><span class='comma'>,</span> <span class='int'>150</span><span class='comma'>,</span> <span class='int'>100</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_svgs'>svgs</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_svg'>svg</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+    <span class='id identifier rubyid_grid'>grid</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_svg'>svg</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_img'>img</span> <span class='op'>=</span> <span class='const'>SVGElement</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>children:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_grid'>grid</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>boundx:</span> <span class='int'>1000</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='int'>300</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_translate'>translate</span><span class='lparen'>(</span><span class='int'>100</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_resp'>resp</span> <span class='op'>=</span> <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_title'>title</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Prepare Samples for transfer</span><span class='tstring_end'>&#39;</span></span>
+
+    <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>In preparation for liquid transfer, set aside tubes </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_expected_object_ids'>expected_object_ids</span><span class='period'>.</span><span class='id identifier rubyid_to_sentence'>to_sentence</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Scan in tube IDs for confirmation.</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_note'>note</span> <span class='id identifier rubyid_display_svg'>display_svg</span><span class='lparen'>(</span><span class='id identifier rubyid_img'>img</span><span class='comma'>,</span> <span class='float'>0.75</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_expected_object_ids'>expected_object_ids</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+      <span class='id identifier rubyid_get'>get</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>text</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>var:</span> <span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='label'>label:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_expected_object_ids'>expected_object_ids</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_resp'>resp</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_found'>found</span> <span class='op'>=</span> <span class='id identifier rubyid_expected_object_ids'>expected_object_ids</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_resp'>resp</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_found'>found</span>
+  <span class='kw'>end</span>
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pre_transfer_validation_with_multiple_tries-instance_method">
+  
+    #<strong>pre_transfer_validation_with_multiple_tries</strong>(from_name, to_name, from_svg = nil, to_svg = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 120</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_pre_transfer_validation_with_multiple_tries'>pre_transfer_validation_with_multiple_tries</span><span class='lparen'>(</span><span class='id identifier rubyid_from_name'>from_name</span><span class='comma'>,</span> <span class='id identifier rubyid_to_name'>to_name</span><span class='comma'>,</span> <span class='id identifier rubyid_from_svg'>from_svg</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_to_svg'>to_svg</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='int'>5</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_pre_transfer_validate'>pre_transfer_validate</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_from_name'>from_name</span><span class='comma'>,</span> <span class='id identifier rubyid_to_name'>to_name</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_from_svg'>from_svg</span><span class='comma'>,</span> <span class='id identifier rubyid_to_svg'>to_svg</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>||</span> <span class='id identifier rubyid_debug'>debug</span>
+
+    <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_title'>title</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Wrong tubes</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Ensure that you have the correct tubes before continuing.</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>On the next step you will retry scanning in the samples.</span><span class='tstring_end'>&#39;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span>
+    <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='symbol'>:wrong_items</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Objects for transfer are wrong and could not be resolved</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Objects for transfer are wrong and could not be resolved. Speak to a lab manager.</span><span class='tstring_end'>&#39;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1763,13 +1867,13 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-194
-195
-196
-197</pre>
+213
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 194</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 213</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_propogate_information_lazy'>propogate_information_lazy</span><span class='lparen'>(</span><span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='id identifier rubyid_to'>to</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_from_das'>from_das</span> <span class='op'>=</span> <span class='const'>DataAssociation</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='label'>parent_id:</span> <span class='id identifier rubyid_from'>from</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='label'>parent_class:</span> <span class='id identifier rubyid_from'>from</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='label'>key:</span> <span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span>
@@ -1806,21 +1910,21 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191</pre>
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 199</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_propogate_kit_info_forward'>propogate_kit_info_forward</span><span class='lparen'>(</span><span class='id identifier rubyid_ops'>ops</span><span class='comma'>,</span> <span class='id identifier rubyid_input_name'>input_name</span><span class='comma'>,</span> <span class='id identifier rubyid_output_name'>output_name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_das'>das</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1854,24 +1958,26 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145</pre>
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 154</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_record_technician_id'>record_technician_id</span>
   <span class='id identifier rubyid_resp'>resp</span> <span class='op'>=</span> <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_title'>title</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Scan your technician ID</span><span class='tstring_end'>&#39;</span></span>
-    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Scan or write in the technician ID on your badge.</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Scan the technician ID on your badge.</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_note'>note</span> <span class='id identifier rubyid_display_svg'>display_svg</span><span class='lparen'>(</span><span class='id identifier rubyid_technician_id_svg'>technician_id_svg</span><span class='comma'>,</span> <span class='float'>0.5</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_get'>get</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>text</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>var:</span> <span class='symbol'>:id</span><span class='comma'>,</span> <span class='label'>label:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ID</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span>
@@ -1898,12 +2004,12 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-19
-20
-21</pre>
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sample_num_to_id'>sample_num_to_id</span><span class='lparen'>(</span><span class='id identifier rubyid_num'>num</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_num'>num</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_rjust'>rjust</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#SAMPLE_NUM_DIGITS-constant" title="OLAKitIDs::SAMPLE_NUM_DIGITS (constant)">SAMPLE_NUM_DIGITS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -1939,16 +2045,16 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-33
-34
-35
-36
 37
 38
-39</pre>
+39
+40
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sample_nums_from_kit_num'>sample_nums_from_kit_num</span><span class='lparen'>(</span><span class='id identifier rubyid_kit_num'>kit_num</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_sample_nums'>sample_nums</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1965,7 +2071,7 @@ $(document).ready(function() {
       <div class="method_details ">
   <h3 class="signature " id="sample_validation_with_multiple_tries-instance_method">
   
-    #<strong>sample_validation_with_multiple_tries</strong>(expected_sample_ids)  &#x21d2; <tt>Object</tt> 
+    #<strong>sample_validation_with_multiple_tries</strong>(expected_object_ids, expected_svgs = nil)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1977,36 +2083,34 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134</pre>
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 137</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_sample_validation_with_multiple_tries'>sample_validation_with_multiple_tries</span><span class='lparen'>(</span><span class='id identifier rubyid_expected_sample_ids'>expected_sample_ids</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_sample_validation_with_multiple_tries'>sample_validation_with_multiple_tries</span><span class='lparen'>(</span><span class='id identifier rubyid_expected_object_ids'>expected_object_ids</span><span class='comma'>,</span> <span class='id identifier rubyid_expected_svgs'>expected_svgs</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='int'>5</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_validate_samples'>validate_samples</span><span class='lparen'>(</span><span class='id identifier rubyid_expected_sample_ids'>expected_sample_ids</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_validate_samples'>validate_samples</span><span class='lparen'>(</span><span class='id identifier rubyid_expected_object_ids'>expected_object_ids</span><span class='comma'>,</span> <span class='id identifier rubyid_expected_svgs'>expected_svgs</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>||</span> <span class='id identifier rubyid_debug'>debug</span>
 
     <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
       <span class='id identifier rubyid_title'>title</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Wrong Samples</span><span class='tstring_end'>&#39;</span></span>
       <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Ensure that you have the correct samples before continuing.</span><span class='tstring_end'>&#39;</span></span>
-      <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Incoming samples should be labeled &lt;b&gt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_expected_sample_ids'>expected_sample_ids</span><span class='period'>.</span><span class='id identifier rubyid_to_sentence'>to_sentence</span><span class='embexpr_end'>}</span><span class='tstring_content'>&lt;/b&gt;.</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>On the next step you will retry scanning in the samples.</span><span class='tstring_end'>&#39;</span></span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
@@ -2046,20 +2150,20 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211</pre>
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 220</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_output_components_and_units'>set_output_components_and_units</span><span class='lparen'>(</span><span class='id identifier rubyid_ops'>ops</span><span class='comma'>,</span> <span class='id identifier rubyid_output_name'>output_name</span><span class='comma'>,</span> <span class='id identifier rubyid_component'>component</span><span class='comma'>,</span> <span class='id identifier rubyid_unit'>unit</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_data_associations'>data_associations</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2071,6 +2175,42 @@ $(document).ready(function() {
     <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_temporary'>temporary</span><span class='lbracket'>[</span><span class='const'>OLAConstants</span><span class='op'>::</span><span class='const'>UNIT_KEY</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_unit'>unit</span>
   <span class='kw'>end</span>
   <span class='const'>DataAssociation</span><span class='period'>.</span><span class='id identifier rubyid_import'>import</span> <span class='id identifier rubyid_data_associations'>data_associations</span><span class='comma'>,</span> <span class='label'>on_duplicate_key_update:</span> <span class='lbracket'>[</span><span class='symbol'>:object</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="technician_id_svg-instance_method">
+  
+    #<strong>technician_id_svg</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+232
+233
+234
+235
+236
+237</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 232</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_technician_id_svg'>technician_id_svg</span>
+  <span class='id identifier rubyid_child'>child</span> <span class='op'>=</span> <span class='id identifier rubyid_icon_from_html'>icon_from_html</span><span class='lparen'>(</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;svg&gt;&lt;defs&gt;&lt;clipPath id=&quot;clip-path&quot; transform=&quot;translate(-117.03 -68.5)&quot;&gt;&lt;polygon points=&quot;190.6 172.5 205.9 144.6 167.7 121.4 91.1 232.7 131.2 285.2 194 237.4 278.2 229.1 279.1 196.4 190.6 196.4 190.6 172.5&quot; fill=&quot;none&quot;/&gt;&lt;/clipPath&gt;&lt;/defs&gt;&lt;title&gt;2_TechnicianIDcard&lt;/title&gt;&lt;rect x=&quot;73.57&quot; y=&quot;0.5&quot; width=&quot;197.8&quot; height=&quot;127.4&quot; fill=&quot;#fff&quot; stroke=&quot;#000&quot; stroke-miterlimit=&quot;10&quot;/&gt;&lt;g clip-path=&quot;url(#clip-path)&quot;&gt;&lt;path d=&quot;M139.2,210.9c2.1-1.9,8.4-9.2,10.1-14.6s9.1-22.9,13.4-25.7,12.9-10.2,15.8-14.9a143.5,143.5,0,0,1,8.2-11.8s3-6.2,5.6-3.6,4.2,10.4.4,16-10.2,12.8-12,17.4c0,0,23-2,26.7-4.3s26.1-10.7,27.3-11.6,19.7-8.4,24.1-7.1,6.5,2.1,6.1,4.2a14.94,14.94,0,0,1-2.8,4.8s11.3-4.9,12.8-3.3c0,0,6.6,1.4,3.7,6.4a20.15,20.15,0,0,1-8.4,7.4l-10.3,6.3c5.3-2.3,12.4-5.2,13.4-4.1,1.5,1.6,8.7,3.7.2,8.6-7.6,4.5-20.4,11.4-23,12.8h0c5.6-2.3,8-1.3,12,.3s-8.2,9.6-9.7,11-18.6,9.7-26.4,16.3-26.7,14.6-32.6,15.5-32.8,10.4-37.7,12.3-14.5,15.6-21.2,17.1-17.3-38.2-17.3-38.2S137.2,212.8,139.2,210.9Z&quot; transform=&quot;translate(-117.03 -68.5)&quot; fill=&quot;#b4b9de&quot;/&gt;&lt;path d=&quot;M179.1,185.3a42.36,42.36,0,0,1,1.9-11.1c1.8-4.6,8.2-11.8,12-17.4s2.2-13.5-.4-16-5.6,3.6-5.6,3.6-5.3,7.1-8.2,11.8-11.5,12-15.8,14.9-11.6,20.2-13.4,25.7-8,12.7-10.1,14.6-21.9,17.2-21.9,17.2,10.5,39.6,17.3,38.2,16.2-15.2,21.2-17.1,31.9-11.5,37.7-12.3,24.8-8.8,32.6-15.5,24.9-15,26.4-16.3,13.7-9.4,9.7-11-6.5-2.7-12.5-.1-15.6,9.9-19.1,11.2-7.1,4.8-7.1,4.8&quot; transform=&quot;translate(-117.03 -68.5)&quot; fill=&quot;none&quot; stroke=&quot;#2e3192&quot; stroke-miterlimit=&quot;10&quot;/&gt;&lt;path d=&quot;M181.1,174.2s23-2,26.7-4.3,26.1-10.7,27.3-11.6,19.7-8.4,24.1-7.1,6.5,2.1,6.1,4.2a15.65,15.65,0,0,1-9.5,9.4c-5.1,1.4-26.9,10.1-31.4,13-4.7,2.9-7.4,4.7-7.4,4.7&quot; transform=&quot;translate(-117.03 -68.5)&quot; fill=&quot;none&quot; stroke=&quot;#2e3192&quot; stroke-miterlimit=&quot;10&quot;/&gt;&lt;path d=&quot;M223.5,193.4s28.7-13.7,31.3-14.3,17.6-8,19.1-6.4,8.7,3.7.2,8.6c-8.5,5.1-23.5,13.1-23.5,13.1&quot; transform=&quot;translate(-117.03 -68.5)&quot; fill=&quot;none&quot; stroke=&quot;#2e3192&quot; stroke-miterlimit=&quot;10&quot;/&gt;&lt;path d=&quot;M262.6,160s11.3-4.9,12.8-3.3c0,0,6.6,1.4,3.7,6.4a20.15,20.15,0,0,1-8.4,7.4l-10.3,6.3&quot; transform=&quot;translate(-117.03 -68.5)&quot; fill=&quot;none&quot; stroke=&quot;#2e3192&quot; stroke-miterlimit=&quot;10&quot;/&gt;&lt;/g&gt;&lt;g style=&quot;isolation:isolate&quot;&gt;&lt;text transform=&quot;translate(110.02 52.91)&quot; font-size=&quot;21.42&quot; font-family=&quot;ArialMT, Arial&quot; style=&quot;isolation:isolate&quot;&gt;OLA-Simple&lt;/text&gt;&lt;text transform=&quot;translate(110.02 78.61)&quot; font-size=&quot;21.42&quot; font-family=&quot;ArialMT, Arial&quot; style=&quot;isolation:isolate&quot;&gt;&lt;tspan letter-spacing=&quot;-0.11em&quot;&gt;T&lt;/tspan&gt;&lt;tspan x=&quot;10.71&quot; y=&quot;0&quot;&gt;echnician ID&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;rect x=&quot;73.57&quot; y=&quot;0.5&quot; width=&quot;197.8&quot; height=&quot;23.3&quot; fill=&quot;#0d537c&quot;/&gt;&lt;text transform=&quot;translate(114.25 19.7)&quot; font-size=&quot;21.67&quot; fill=&quot;#16f70b&quot; font-family=&quot;Arial-BoldMT, Arial&quot; font-weight=&quot;700&quot; style=&quot;isolation:isolate&quot;&gt;AQUARIUM&lt;/text&gt;&lt;rect x=&quot;104.47&quot; y=&quot;89&quot; width=&quot;3.2&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;109.37&quot; y=&quot;89&quot; width=&quot;1.9&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;114.27&quot; y=&quot;89&quot; width=&quot;1.8&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;122.97&quot; y=&quot;89&quot; width=&quot;3.1&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;127.67&quot; y=&quot;89&quot; width=&quot;5.1&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;138.07&quot; y=&quot;89&quot; width=&quot;1.5&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;140.97&quot; y=&quot;89&quot; width=&quot;2.1&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;146.17&quot; y=&quot;89&quot; width=&quot;5.2&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;152.87&quot; y=&quot;89&quot; width=&quot;3.4&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;159.47&quot; y=&quot;89&quot; width=&quot;2&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;213.75&quot; y=&quot;88.9&quot; width=&quot;2.9&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;210.47&quot; y=&quot;88.9&quot; width=&quot;1.7&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;205.96&quot; y=&quot;88.9&quot; width=&quot;1.7&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;196.81&quot; y=&quot;88.9&quot; width=&quot;2.9&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;190.63&quot; y=&quot;88.9&quot; width=&quot;4.7&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;184.43&quot; y=&quot;88.9&quot; width=&quot;1.4&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;181.26&quot; y=&quot;88.9&quot; width=&quot;1.9&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;173.56&quot; y=&quot;88.9&quot; width=&quot;4.8&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;168.98&quot; y=&quot;88.9&quot; width=&quot;3.1&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;164.19&quot; y=&quot;88.9&quot; width=&quot;1.8&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;221.97&quot; y=&quot;89&quot; width=&quot;3.2&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;226.77&quot; y=&quot;89&quot; width=&quot;1.9&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;231.77&quot; y=&quot;89&quot; width=&quot;1.8&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;240.37&quot; y=&quot;89&quot; width=&quot;3.1&quot; height=&quot;30.4&quot;/&gt;&lt;rect x=&quot;246.77&quot; y=&quot;89&quot; width=&quot;1.5&quot; height=&quot;30.4&quot;/&gt;&lt;/svg&gt;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rparen'>)</span>
+  <span class='const'>SVGElement</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>children:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_child'>child</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>boundx:</span> <span class='int'>400</span><span class='comma'>,</span> <span class='label'>boundy:</span> <span class='int'>200</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2092,19 +2232,19 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79</pre>
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate_package'>validate_package</span><span class='lparen'>(</span><span class='id identifier rubyid_this_package'>this_package</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_resp'>resp</span> <span class='op'>=</span> <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
@@ -2124,7 +2264,7 @@ $(document).ready(function() {
       <div class="method_details ">
   <h3 class="signature " id="validate_samples-instance_method">
   
-    #<strong>validate_samples</strong>(expected_sample_ids)  &#x21d2; <tt>Object</tt> 
+    #<strong>validate_samples</strong>(expected_object_ids, svgs)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -2136,41 +2276,41 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116</pre>
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'OLAKitIDs.rb', line 74</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_validate_samples'>validate_samples</span><span class='lparen'>(</span><span class='id identifier rubyid_expected_sample_ids'>expected_sample_ids</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_validate_samples'>validate_samples</span><span class='lparen'>(</span><span class='id identifier rubyid_expected_object_ids'>expected_object_ids</span><span class='comma'>,</span> <span class='id identifier rubyid_svgs'>svgs</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_resp'>resp</span> <span class='op'>=</span> <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_title'>title</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Validate Incoming Samples</span><span class='tstring_end'>&#39;</span></span>
 
-    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Scan in the IDs of the inputs </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_expected_sample_ids'>expected_sample_ids</span><span class='period'>.</span><span class='id identifier rubyid_to_sentence'>to_sentence</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_expected_sample_ids'>expected_sample_ids</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>To ensure we are working with the right samples, scan in the IDs of the retrieved inputs </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_expected_object_ids'>expected_object_ids</span><span class='period'>.</span><span class='id identifier rubyid_to_sentence'>to_sentence</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_expected_object_ids'>expected_object_ids</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
       <span class='id identifier rubyid_get'>get</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>text</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>var:</span> <span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='label'>label:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_expected_sample_ids'>expected_sample_ids</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+  <span class='id identifier rubyid_expected_object_ids'>expected_object_ids</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_resp'>resp</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span>
-      <span class='id identifier rubyid_found'>found</span> <span class='op'>=</span> <span class='id identifier rubyid_expected_sample_ids'>expected_sample_ids</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_resp'>resp</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_found'>found</span> <span class='op'>=</span> <span class='id identifier rubyid_expected_object_ids'>expected_object_ids</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_resp'>resp</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
     <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_found'>found</span>
   <span class='kw'>end</span>
