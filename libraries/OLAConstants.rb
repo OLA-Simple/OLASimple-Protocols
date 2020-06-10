@@ -103,10 +103,10 @@ module OLAConstants
 
   # equipment
   THERMOCYCLER = "thermocycler" # what to call the thermocycler
-  CENTRIFUGE_PRE = "centrifuge 1 (in the #{PRE_PCR} area)"
-  CENTRIFUGE_POST = "centrifuge 2 (in the #{POST_PCR} area)"
-  PCR_RACK_PRE = "PCR rack 1 (in the #{PRE_PCR} area)" # what to call the racks the PCR tubes go in
-  PCR_RACK_POST = "PCR rack 2 (in the #{POST_PCR} area)" # what to call the racks the PCR tubes go in
+  CENTRIFUGE_PRE = "Minifuge"
+  CENTRIFUGE_POST = "Minifuge"
+  PCR_RACK_PRE = "PCR rack (in the #{PRE_PCR} area)" # what to call the racks the PCR tubes go in
+  PCR_RACK_POST = "PCR rack (in the #{POST_PCR} area)" # what to call the racks the PCR tubes go in
   PHOTOCOPIER = "scanner"
   BASIC_MATERIALS_PRE = [
       "200uL pipette and filtered tips",
@@ -124,16 +124,16 @@ module OLAConstants
       "a timer",
       "latex gloves"
   ]
-  TRASH_PRE = "trash 1 (in the #{PRE_PCR} area)"
-  TRASH_POST = "trash 2 (in the #{POST_PCR} area)"
+  TRASH_PRE = "trash (in the #{PRE_PCR} area)"
+  TRASH_POST = "trash (in the #{POST_PCR} area)"
   WASTE_PRE = "biohazard waste 1 (red bag in the #{PRE_PCR} area)"
   WASTE_POST = "biohazard waste 2 (red bag in the #{POST_PCR} area)"
   BENCH_PRE = "bench 1 (in the #{PRE_PCR} area)"
   BENCH_POST = "bench 2 (in the #{POST_PCR} area)"
   PACKAGE_PRE = "package (#{PRE_PCR})"
   PACKAGE_POST = "package (#{POST_PCR})"
-  FRIDGE_PRE = "fridge 1 (in the #{PRE_PCR} area)"
-  FRIDGE_POST = "fridge 2 (in the #{POST_PCR} area)"
+  FRIDGE_PRE = "fridge"
+  FRIDGE_POST = "fridge"
   P20_PRE = "#{PRE_PCR} P20"
   P20_POST = "#{POST_PCR} P20"
   P200_PRE = "#{PRE_PCR} P200"
