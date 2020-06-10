@@ -126,7 +126,7 @@ class Protocol
     record_technician_id
     safety_warning
     area_preparation POST_PCR, MATERIALS, PRE_PCR
-    simple_clean("OLASimple Paper Detection")
+    simple_clean('OLASimple Paper Detection')
 
     get_detection_packages operations.running
     validate_detection_packages operations.running
@@ -134,8 +134,8 @@ class Protocol
     rehydrate_stop_solution(sorted_ops.running)
     wait_for_pcr sorted_ops.running
     retrieve_inputs(sorted_ops.running)
-    # validate_detection_inputs(sorted_ops.running)
-    
+    validate_detection_inputs(sorted_ops.running)
+
     stop_ligation_product(sorted_ops.running, expert_mode)
     # short_timer
     rehydrate_gold_solution(sorted_ops.running)
@@ -145,7 +145,8 @@ class Protocol
     read_from_scanner(sorted_ops.running)
     analysis operations.running
 
-    cleanup sorted_ops
+    discard_things(sorted_ops.running)
+    clean_area(AREA)
     conclusion sorted_ops
     wash_self
     accept_comments
@@ -300,7 +301,7 @@ class Protocol
   end
 
   def validate_detection_inputs(myops)
-    expected_inputs = myops.map { |op| ref(op.input(INPUT).item) }
+    expected_inputs = myops.map { |op| "#{op.temporary[:input_unit]}-#{op.temporary[:input_sample]}" }
     sample_validation_with_multiple_tries(expected_inputs)
   end
 
@@ -421,11 +422,23 @@ class Protocol
         sample = op.temporary[:output_sample]
         panel_unit = op.temporary[:output_unit]
         tube_unit = op.temporary[:input_unit]
-        show do
+        # show do
+        #   title "Arrange #{STRIPS} and tubes" # for sample 1?
+        #   note "Place the detection #{STRIPS} and #{LIGATION_SAMPLE.pluralize(PREV_COMPONENTS.length)} as shown in the picture:"
+        #   note display_svg(display_panel_and_tubes(kit, panel_unit, tube_unit, PREV_COMPONENTS, sample, COLORS).translate!(50), 0.6)
+        # end
+
+        # Validate samples
+        from_name = "#{op.temporary[:input_unit]}-#{op.temporary[:input_sample]}"
+        to_name = "#{op.temporary[:output_unit]}-#{op.temporary[:output_sample]}"
+        svg_both = display_panel_and_tubes(kit, panel_unit, tube_unit, PREV_COMPONENTS, sample, COLORS).translate!(50).scale!(0.8)
+        p = proc do
           title "Arrange #{STRIPS} and tubes" # for sample 1?
-          note "Place the detection #{STRIPS} and #{LIGATION_SAMPLE.pluralize(PREV_COMPONENTS.length)} as shown in the picture:"
-          note display_svg(display_panel_and_tubes(kit, panel_unit, tube_unit, PREV_COMPONENTS, sample, COLORS).translate!(50), 0.6)
+          note "Place the detection #{STRIPS} #{to_name} and #{LIGATION_SAMPLE.pluralize(PREV_COMPONENTS.length)} #{from_name} as shown in the picture:"
+          note 'Scan in IDS of objects for confirmation.'
         end
+        content = ShowBlock.new(self).run(&p)
+        pre_transfer_validation_with_multiple_tries(from_name, to_name, svg_both, content_override: content)
 
         show do
           title "For each colored tube, add #{SAMPLE_TO_STRIP_VOLUME}uL of #{LIGATION_SAMPLE} to the sample port of each #{STRIP}."
@@ -603,7 +616,7 @@ class Protocol
     end
   end
 
-  def cleanup(myops)
+  def discard_things(myops)
     def discard_refs_from_op(op)
       refs = []
       refs.push('Diluent A ' + op.ref('diluent A').bold)
@@ -623,28 +636,6 @@ class Protocol
       t = Table.new
       t.add_column('Item to throw away', all_refs)
       table t
-    end
-
-    show do
-      disinfectant = '10% bleach'
-      title "Wipe down #{AREA.bold} with #{disinfectant.bold}."
-      note "Now you will wipe down your #{BENCH_POST} and equipment with #{disinfectant.bold}."
-      check "Spray #{disinfectant.bold} onto a #{WIPE_POST} and clean off pipettes and pipette tip boxes."
-      check "Spray a small amount of #{disinfectant.bold} on the bench surface. Clean bench with #{WIPE_POST}."
-      # check "Spray some #{disinfectant.bold} on a #{WIPE}, gently wipe down keyboard and mouse of this computer/tablet."
-      warning "Do not spray #{disinfectant.bold} onto tablet or computer!"
-      check "Finally, spray outside of gloves with #{disinfectant.bold}."
-    end
-
-    show do
-      disinfectant = '70% ethanol'
-      title "Wipe down #{AREA.bold} with #{disinfectant.bold}."
-      note "Now you will wipe down your #{BENCH_POST} and equipment with #{disinfectant.bold}."
-      check "Spray #{disinfectant.bold} onto a #{WIPE_POST} and clean off pipettes and pipette tip boxes."
-      check "Spray a small amount of #{disinfectant.bold} on the bench surface. Clean bench with #{WIPE_POST}."
-      #   check "Spray a #{"small".bold} amount of #{disinfectant.bold} on a #{WIPE}. Gently wipe down keyboard and mouse of this computer/tablet."
-      warning "Do not spray #{disinfectant.bold} onto tablet or computer!"
-      check 'Finally, dispose of gloves in garbage bin.'
     end
   end
 
