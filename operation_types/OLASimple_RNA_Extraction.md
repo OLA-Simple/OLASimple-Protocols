@@ -199,7 +199,7 @@ class Protocol
     end
 
     show do
-      title 'RNAse degrades RNA'
+      title 'RNase degrades RNA'
       note 'RNA is prone to degradation by RNase present in our eyes, skin, and breath.'
       note 'Avoid opening tubes outside the Biosafety Cabinet (BSC).'
       bullet 'Change gloves whenever you suspect potential RNAse contamination'
@@ -248,10 +248,10 @@ class Protocol
 
   def retrieve_package(this_package)
     show do
-      title "Take package #{this_package.bold} from the #{FRIDGE_PRE} and place on the #{BENCH_PRE} in the #{BSC}"
+      title "Take package #{this_package.bold} from the #{FRIDGE_PRE} and place in the #{BSC}"
       check 'Grab package'
-      check 'Remove the <b>outside layer</b> of gloves (since you just touched the door knob).'
-      check 'Put on a Removnew outside layer of gloves.'
+      check 'Remove the <b>outside layer</b> of gloves (since you just touched the handle).'
+      check 'Put on a new outside layer of gloves.'
     end
   end
 
@@ -330,7 +330,7 @@ class Protocol
 
   # helper method for simple transfers in this protocol
   def transfer_and_vortex(title, from, to, volume_ul, warning: nil, to_svg: nil, from_svg: nil, skip_centrifuge: false)
-    pipette, extra_note = pipette_decision(volume_ul)
+    pipette, extra_note, setting_instruction = pipette_decision(volume_ul)
 
     if to.is_a?(Array) # MULTI TRANSFER
       img = nil
@@ -345,11 +345,12 @@ class Protocol
       end
       show do
         title title
+        check setting_instruction
         to.each do |t|
           check "Transfer <b>#{volume_ul}uL</b> of <b>#{from}</b> into <b>#{t}</b> using a #{pipette} pipette."
-          check 'Discard pipette tip and replace.'
+          note extra_note if extra_note
+          check 'Discard pipette tip.'
         end
-        note extra_note if extra_note
         warning warning if warning
         note display_svg(img, 0.75) if img
         check "Ensure tube caps are tightly shut for #{to.to_sentence}."
@@ -369,6 +370,7 @@ class Protocol
 
       show do
         title title
+        check setting_instruction
         check "Transfer <b>#{volume_ul}uL</b> of <b>#{from}</b> into <b>#{to}</b> using a #{pipette} pipette."
         note extra_note if extra_note
         warning warning if warning
@@ -383,15 +385,19 @@ class Protocol
 
   def pipette_decision(volume_ul)
     if volume_ul <= 20
-      P20_PRE
+      setting = '[ ' + (volume_ul * 10).round.to_s.rjust(3, '0').split('').join(' ') + ' ]'
+      [P20_PRE, nil, "Set P20 pipette to <b>#{setting}</b>"]
     elsif volume_ul <= 200
-      P200_PRE
+      setting = '[ ' + volume_ul.round.to_s.rjust(3, '0').split('').join(' ') + ' ]'
+      [P200_PRE, nil, "Set p200 pipette to <b>#{setting}</b>"]
     elsif volume_ul <= 1000
-      P1000_PRE
+      setting = '[ ' + (volume_ul / 10).round.to_s.rjust(3, '0').split('').join(' ') + ' ]'
+      [P1000_PRE, nil, "Set p1000 pipette to <b>#{setting}</b>"]
     else
       factor = volume_ul.fdiv(1000).ceil
       split_volume = volume_ul.fdiv(factor)
-      [P1000_PRE, "Split transfer into <b>#{factor}</b> seperate transfers of <b>#{split_volume.round}uL</b>."]
+      setting = '[ ' + (split_volume / 10).round.to_s.rjust(3, '0').split('').join(' ') + ' ]'
+      [P1000_PRE, "Split transfer into <b>#{factor}</b> seperate transfers of <b>#{split_volume.round}uL</b>.", "Set p1000 pipette to <b>#{setting}</b>"]
     end
   end
 
@@ -419,6 +425,11 @@ class Protocol
   end
 
   def prepare_buffers
+    show do
+      title "Centrifuge #{DTT} and #{SA_WATER}"
+      check "Centrifuge <b>#{DTT}</b> and <b>#{SA_WATER}</b> for <b>5 seconds</b>."
+    end
+
     # add sa water to dtt/trna
     transfer_and_vortex(
       "Prepare #{DTT}",
@@ -438,7 +449,8 @@ class Protocol
       lysis_buffers,
       10,
       from_svg: :E0_open_wet,
-      to_svg: :E1_open
+      to_svg: :E1_open,
+      skip_centrifuge: true
     )
 
     # prepare wash buffer 2 with ethanaol
@@ -467,7 +479,8 @@ class Protocol
         "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}",
         SAMPLE_VOLUME,
         from_svg: :sXXX_open,
-        to_svg: :E1_open
+        to_svg: :E1_open,
+        skip_centrifuge: true
       )
     end
 
@@ -525,7 +538,7 @@ class Protocol
   end
 
   def transfer_carefully(from, to, volume_ul, from_type:, to_type:, from_svg: nil, to_svg: nil)
-    pipette, extra_note = pipette_decision(volume_ul)
+    pipette, extra_note, setting_instruction = pipette_decision(volume_ul)
     if to.is_a?(Array) # MULTI TRANSFER
       img = nil
       if from_svg && to_svg
@@ -538,10 +551,11 @@ class Protocol
       end
       show do
         title "Add #{from_type || from} to each #{to_type + ' ' + to.to_sentence || to}"
+        check setting_instruction
         note "<b>Carefully</b> open #{to_type.pluralize(to)} <b>#{to.to_sentence}</b> lid."
         to.each do |t|
           check "<b>Carefully</b> Add <b>#{volume_ul}uL</b> of #{from_type} <b>#{from}</b> to <b>#{t}</b> using a #{pipette} pipette."
-          check 'Discard pipette tip and replace.'
+          check 'Discard pipette tip.'
         end
         note extra_note if extra_note
         note display_svg(img, 0.75) if img
@@ -558,6 +572,7 @@ class Protocol
       end
       show do
         title "Add #{from_type || from} to #{to_type + ' ' + to || to}"
+        check setting_instruction
         note "<b>Carefully</b> open #{to_type} <b>#{to}</b> lid."
         check "<b>Carefully</b> Add <b>#{volume_ul}uL</b> of #{from_type} <b>#{from}</b> to <b>#{to}</b> using a #{pipette} pipette."
         note extra_note if extra_note
