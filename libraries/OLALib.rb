@@ -633,7 +633,7 @@ module OLALib
       check "Spray #{disinfectant.bold} onto a #{WIPE_PRE} and clean off pipettes and pipette tip boxes."
       check "Spray #{disinfectant.bold} onto a #{WIPE_PRE} and wipe down the bench surface."
       # check "Spray some #{disinfectant.bold} on a #{WIPE}, gently wipe down keyboard and mouse of this computer/tablet."
-      warning "Do not spray #{disinfectant.bold} onto tablet or computer!"
+      warning "Do not spray 10% bleach directly onto tablet, computer, barcode scanner or centrifuge!"
       check "Finally, spray outside of gloves with #{disinfectant.bold}."
     end
 
@@ -643,6 +643,7 @@ module OLALib
       note "Now you will wipe down your #{area} space and equipment with #{disinfectant.bold}."
       check "Spray #{disinfectant.bold} onto a #{WIPE_PRE} and clean off pipettes and pipette tip boxes."
       check "Spray #{disinfectant.bold} onto a #{WIPE_PRE} and wipe down the bench surface."
+      note "Bleach residues can inhibit the assay. Make sure to completely wipe all surface with 70% ethanol spray"
       warning "Do not spray #{disinfectant.bold} onto tablet or computer!"
       check "Finally, spray outside of gloves with #{disinfectant.bold}."
     end
