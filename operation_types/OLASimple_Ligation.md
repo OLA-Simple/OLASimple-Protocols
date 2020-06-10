@@ -84,14 +84,14 @@ class Protocol
   LIGATION_VOLUME = PACK_HASH['Ligation Mix Rehydration Volume'] # volume to rehydrate ligation mix
   SAMPLE_VOLUME = PACK_HASH['PCR to Ligation Mix Volume'] # volume of pcr product to ligation mix
   MATERIALS = [
+    'nitrile gloves (wear tight gloves to reduce contamination risk)',
     'P200 pipette and filtered tips',
     'P2 pipette and filtered tips',
     'a spray bottle of 10% v/v bleach',
     'a spray bottle of 70% v/v ethanol',
-    'a timer, practice how to use the timer',
     'balancing tube (on rack)',
-    'a centrifuge',
-    'a vortex mixer'
+    'centrifuge',
+    'vortex mixer'
   ].freeze
   COMPONENTS = PACK_HASH['Components']['sample tubes']
 
@@ -399,6 +399,10 @@ class Protocol
       ops.each do |op|
         from = op.input_ref(INPUT)
         labels = op.output_refs(OUTPUT)
+        to_strip_name = "#{op.temporary[:output_unit]}-#{op.temporary[:output_sample]}"
+        tubeP = make_tube(opentube, ['PCR Sample'], op.input_tube_label(INPUT), 'small').scale(0.75)
+        ligation_tubes = display_ligation_tubes(*op.output_tokens(OUTPUT), COLORS).translate!(0, -20)
+        pre_transfer_validation_with_multiple_tries(from, to_strip_name, tubeP, ligation_tubes)
         if expert_mode
           # All transfers at once...
           show do
@@ -407,8 +411,6 @@ class Protocol
             check "Using a P2 pipette set to [1 2 0]."
             note "Add #{SAMPLE_VOLUME}uL from #{from.bold} into each of #{op.temporary[:label_string].bold}. Only open one ligation tube at a time."
 
-            tubeP = make_tube(opentube, ['PCR Sample'], op.input_tube_label(INPUT), 'small').scale(0.75)
-            ligation_tubes = display_ligation_tubes(*op.output_tokens(OUTPUT), COLORS).translate!(0, -20)
             transfer_image = make_transfer(tubeP, ligation_tubes, 300, "#{SAMPLE_VOLUME}uL", "(Post-PCR P2 pipette)")
             note display_svg(transfer_image, 0.6)
             labels.each do |l|
