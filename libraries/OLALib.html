@@ -4112,14 +4112,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-660
 661
 662
 663
-664</pre>
+664
+665</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 660</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 661</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_area_setup'>area_setup</span><span class='lparen'>(</span><span class='id identifier rubyid_area'>area</span><span class='comma'>,</span> <span class='id identifier rubyid_materials'>materials</span><span class='comma'>,</span> <span class='id identifier rubyid_other_area'>other_area</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_area_preparation'>area_preparation</span> <span class='id identifier rubyid_area'>area</span><span class='comma'>,</span> <span class='id identifier rubyid_materials'>materials</span><span class='comma'>,</span> <span class='id identifier rubyid_other_area'>other_area</span>
@@ -4197,14 +4197,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-702
 703
 704
 705
-706</pre>
+706
+707</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 702</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 703</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bsc_svg'>bsc_svg</span>
   <span class='id identifier rubyid_icon_from_html'>icon_from_html</span><span class='lparen'>(</span>
@@ -4420,7 +4420,8 @@ $(document).ready(function() {
 646
 647
 648
-649</pre>
+649
+650</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'OLALib.rb', line 628</span>
@@ -4433,7 +4434,7 @@ $(document).ready(function() {
     <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto a </span><span class='embexpr_beg'>#{</span><span class='const'>WIPE_PRE</span><span class='embexpr_end'>}</span><span class='tstring_content'> and clean off pipettes and pipette tip boxes.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto a </span><span class='embexpr_beg'>#{</span><span class='const'>WIPE_PRE</span><span class='embexpr_end'>}</span><span class='tstring_content'> and wipe down the bench surface.</span><span class='tstring_end'>&quot;</span></span>
     <span class='comment'># check &quot;Spray some #{disinfectant.bold} on a #{WIPE}, gently wipe down keyboard and mouse of this computer/tablet.&quot;
-</span>    <span class='id identifier rubyid_warning'>warning</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto tablet or computer!</span><span class='tstring_end'>&quot;</span></span>
+</span>    <span class='id identifier rubyid_warning'>warning</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not spray 10% bleach directly onto tablet, computer, barcode scanner or centrifuge!</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Finally, spray outside of gloves with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
@@ -4443,6 +4444,7 @@ $(document).ready(function() {
     <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Now you will wipe down your </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_area'>area</span><span class='embexpr_end'>}</span><span class='tstring_content'> space and equipment with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto a </span><span class='embexpr_beg'>#{</span><span class='const'>WIPE_PRE</span><span class='embexpr_end'>}</span><span class='tstring_content'> and clean off pipettes and pipette tip boxes.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto a </span><span class='embexpr_beg'>#{</span><span class='const'>WIPE_PRE</span><span class='embexpr_end'>}</span><span class='tstring_content'> and wipe down the bench surface.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_note'>note</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Bleach residues can inhibit the assay. Make sure to completely wipe all surface with 70% ethanol spray</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_warning'>warning</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not spray </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'> onto tablet or computer!</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_check'>check</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Finally, spray outside of gloves with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_disinfectant'>disinfectant</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
@@ -4467,14 +4469,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-696
 697
 698
 699
-700</pre>
+700
+701</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 696</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 697</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_coat_svg'>coat_svg</span>
   <span class='id identifier rubyid_icon_from_html'>icon_from_html</span><span class='lparen'>(</span>
@@ -4539,7 +4541,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-776
 777
 778
 779
@@ -4553,10 +4554,11 @@ $(document).ready(function() {
 787
 788
 789
-790</pre>
+790
+791</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 776</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 777</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_strip_section'>display_strip_section</span><span class='lparen'>(</span><span class='id identifier rubyid_upload'>upload</span><span class='comma'>,</span> <span class='id identifier rubyid_display_section'>display_section</span><span class='comma'>,</span> <span class='id identifier rubyid_num_sections'>num_sections</span><span class='comma'>,</span> <span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_p'>p</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span>
@@ -4593,15 +4595,15 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-769
 770
 771
 772
 773
-774</pre>
+774
+775</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 769</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 770</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_upload'>display_upload</span><span class='lparen'>(</span><span class='id identifier rubyid_upload'>upload</span><span class='comma'>,</span> <span class='id identifier rubyid_size'>size</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>100%</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_p'>p</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span>
@@ -4640,14 +4642,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-711
 712
 713
 714
-715</pre>
+715
+716</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 711</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 712</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_extract_basename'>extract_basename</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ext'>ext</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_extname'>extname</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
@@ -4894,14 +4896,14 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-690
 691
 692
 693
-694</pre>
+694
+695</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 690</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 691</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_gloves_svg'>gloves_svg</span>
   <span class='id identifier rubyid_icon_from_html'>icon_from_html</span><span class='lparen'>(</span>
@@ -5344,7 +5346,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-666
 667
 668
 669
@@ -5366,10 +5367,11 @@ $(document).ready(function() {
 685
 686
 687
-688</pre>
+688
+689</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 666</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 667</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_safety_warning'>safety_warning</span><span class='lparen'>(</span><span class='id identifier rubyid_area'>area</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_grid'>grid</span> <span class='op'>=</span> <span class='const'>SVGGrid</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>3</span><span class='comma'>,</span> <span class='int'>1</span><span class='comma'>,</span> <span class='int'>200</span><span class='comma'>,</span> <span class='int'>100</span><span class='rparen'>)</span>
@@ -5578,7 +5580,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-717
 718
 719
 720
@@ -5628,10 +5629,11 @@ $(document).ready(function() {
 764
 765
 766
-767</pre>
+767
+768</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 717</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 718</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show_with_expected_uploads'>show_with_expected_uploads</span><span class='lparen'>(</span><span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_save_key'>save_key</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_num_tries'>num_tries</span> <span class='op'>=</span> <span class='int'>5</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_upload_hashes'>upload_hashes</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -5704,17 +5706,17 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-651
 652
 653
 654
 655
 656
 657
-658</pre>
+658
+659</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLALib.rb', line 651</span>
+      <pre class="code"><span class="info file"># File 'OLALib.rb', line 652</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_simple_clean'>simple_clean</span><span class='lparen'>(</span><span class='id identifier rubyid_protocol'>protocol</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_show'>show</span> <span class='kw'>do</span>
