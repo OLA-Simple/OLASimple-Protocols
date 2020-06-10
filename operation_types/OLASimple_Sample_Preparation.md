@@ -176,7 +176,7 @@ class Protocol
     show do
       title "Take package #{this_package.bold} from the #{FRIDGE_PRE} and place inside the BSC"
       check 'Grab package'
-      check 'Remove the <b>outside layer</b> of gloves (since you just touched the door knob).'
+      check 'Remove the <b>outside layer</b> of gloves (since you just touched the handle).'
       check 'Put on a new outside layer of gloves.'
     end
   end
@@ -233,7 +233,7 @@ class Protocol
       transfer_img = make_transfer(from_tubes_open[i], to_tubes_open[i], 250, "#{SAMPLE_VOLUME}ul", "(#{P1000_PRE})").translate(100, 0)
       show do
         title "Transfer #{from_names[i]} to #{to_names[i]}"
-        note "Use a #{P1000_PRE} pipette and set it to <b>[3 5 0]</b>."
+        note "Use a #{P1000_PRE} pipette and set it to <b>[3 8 0]</b>."
         check "Transfer <b>#{SAMPLE_VOLUME}uL</b> from <b>#{from_names[i]}</b> to <b>#{to_names[i]}</b> using a #{P1000_PRE} pipette."
         note display_svg(transfer_img, 0.75)
       end
@@ -245,7 +245,7 @@ class Protocol
       title 'Store Items'
       sample_tubes = sample_labels.map { |s| "#{UNIT}-#{s}" }
       _, plasma_tube_names = plasma_tubes(ops)
-      check "Retrun #{plasma_tube_names.to_sentence} to the freezer."
+      check "Return #{plasma_tube_names.to_sentence} to the freezer."
       note "Leave <b>#{sample_tubes.to_sentence}</b> in the BSC for immediate continuation."
     end
   end
