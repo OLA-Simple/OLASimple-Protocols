@@ -55,7 +55,7 @@ class Protocol
   UNIT = 'S'
   OUTPUT_COMPONENT = ''
   PLASMA_LOCATION = '-20 freezer'
-  SAMPLE_VOLUME = 350
+  SAMPLE_VOLUME = 380
 
   def main
     operations.make
@@ -92,9 +92,9 @@ class Protocol
       sample_validation_with_multiple_tries(expected_plasma_samples)
       wait_for_thaw
       transfer_plasma(ops)
+      store(ops)
     end
 
-    store
     accept_comments
     conclusion(operations)
     {}
@@ -153,16 +153,17 @@ class Protocol
 
   def required_equipment
     show do
-      title 'Get required equipment'
-      note "You will need the following supplies in the BSC"
+      title 'You will need the following supplies in the BSC'
       materials = [
         'P1000 pipette and filter tips',
         'P200 pipette and filter tips',
         'P20 pipette and filter tips',
+        'Serological pipette and 10mL tip',
         'Vortex mixer',
+        'Minifuge',
         'Cold tube rack',
-        '70% v/v Ethanol spray for cleaning,',
-        '10% v/v Bleach speay for cleaning',
+        '70% v/v Ethanol spray for cleaning',
+        '10% v/v Bleach spray for cleaning',
         'Molecular grade ethanol'
       ]
       materials.each do |m|
@@ -173,7 +174,7 @@ class Protocol
 
   def retrieve_package(this_package)
     show do
-      title "Take package #{this_package.bold} from the #{FRIDGE_PRE} and place on the #{BENCH_PRE} in the BSC"
+      title "Take package #{this_package.bold} from the #{FRIDGE_PRE} and place inside the BSC"
       check 'Grab package'
       check 'Remove the <b>outside layer</b> of gloves (since you just touched the door knob).'
       check 'Put on a new outside layer of gloves.'
@@ -217,6 +218,7 @@ class Protocol
       title 'Wait for Plasma to thaw'
       note 'Let plasma sit at room temperature to thaw for 5 minutes.'
       check 'Set a timer.'
+      note 'Built in timer is available in the top left.'
       note 'Continue only once the plasma is thawed enough to begin pipetting.'
     end
   end
@@ -238,10 +240,12 @@ class Protocol
     end
   end
 
-  def store
+  def store(ops)
     show do
       title 'Store Items'
       sample_tubes = sample_labels.map { |s| "#{UNIT}-#{s}" }
+      _, plasma_tube_names = plasma_tubes(ops)
+      check "Retrun #{plasma_tube_names.to_sentence} to the freezer."
       note "Leave <b>#{sample_tubes.to_sentence}</b> in the BSC for immediate continuation."
     end
   end
