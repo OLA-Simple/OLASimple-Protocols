@@ -78,12 +78,12 @@ module OLAKits
             "Sample Volume" => 2.4,
             "Mutation Labels" => [
                 "K65R",
+                "70E",
                 "K103N",
                 "V106M",
                 "Y181C",
                 "M184V",
                 "G190A",
-                "X"
             ],
             "Mutation Colors" => ["red", "green","yellow", "blue", "purple", "white", "gray"]
 
