@@ -71,11 +71,13 @@ module OLAKitIDs
     raise 'Package id is wrong and could not be resolved. Speak to a Lab manager.'
   end
 
-  def validate_samples(expected_object_ids, svgs)
+  def validate_samples(expected_object_ids, svgs, ids_override: nil)
+    show_ids = expected_object_ids
+    expected_object_ids = ids_override if ids_override
     resp = show do
       title 'Validate Incoming Samples'
 
-      note "To ensure we are working with the right samples, scan in the IDs of the retrieved inputs #{expected_object_ids.to_sentence}."
+      note "To ensure we are working with the right samples, scan in the IDs of the retrieved inputs #{show_ids.to_sentence}."
       expected_object_ids.size.times do |i|
         get 'text', var: i.to_s.to_sym, label: '', default: ''
       end
@@ -90,7 +92,9 @@ module OLAKitIDs
     true
   end
 
-  def pre_transfer_validate(expected_object_ids, svgs)
+  def pre_transfer_validate(expected_object_ids, svgs, ids_override: nil)
+    show_ids = expected_object_ids
+    expected_object_ids = ids_override if ids_override
     grid = SVGGrid.new(svgs.size, 1, 150, 100)
     svgs.each_with_index do |svg, i|
       grid.add(svg, i, 0)
@@ -100,7 +104,7 @@ module OLAKitIDs
     resp = show do
       title 'Prepare Samples for transfer'
 
-      check "In preparation for liquid transfer, set aside tubes #{expected_object_ids.to_sentence}."
+      check "In preparation for liquid transfer, set aside tubes #{show_ids.to_sentence}."
       note 'Scan in tube IDs for confirmation.'
       note display_svg(img, 0.75)
       expected_object_ids.size.times do |i|
@@ -118,8 +122,10 @@ module OLAKitIDs
   end
 
   def pre_transfer_validation_with_multiple_tries(from_name, to_name, from_svg=nil, to_svg=nil)
+    from_id = from_name.dup.sub("-", "")
+    to_id = to_name.dup.sub("-", "")
     5.times do
-      result = pre_transfer_validate([from_name, to_name], [from_svg, to_svg])
+      result = pre_transfer_validate([from_name, to_name], [from_svg, to_svg], ids_override: [from_id, to_id])
       return true if result || debug
 
       show do
@@ -135,8 +141,9 @@ module OLAKitIDs
   end
 
   def sample_validation_with_multiple_tries(expected_object_ids, expected_svgs=nil)
+    expected_object_ids = expected_object_ids.map { |id| id.dup.sub("-", "") }
     5.times do
-      result = validate_samples(expected_object_ids, expected_svgs)
+      result = validate_samples(expected_object_ids, expected_svgs, ids_override: expected_object_ids)
       return true if result || debug
 
       show do
