@@ -121,7 +121,7 @@ class Protocol
     debug_setup operations
     save_temporary_input_values(operations, INPUT)
     save_temporary_output_values(operations)
-    expert_mode = ask_if_expert
+    expert_mode = true
     introduction operations.running
     record_technician_id
     safety_warning
