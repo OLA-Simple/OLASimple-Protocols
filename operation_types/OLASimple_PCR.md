@@ -144,7 +144,7 @@ class Protocol
     get_pcr_packages(operations.running)
     validate_pcr_packages(operations.running)
     open_pcr_packages(operations.running)
-    debug_table(operations.running)
+    # debug_table(operations.running)
     # check_for_tube_defects sorted_ops.running
     # nuttada thaw
     # nuttada needs vortex + centrigure
@@ -313,25 +313,29 @@ class Protocol
     gops = group_packages(myops)
     gops.each do |_unit, ops|
       from = ops.first.ref('diluent A')
-      ops.each do |op|
+      tos = ops.map { |op| ref(op.output(OUTPUT).item) }
+      to_tubes = ops.map.with_index do |op, i|
         to_item = op.output(OUTPUT).item
         to = ref(to_item)
-        tubeA = make_tube(opentube, [DILUENT_A, from], '', fluid = 'medium')
         tubeP = make_tube(opentube, [PCR_SAMPLE, to], '', fluid = 'powder').scale!(0.75)
-        img = make_transfer(tubeA, tubeP, 300, "#{PCR_MIX_VOLUME}uL", "(#{P200_PRE} pipette)")
-        img.translate!(25)
-        show do
-          raw transfer_title_proc(PCR_MIX_VOLUME, from, to)
-          # title "Add #{PCR_MIX_VOLUME}uL from #{DILUENT_A} #{from.bold} to #{PCR_SAMPLE} #{to.bold}"
-          note "#{DILUENT_A} will be used to dissolve the powder in the #{PCR_SAMPLE}."
-          note "Use a #{P200_PRE} pipette and set it to <b>[0 4 0]</b>."
-          note 'Avoid touching the inside of the lid, as this could cause contamination. '
-          note 'Dispose of pipette tip.'
-          check "Transfer #{PCR_MIX_VOLUME}uL from #{from.bold} into #{to.bold}"
-          note display_svg(img, 0.75)
-        end
+        tubeP.translate!(120 * i, 0)
       end
-
+      tubeA = make_tube(opentube, [DILUENT_A, from], '', fluid = 'medium')
+      tubes_P = SVGElement.new(children: to_tubes, boundx: 200, boundy: 200)
+      img = make_transfer(tubeA, tubes_P, 300, "#{PCR_MIX_VOLUME}uL", "(#{P200_PRE} pipette)")
+      img.translate!(25)
+      show do
+        raw transfer_title_proc(PCR_MIX_VOLUME, from, tos.to_sentence)
+        # title "Add #{PCR_MIX_VOLUME}uL from #{DILUENT_A} #{from.bold} to #{PCR_SAMPLE} #{to.bold}"
+        note "#{DILUENT_A} will be used to dissolve the powder in the #{PCR_SAMPLE}s."
+        note "Use a #{P200_PRE} pipette and set it to <b>[0 4 0]</b>."
+        note 'Avoid touching the inside of the lid, as this could cause contamination. '
+        note 'Dispose of pipette tip.'
+        tos.each do |to|
+          check "Transfer #{PCR_MIX_VOLUME}uL from #{from.bold} into #{to.bold}"
+        end
+        note display_svg(img, 0.75)
+      end
       # TODO: add "make sure tube caps are completely closed" for any centrifugation or vortexing step.
       #
     end
@@ -352,13 +356,16 @@ class Protocol
       ops.each do |op|
         from = ref(op.input(INPUT).item)
         to = ref(op.output(OUTPUT).item)
+        tubeS = make_tube(opentube, [SAMPLE_ALIAS, from], '', fluid = 'medium')
+        tubeP = make_tube(opentube, [PCR_SAMPLE, to], '', fluid = 'medium').scale!(0.75)
+        tubeS_closed = make_tube(closedtube, [SAMPLE_ALIAS, from], '', fluid = 'medium')
+        tubeP_closed = make_tube(closedtube, [PCR_SAMPLE, to], '', fluid = 'medium').translate!(0,40).scale!(0.75)
+        pre_transfer_validation_with_multiple_tries(from, to, tubeS_closed, tubeP_closed)
         show do
           raw transfer_title_proc(SAMPLE_VOLUME, "#{SAMPLE_ALIAS} #{from}", "#{PCR_SAMPLE} #{to}")
           note "Carefully open tube #{from.bold} and tube #{to.bold}"
           note "Use a #{P20_PRE} pipette and set it to <b>[1 0 0]</b>."
           check "Transfer #{SAMPLE_VOLUME}uL from #{from.bold} into #{to.bold}"
-          tubeS = make_tube(opentube, [SAMPLE_ALIAS, from], '', fluid = 'medium')
-          tubeP = make_tube(opentube, [PCR_SAMPLE, to], '', fluid = 'medium').scale!(0.75)
           img = make_transfer(tubeS, tubeP, 300, "#{SAMPLE_VOLUME}uL", "(#{P20_PRE} pipette)")
           img.translate!(25)
           note display_svg(img, 0.75)
