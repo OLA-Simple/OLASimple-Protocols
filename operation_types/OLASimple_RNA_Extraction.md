@@ -63,17 +63,15 @@ class Protocol
   PACK_HASH = EXTRACTION_UNIT
 
   THIS_UNIT     = PACK_HASH['Unit Name']
-  DTT           = THIS_UNIT + PACK_HASH['Components']['dtt']                #E0
-  LYSIS_BUFFER  = THIS_UNIT + PACK_HASH['Components']['lysis buffer']       #E1
-  WASH1         = THIS_UNIT + PACK_HASH['Components']['wash buffer 1']      #E2
-  WASH2         = THIS_UNIT + PACK_HASH['Components']['wash buffer 2']      #E3
-  SA_WATER      = THIS_UNIT + PACK_HASH['Components']['sodium azide water'] #E4
-  SAMPLE_COLUMN = THIS_UNIT + PACK_HASH['Components']['sample column']      #E5
-  RNA_EXTRACT   = THIS_UNIT + PACK_HASH['Components']['rna extract tube']   #E6
-  ETHANOL       = "Molecular Grade Ethanol"
+  DTT           = THIS_UNIT + PACK_HASH['Components']['dtt']                # E0
+  LYSIS_BUFFER  = THIS_UNIT + PACK_HASH['Components']['lysis buffer']       # E1
+  WASH1         = THIS_UNIT + PACK_HASH['Components']['wash buffer 1']      # E2
+  WASH2         = THIS_UNIT + PACK_HASH['Components']['wash buffer 2']      # E3
+  SA_WATER      = THIS_UNIT + PACK_HASH['Components']['sodium azide water'] # E4
+  SAMPLE_COLUMN = THIS_UNIT + PACK_HASH['Components']['sample column']      # E5
+  RNA_EXTRACT   = THIS_UNIT + PACK_HASH['Components']['rna extract tube']   # E6
+  ETHANOL       = 'Molecular Grade Ethanol'
   GuSCN_WASTE = 'GuSCN waste container'
-
-
 
   # KIT_SVGs = {
   #   DTT => {closed_dry: E0_closed_dry}
@@ -116,7 +114,7 @@ class Protocol
     lyse_samples
     add_ethanol
 
-    3.times do
+    4.times do
       operations.each { |op| add_sample_to_column(op) }
       centrifuge_columns(flow_instructions: "Discard flow through into #{GuSCN_WASTE}")
     end
@@ -132,7 +130,7 @@ class Protocol
     transfer_column_to_e6
     elute
     incubate(sample_labels.map { |s| "#{SAMPLE_COLUMN}-#{s}" }, '1 minute')
-    centrifuge_columns(flow_instructions: '<b>DO NOT DISCARD FLOW THROUGH</b>')
+    centrifuge_columns(flow_instructions: '<b>DO NOT DISCARD FLOW THROUGH</b>', extra_warning: 'DO NOT DISCARD FLOW THROUGH')
 
     finish_up
     disinfect
@@ -201,9 +199,10 @@ class Protocol
     end
 
     show do
-      title 'RNAse Degredation'
+      title 'RNAse degrades RNA'
       note 'RNA is prone to degradation by RNase present in our eyes, skin, and breath.'
       note 'Avoid opening tubes outside the Biosafety Cabinet (BSC).'
+      bullet 'Change gloves whenever you suspect potential RNAse contamination'
       # show image of gloves
     end
 
@@ -228,16 +227,17 @@ class Protocol
 
   def required_equipment
     show do
-      title 'Get required equipment'
-      note "You will need the following supplies in the #{BSC.bold}"
+      title 'You will need the following supplies in the BSC'
       materials = [
         'P1000 pipette and filter tips',
         'P200 pipette and filter tips',
         'P20 pipette and filter tips',
+        'Serological pipette and 10mL tip',
         'Vortex mixer',
+        'Minifuge',
         'Cold tube rack',
-        '70% v/v Ethanol spray for cleaning,',
-        '10% v/v Bleach speay for cleaning',
+        '70% v/v Ethanol spray for cleaning',
+        '10% v/v Bleach spray for cleaning',
         'Molecular grade ethanol'
       ]
       materials.each do |m|
@@ -279,7 +279,7 @@ class Protocol
     }
 
     SHARED_COMPONENTS.each_with_index do |component, i|
-      svg_label = (component != ETHANOL && component != GuSCN_WASTE) ? component : ""
+      svg_label = component != ETHANOL && component != GuSCN_WASTE ? component : ''
       svg = draw_svg(initial_kit_components[component], svg_label: svg_label)
       grid.add(svg, i, 0)
     end
@@ -296,7 +296,7 @@ class Protocol
     grid.add(many_collection_tubes(6), PER_SAMPLE_COMPONENTS.size + SHARED_COMPONENTS.size, 0)
 
     grid.align!('center-left')
-    img = SVGElement.new(children: [grid], boundx: 1000, boundy: 300).translate!(30, 50)
+    SVGElement.new(children: [grid], boundx: 1000, boundy: 300).translate!(30, 50)
   end
 
   def retrieve_inputs
@@ -321,21 +321,22 @@ class Protocol
   def fill_ethanol
     svg = SVGElement.new(children: [ethanol_container_open], boundx: 400, boundy: 200)
     show do
-      title "Transfer 4mL of Molecular grade ethanol to Provided Container"
-      check "Use a serological pipette to transfer <b>4ml</b> of <b>Molecular Grade Ethanol</b> into provided container."
+      title 'Transfer 4mL of Molecular grade ethanol to Provided Container'
+      check 'Use a serological pipette to transfer <b>4ml</b> of <b>Molecular Grade Ethanol</b> into provided container.'
       note display_svg(svg)
+      check 'Return the Molecular grade ethanol to the flammable cabinet.'
     end
   end
 
   # helper method for simple transfers in this protocol
-  def transfer_and_vortex(title, from, to, volume_ul, warning: nil, to_svg: nil, from_svg: nil)
+  def transfer_and_vortex(title, from, to, volume_ul, warning: nil, to_svg: nil, from_svg: nil, skip_centrifuge: false)
     pipette, extra_note = pipette_decision(volume_ul)
 
-    if to.is_a?(Array) #MULTI TRANSFER 
+    if to.is_a?(Array) # MULTI TRANSFER
       img = nil
       if from_svg && to_svg
         from_component, from_sample_num = from.split('-')
-        from_label = (from_component != ETHANOL && from_component != GuSCN_WASTE) ? from.split('-').join("\n") : ""
+        from_label = from_component != ETHANOL && from_component != GuSCN_WASTE ? from.split('-').join("\n") : ''
         from_svg_rendered = draw_svg(from_svg, svg_label: from_label)
         to_labels = to.map { |t| t.split('-').join("\n") }
         to_svgs_rendered = to_labels.map.with_index { |to_label, i| draw_svg(to_svg, svg_label: to_label).translate!(130 * i, 0) }
@@ -346,21 +347,22 @@ class Protocol
         title title
         to.each do |t|
           check "Transfer <b>#{volume_ul}uL</b> of <b>#{from}</b> into <b>#{t}</b> using a #{pipette} pipette."
+          check 'Discard pipette tip and replace.'
         end
         note extra_note if extra_note
         warning warning if warning
         note display_svg(img, 0.75) if img
-        check 'Discard pipette tip.'
+        check "Ensure tube caps are tightly shut for #{to.to_sentence}."
         check "Vortex <b>#{to.to_sentence}</b> for <b>2 seconds, twice</b>."
-        check "Centrifuge <b>#{to.to_sentence}</b> for <b>5 seconds</b>."
+        check "Centrifuge <b>#{to.to_sentence}</b> for <b>5 seconds</b>." unless skip_centrifuge
       end
-    else #SINGLE TRANSFER
+    else # SINGLE TRANSFER
       from_component, from_sample_num = from.split('-')
       to_component, to_sample_num = to.split('-')
       if from_svg && to_svg
-        from_label = (from_component != ETHANOL && from_component != GuSCN_WASTE) ? [from_component, from_sample_num].join("\n") : ""
+        from_label = from_component != ETHANOL && from_component != GuSCN_WASTE ? [from_component, from_sample_num].join("\n") : ''
         from_svg = draw_svg(from_svg, svg_label: from_label)
-        to_label = (to_component != ETHANOL && to_component != GuSCN_WASTE) ? [to_component, to_sample_num].join("\n") : ""
+        to_label = to_component != ETHANOL && to_component != GuSCN_WASTE ? [to_component, to_sample_num].join("\n") : ''
         to_svg = draw_svg(to_svg, svg_label: to_label)
         img = make_transfer(from_svg, to_svg, 300, "#{volume_ul}ul", "(#{pipette})")
       end
@@ -372,8 +374,9 @@ class Protocol
         warning warning if warning
         note display_svg(img, 0.75) if img
         check 'Discard pipette tip.'
+        check "Ensure tube cap is tightly shut for #{to}."
         check "Vortex <b>#{to}</b> for <b>2 seconds, twice</b>."
-        check "Centrifuge <b>#{to}</b> for <b>5 seconds</b>."
+        check "Centrifuge <b>#{to}</b> for <b>5 seconds</b>." unless skip_centrifuge
       end
     end
   end
@@ -402,12 +405,13 @@ class Protocol
     end
   end
 
-  def centrifuge_columns(flow_instructions: nil)
+  def centrifuge_columns(flow_instructions: nil, extra_warning: nil)
     columns = sample_labels.map { |s| "#{SAMPLE_COLUMN}-#{s}" }
 
     show do
       title " Centrifuge Columns for #{CENTRIFUGE_TIME}"
-      warning 'Ensure both tube caps are closed'
+      warning extra_warning if extra_warning
+      warning 'Ensure both tube caps are tightly closed'
       raw centrifuge_proc('Column', columns, CENTRIFUGE_TIME, '', AREA)
       note display_balance_tubes_svg
       check flow_instructions if flow_instructions
@@ -452,9 +456,11 @@ class Protocol
   # transfer plasma Samples into lysis buffer and incubate
   def lyse_samples
     operations.each do |op|
-      expected_object_ids = [op.input_ref(INPUT).to_s, "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}"]
-      svgs = [draw_svg(:sXXX_closed, svg_label: op.input_ref(INPUT).to_s.sub("-", "\n")), draw_svg(:E1_closed, svg_label: "#{LYSIS_BUFFER}\n#{op.temporary[:output_sample]}")]
-      pre_transfer_validate(expected_object_ids, svgs)
+      from_name = op.input_ref(INPUT).to_s
+      to_name = "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}"
+      from_svg = draw_svg(:sXXX_closed, svg_label: op.input_ref(INPUT).to_s.sub('-', "\n"))
+      to_svg = draw_svg(:E1_closed, svg_label: "#{LYSIS_BUFFER}\n#{op.temporary[:output_sample]}")
+      pre_transfer_validation_with_multiple_tries(from_name, to_name, from_svg, to_svg)
       transfer_and_vortex(
         "Lyse Sample #{op.input_ref(INPUT)}",
         op.input_ref(INPUT).to_s,
@@ -469,7 +475,7 @@ class Protocol
     incubate(lysed_samples, '15 minutes')
   end
 
-  ETHANOL_BUFFER_VOLUME = 1200
+  ETHANOL_BUFFER_VOLUME = 1400
   def add_ethanol
     lysis_buffers = operations.map { |op| "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}" }
     transfer_and_vortex(
@@ -478,26 +484,26 @@ class Protocol
       lysis_buffers,
       ETHANOL_BUFFER_VOLUME,
       from_svg: :ethanol_container_open,
-      to_svg: :E1_open
+      to_svg: :E1_open,
+      skip_centrifuge: true
     )
   end
-
 
   COLUMN_VOLUME = 800
   def add_sample_to_column(op)
     from = "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}"
     to = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}"
-    expected_object_ids = [from, to]
-    svgs = [draw_svg(:E1_closed, svg_label: from.sub("-", "\n")), draw_svg(:E5_empty_closed_w_empty_collector, svg_label: to.sub("-", "\n"))]
-    pre_transfer_validate(expected_object_ids, svgs)
+    from_svg = draw_svg(:E1_closed, svg_label: from.sub('-', "\n"))
+    to_svg = draw_svg(:E5_empty_closed_w_empty_collector, svg_label: to.sub('-', "\n"))
+    pre_transfer_validation_with_multiple_tries(from, to, from_svg, to_svg)
     transfer_carefully(from, to, COLUMN_VOLUME, from_type: 'sample', to_type: 'column', from_svg: :E1_open, to_svg: :E5_full_open_w_empty_collector)
   end
 
   def change_collection_tubes
     sample_columns = operations.map { |op| "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}" }
-    from_svgs_rendered = sample_columns.map.with_index { |from_label, i| draw_svg( :E5_empty_closed_w_empty_collector, svg_label: from_label.sub("-", "\n")).translate!(80 * i, 0) }
+    from_svgs_rendered = sample_columns.map.with_index { |from_label, i| draw_svg(:E5_empty_closed_w_empty_collector, svg_label: from_label.sub('-', "\n")).translate!(80 * i, 0) }
     from_svg_final = SVGElement.new(children: from_svgs_rendered, boundx: 150, boundy: 200)
-    img = make_transfer(from_svg_final, many_collection_tubes(sample_columns.size), 300, "", "(Change Tubes)")
+    img = make_transfer(from_svg_final, many_collection_tubes(sample_columns.size), 300, '', '(Change Tubes)')
     show do
       title 'Change Collection Tubes'
       note display_svg(img, 0.8)
@@ -509,18 +515,18 @@ class Protocol
   end
 
   def add_wash_1
-    columns = operations.map{ |op| column = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}" }
+    columns = operations.map { |op| column = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}" }
     transfer_carefully(WASH2, columns, COLUMN_VOLUME, from_type: 'buffer', to_type: 'column', from_svg: :E2_open, to_svg: :E5_full_open_w_empty_collector)
   end
 
   def add_wash_2
-    columns = operations.map{ |op| column = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}" }
+    columns = operations.map { |op| column = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}" }
     transfer_carefully(WASH2, columns, COLUMN_VOLUME, from_type: 'buffer', to_type: 'column', from_svg: :E3_open, to_svg: :E5_full_open_w_empty_collector)
   end
 
   def transfer_carefully(from, to, volume_ul, from_type:, to_type:, from_svg: nil, to_svg: nil)
     pipette, extra_note = pipette_decision(volume_ul)
-    if to.is_a?(Array) #MULTI TRANSFER 
+    if to.is_a?(Array) # MULTI TRANSFER
       img = nil
       if from_svg && to_svg
         from_label = from.split('-').join("\n")
@@ -531,17 +537,17 @@ class Protocol
         img = make_transfer(from_svg_rendered, to_svg_final, 300, "#{volume_ul}ul", "(#{pipette})")
       end
       show do
-        title "Add #{from_type || from} to each #{to_type + " " + to.to_sentence || to}"
+        title "Add #{from_type || from} to each #{to_type + ' ' + to.to_sentence || to}"
         note "<b>Carefully</b> open #{to_type.pluralize(to)} <b>#{to.to_sentence}</b> lid."
         to.each do |t|
           check "<b>Carefully</b> Add <b>#{volume_ul}uL</b> of #{from_type} <b>#{from}</b> to <b>#{t}</b> using a #{pipette} pipette."
+          check 'Discard pipette tip and replace.'
         end
         note extra_note if extra_note
         note display_svg(img, 0.75) if img
-        check 'Discard pipette tip.'
         note "<b>Slowly</b> close lid of <b>#{to.to_sentence}</b>"
       end
-    else #SINGLE TRANSFER
+    else # SINGLE TRANSFER
       img = nil
       if from_svg && to_svg
         from_label = from.split('-').join("\n")
@@ -551,7 +557,7 @@ class Protocol
         img = make_transfer(from_svg_rendered, to_svg_rendered, 300, "#{volume_ul}ul", "(#{pipette})")
       end
       show do
-        title "Add #{from_type || from} to #{to_type + " " + to || to}"
+        title "Add #{from_type || from} to #{to_type + ' ' + to || to}"
         note "<b>Carefully</b> open #{to_type} <b>#{to}</b> lid."
         check "<b>Carefully</b> Add <b>#{volume_ul}uL</b> of #{from_type} <b>#{from}</b> to <b>#{to}</b> using a #{pipette} pipette."
         note extra_note if extra_note
@@ -565,7 +571,7 @@ class Protocol
   def transfer_column_to_e6
     show do
       title 'Transfer Columns'
-      warning 'Make sure the bottom of the E5 columns did not touch any fluid from the previous collection tubes. When in doubt, replace collection tubes again and centrifuge for 1 more minute .'
+      warning 'Make sure the bottom of the E5 columns did not touch any fluid from the previous collection tubes. When in doubt, centrifuge the tube for 1 more minute.'
       note display_pre_elution_warning
       operations.each do |op|
         column = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}"
@@ -584,6 +590,7 @@ class Protocol
       columns.each do |column|
         check "Add <b>60uL</b> from <b>#{SA_WATER}</b> to column <b>#{column}</b>"
       end
+      check 'Close lid on column tightly.'
     end
   end
 
@@ -596,6 +603,7 @@ class Protocol
         check "Remove column <b>#{column}</b> from <b>#{extract_tube}</b>, and discard <b>#{column} in #{WASTE_PRE}</b>"
       end
       extract_tubes = sample_labels.map { |s| "#{RNA_EXTRACT}-#{s}" }
+      check "Ensure lids are firmly closed for all of #{extract_tubes.to_sentence}."
       check "Place <b>#{extract_tubes.to_sentence}</b> on cold rack"
     end
   end
@@ -634,4 +642,5 @@ class Protocol
     end
   end
 end
+
 ```
