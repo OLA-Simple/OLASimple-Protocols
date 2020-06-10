@@ -256,7 +256,7 @@ class Protocol
       show do
         raw transfer_title_proc(STOP_VOLUME, from, to)
         check "Centrifuge tube #{to} for 5 seconds to pull down powder."
-        check "Set a #{P200_POST} pipette to [0 3 6]. Add #{STOP_VOLUME}uL from #{from.bold} into tube #{to.bold}"
+        check "Set a #{P200_POST} pipette to <b>[0 3 6]</b>. Add #{STOP_VOLUME}uL from #{from.bold} into tube #{to.bold}"
         tubeA = make_tube(opentube, DILUENT_A, ops.first.tube_label('diluent A'), 'medium')
         tubeS = make_tube(opentube, STOP_MIX, ops.first.tube_label('stop'), 'powder')
         img = make_transfer(tubeA, tubeS, 300, "#{STOP_VOLUME}uL", "(#{P200_POST} pipette)")
@@ -476,7 +476,7 @@ class Protocol
         raw transfer_title_proc(GOLD_VOLUME, from, to)
         # title "Add #{GOLD_VOLUME}uL of #{DILUENT_A} #{from.bold} to #{GOLD_MIX} #{to.bold}"
         raw centrifuge_proc(GOLD_MIX, [to], CENTRIFUGE_TIME, 'to pull down dried powder.', AREA)
-        note "Set a #{P1000_POST} pipette to [ 0 6 0]. Add #{GOLD_VOLUME}uL from #{from.bold} into tube #{to.bold}."
+        note "Set a #{P1000_POST} pipette to <b>[ 0 6 0 ]</b>. Add #{GOLD_VOLUME}uL from #{from.bold} into tube #{to.bold}."
         raw vortex_proc(GOLD_MIX, [to], '10 seconds', 'to mix well.')
         warning "Make sure #{GOLD_MIX} is fully dissolved."
         warning "Do not centrifuge #{to.bold} after vortexing."
@@ -506,7 +506,7 @@ class Protocol
         note 'Add gold to the rest of strips at the SAMPLE PORT and then <b>immediately</b> click OK.'
         warning 'DO NOT add gold solution onto the reading window.'
         note '<hr>'
-        check "Set a #{P200_POST} pipette to [0 4 0]. Transfer #{GOLD_TO_STRIP_VOLUME}uL of #{GOLD_MIX} #{ops.first.ref('gold').bold} to #{pluralizer(STRIP, PREV_COMPONENTS.length * ops.length)} at the SAMPLE PORT."
+        check "Set a #{P200_POST} pipette to <b>[0 4 0]</b>. Transfer #{GOLD_TO_STRIP_VOLUME}uL of #{GOLD_MIX} #{ops.first.ref('gold').bold} to #{pluralizer(STRIP, PREV_COMPONENTS.length * ops.length)} at the SAMPLE PORT."
         grid = SVGGrid.new(ops.length, ops.length, 50, 50)
         ops.each.with_index do |op, i|
           _tokens = op.output_tokens(OUTPUT)
@@ -648,7 +648,7 @@ class Protocol
   def conclusion(_myops)
     show do
       title 'Thank you!'
-      note 'Thank you for all your hard work.'
+      note 'Thank you for your hard work.'
     end
   end
 
