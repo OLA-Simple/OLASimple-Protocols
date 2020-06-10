@@ -330,9 +330,9 @@ class Protocol
         note "#{DILUENT_A} will be used to dissolve the powder in the #{PCR_SAMPLE}s."
         note "Use a #{P200_PRE} pipette and set it to <b>[0 4 0]</b>."
         note 'Avoid touching the inside of the lid, as this could cause contamination. '
-        note 'Dispose of pipette tip.'
         tos.each do |to|
           check "Transfer #{PCR_MIX_VOLUME}uL from #{from.bold} into #{to.bold}"
+          note 'Discard pipette tip.'
         end
         note display_svg(img, 0.75)
       end
@@ -406,7 +406,6 @@ class Protocol
 
     show do
       title 'Run PCR'
-      check 'Talk to your assigner which thermocycler to use'
       check 'Close all the lids of the pipette tip boxes and pre-PCR rack'
       check "Take only the PCR tubes (#{sample_refs.to_sentence}) with you"
       check 'Place the PCR samples in the assigned thermocycler, close, and tighten the lid'
