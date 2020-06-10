@@ -92,7 +92,7 @@ module OLAKitIDs
     true
   end
 
-  def pre_transfer_validate(expected_object_ids, svgs, ids_override: nil)
+  def pre_transfer_validate(expected_object_ids, svgs, ids_override: nil, content_override: nil)
     show_ids = expected_object_ids
     expected_object_ids = ids_override if ids_override
     grid = SVGGrid.new(svgs.size, 1, 150, 100)
@@ -102,10 +102,14 @@ module OLAKitIDs
     img = SVGElement.new(children: [grid], boundx: 1000, boundy: 300).translate(100, 0)
 
     resp = show do
-      title 'Prepare Samples for transfer'
+      if content_override
+        raw content_override
+      else
+        title 'Prepare Samples for transfer'
 
-      check "In preparation for liquid transfer, set aside tubes #{show_ids.to_sentence}."
-      note 'Scan in tube IDs for confirmation.'
+        check "In preparation for liquid transfer, set aside tubes #{show_ids.to_sentence}."
+        note 'Scan in tube IDs for confirmation.'
+      end
       note display_svg(img, 0.75)
       expected_object_ids.size.times do |i|
         get 'text', var: i.to_s.to_sym, label: '', default: ''
@@ -121,11 +125,11 @@ module OLAKitIDs
     true
   end
 
-  def pre_transfer_validation_with_multiple_tries(from_name, to_name, from_svg=nil, to_svg=nil)
+  def pre_transfer_validation_with_multiple_tries(from_name, to_name, from_svg=nil, to_svg=nil, content_override: nil)
     from_id = from_name.dup.sub("-", "")
     to_id = to_name.dup.sub("-", "")
     5.times do
-      result = pre_transfer_validate([from_name, to_name], [from_svg, to_svg], ids_override: [from_id, to_id])
+      result = pre_transfer_validate([from_name, to_name], [from_svg, to_svg], ids_override: [from_id, to_id], content_override: content_override)
       return true if result || debug
 
       show do
