@@ -42,11 +42,14 @@ module OLAKitIDs
     sample_nums.reverse
   end
 
+  AUTOFILL = false # for debugging purposes when you don't have a barcode scanner
+
   def validate_package(this_package)
     resp = show do
       title 'Validate kit package'
       note "Scan in the ID of package #{this_package} which you've retrieved."
-      get 'text', var: :package, label: "Package ID", default: ''
+      default = AUTOFILL ? this_package : ''
+      get 'text', var: :package, label: "Package ID", default: default
     end
     return false if resp[:package] != this_package
 
@@ -79,7 +82,8 @@ module OLAKitIDs
 
       note "To ensure we are working with the right samples, scan in the IDs of the retrieved inputs #{show_ids.to_sentence}."
       expected_object_ids.size.times do |i|
-        get 'text', var: i.to_s.to_sym, label: '', default: ''
+        default = AUTOFILL ? expected_object_ids[i] : ''
+        get 'text', var: i.to_s.to_sym, label: '', default: default
       end
     end
 
@@ -112,7 +116,8 @@ module OLAKitIDs
       end
       note display_svg(img, 0.75)
       expected_object_ids.size.times do |i|
-        get 'text', var: i.to_s.to_sym, label: '', default: ''
+        default = AUTOFILL ? expected_object_ids[i] : ''
+        get 'text', var: i.to_s.to_sym, label: '', default: default 
       end
     end
 
@@ -165,9 +170,10 @@ module OLAKitIDs
   def record_technician_id
     resp = show do
       title 'Scan your technician ID'
-      note 'Scan the technician ID on your badge.'
+      note 'Scan the technician ID barcode on your badge.'
       note display_svg(technician_id_svg, 0.5)
-      get 'text', var: :id, label: 'ID', default: ''
+      default = AUTOFILL ? 'TECH634' : ''
+      get 'text', var: :id, label: 'ID', default: default
     end
     operations.each do |op|
       op.associate(OLAConstants::TECH_KEY, resp[:id])
