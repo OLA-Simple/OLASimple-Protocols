@@ -25,6 +25,12 @@ var config = {
 
           
             {
+              name: 'Fluorescence Analysis',
+              path: 'operation_types/Fluorescence_Analysis' + '.md',
+              type: "local-md"
+            },
+          
+            {
               name: 'OLASimple Ligation',
               path: 'operation_types/OLASimple_Ligation' + '.md',
               type: "local-md"
