@@ -682,7 +682,7 @@ module OLALib
       end
       note '<b>PPE is required</b>'
       note display_svg(img2, 0.2)
-      check 'Put on lab coat'
+      check 'Put on lab coat.'
       check "Put on #{(area && area == PRE_PCR) ? 'layers of ' : ''}gloves."
       bullet 'Make sure to use tight gloves. Tight gloves reduce the chance of the gloves getting caught on the tubes when closing their lids.'
       if area && area == PRE_PCR
