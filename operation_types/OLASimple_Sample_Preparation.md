@@ -54,7 +54,7 @@ class Protocol
 
   UNIT = 'S'
   OUTPUT_COMPONENT = ''
-  PLASMA_LOCATION = '-20 freezer'
+  PLASMA_LOCATION = '-80 freezer'
   SAMPLE_VOLUME = 380
 
   def main
@@ -92,9 +92,10 @@ class Protocol
       sample_validation_with_multiple_tries(expected_plasma_samples)
       wait_for_thaw
       transfer_plasma(ops)
+      remove_outer_layer
+      disinfect
       store(ops)
     end
-
     accept_comments
     conclusion(operations)
     {}
@@ -158,7 +159,7 @@ class Protocol
         'P1000 pipette and filter tips',
         'P200 pipette and filter tips',
         'P20 pipette and filter tips',
-        'Serological pipette and 10mL tip',
+        'Pipette controller and 10mL serological pipette',
         'Vortex mixer',
         'Minifuge',
         'Cold tube rack',
@@ -174,10 +175,10 @@ class Protocol
 
   def retrieve_package(this_package)
     show do
-      title "Take package #{this_package.bold} from the #{FRIDGE_PRE} and place inside the BSC"
-      check 'Grab package'
-      check 'Remove the <b>outside layer</b> of gloves (since you just touched the handle).'
-      check 'Put on a new outside layer of gloves.'
+      title "Retrieve Package #{this_package.bold}"
+      check "Grab #{this_package} from the #{FRIDGE_PRE} and place inside the BSC"
+      # check 'Remove the <b>outside layer</b> of gloves (since you just touched the handle).'
+      # check 'Put on a new outside layer of gloves.'
     end
   end
 
@@ -219,7 +220,7 @@ class Protocol
       note 'Let plasma sit at room temperature to thaw for 5 minutes.'
       check 'Set a timer.'
       note 'Built in timer is available in the top left.'
-      note 'Continue only once the plasma is thawed enough to begin pipetting.'
+      note 'Plasma should be completely thawed and mixed before pipetting to ensure concentration of virus is homogeneous.'
     end
   end
 
@@ -236,7 +237,16 @@ class Protocol
         note "Use a #{P1000_PRE} pipette and set it to <b>[3 8 0]</b>."
         check "Transfer <b>#{SAMPLE_VOLUME}uL</b> from <b>#{from_names[i]}</b> to <b>#{to_names[i]}</b> using a #{P1000_PRE} pipette."
         note display_svg(transfer_img, 0.75)
+        check "Discard pipette tip into #{WASTE_PRE}"
+        check "Close both tubes."
       end
+    end
+  end
+  
+  def remove_outer_layer
+    show do
+      title 'Remove outer Layer of Gloves'
+      check "Remove outer layer of gloves and discard them into #{WASTE_PRE}"
     end
   end
 
@@ -245,7 +255,7 @@ class Protocol
       title 'Store Items'
       sample_tubes = sample_labels.map { |s| "#{UNIT}-#{s}" }
       _, plasma_tube_names = plasma_tubes(ops)
-      check "Return #{plasma_tube_names.to_sentence} to the freezer."
+      check "Return #{plasma_tube_names.to_sentence} to #{PLASMA_LOCATION}."
       note "Leave <b>#{sample_tubes.to_sentence}</b> in the BSC for immediate continuation."
     end
   end
