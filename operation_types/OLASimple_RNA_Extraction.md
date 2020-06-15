@@ -112,6 +112,8 @@ class Protocol
     fill_ethanol
     prepare_buffers
     lyse_samples
+    remove_outer_layer
+    incubate_lysed_samples(operations)
     add_ethanol
 
     4.times do
@@ -232,7 +234,7 @@ class Protocol
         'P1000 pipette and filter tips',
         'P200 pipette and filter tips',
         'P20 pipette and filter tips',
-        'Serological pipette and 10mL tip',
+        'Pipette controller and 10mL serological pipette',
         'Vortex mixer',
         'Minifuge',
         'Cold tube rack',
@@ -248,10 +250,8 @@ class Protocol
 
   def retrieve_package(this_package)
     show do
-      title "Take package #{this_package.bold} from the #{FRIDGE_PRE} and place in the #{BSC}"
-      check 'Grab package'
-      check 'Remove the <b>outside layer</b> of gloves (since you just touched the handle).'
-      check 'Put on a new outside layer of gloves.'
+      title "Retrieve package"
+      check "Grab package #{this_package.bold} from the #{FRIDGE_PRE} and place in the #{BSC}"
     end
   end
 
@@ -329,7 +329,7 @@ class Protocol
   end
 
   # helper method for simple transfers in this protocol
-  def transfer_and_vortex(title, from, to, volume_ul, warning: nil, to_svg: nil, from_svg: nil, skip_centrifuge: false)
+  def transfer_and_vortex(title, from, to, volume_ul, warning: nil, to_svg: nil, from_svg: nil, skip_centrifuge: false, extra_check: nil)
     pipette, extra_note, setting_instruction = pipette_decision(volume_ul)
 
     if to.is_a?(Array) # MULTI TRANSFER
@@ -349,7 +349,8 @@ class Protocol
         to.each do |t|
           check "Transfer <b>#{volume_ul}uL</b> of <b>#{from}</b> into <b>#{t}</b> using a #{pipette} pipette."
           note extra_note if extra_note
-          check 'Discard pipette tip.'
+          check "Discard pipette tip into #{WASTE_PRE}."
+          check extra_check if extra_check
         end
         warning warning if warning
         note display_svg(img, 0.75) if img
@@ -375,7 +376,8 @@ class Protocol
         note extra_note if extra_note
         warning warning if warning
         note display_svg(img, 0.75) if img
-        check 'Discard pipette tip.'
+        check "Discard pipette tip into #{WASTE_PRE}."
+        check extra_check if extra_check
         check "Ensure tube cap is tightly shut for #{to}."
         check "Vortex <b>#{to}</b> for <b>2 seconds, twice</b>."
         check "Centrifuge <b>#{to}</b> for <b>5 seconds</b>." unless skip_centrifuge
@@ -397,7 +399,7 @@ class Protocol
       factor = volume_ul.fdiv(1000).ceil
       split_volume = volume_ul.fdiv(factor)
       setting = '[ ' + (split_volume / 10).round.to_s.rjust(3, '0').split('').join(' ') + ' ]'
-      [P1000_PRE, "Split transfer into <b>#{factor}</b> seperate transfers of <b>#{split_volume.round}uL</b>.", "Set p1000 pipette to <b>#{setting}</b>"]
+      [P1000_PRE, "Transfer <b>#{split_volume.round}uL</b>, <b>#{factor} times</b>.", "Set p1000 pipette to <b>#{setting}</b>"]
     end
   end
 
@@ -480,11 +482,14 @@ class Protocol
         SAMPLE_VOLUME,
         from_svg: :sXXX_open,
         to_svg: :E1_open,
-        skip_centrifuge: true
+        skip_centrifuge: true,
+        extra_check: "Close #{from_name} tightly and discard into #{WASTE_PRE}."
       )
     end
+  end
 
-    lysed_samples = operations.map { |op| "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}" }
+  def incubate_lysed_samples(ops)
+    lysed_samples = ops.map { |op| "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}" }
     incubate(lysed_samples, '15 minutes')
   end
 
@@ -654,6 +659,13 @@ class Protocol
     show do
       title 'Thank you!'
       note 'You may start the next protocol immediately, or you may take a short break and come back.'
+    end
+  end
+
+  def remove_outer_layer
+    show do
+      title 'Remove outer Layer of Gloves'
+      check "Remove outer layer of gloves and discard them into #{WASTE_PRE}"
     end
   end
 end
