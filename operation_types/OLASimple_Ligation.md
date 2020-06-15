@@ -203,8 +203,6 @@ class Protocol
         check "Retrieve #{PACKAGE_POST} #{unit.bold}"
       end
       check "Place #{pluralizer(PACKAGE_POST, gops.length)} on the #{BENCH_POST} in the #{AREA.bold}."
-      check 'Remove the <b>outside layer</b> of gloves (since you just touched the refrigerator handle).'
-      check 'Put on a new outside layer of gloves.'
     end
   end
 
