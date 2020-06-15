@@ -634,7 +634,7 @@ module OLALib
       check "Spray #{disinfectant.bold} onto a #{WIPE_PRE} and wipe down the bench surface."
       # check "Spray some #{disinfectant.bold} on a #{WIPE}, gently wipe down keyboard and mouse of this computer/tablet."
       warning "Do not spray 10% bleach directly onto tablet, computer, barcode scanner or centrifuge!"
-      check "Finally, spray outside of gloves with #{disinfectant.bold}."
+      # check "Finally, spray outside of gloves with #{disinfectant.bold}."
     end
 
     show do
@@ -645,7 +645,7 @@ module OLALib
       check "Spray #{disinfectant.bold} onto a #{WIPE_PRE} and wipe down the bench surface."
       note "Bleach residues can inhibit the assay. Make sure to completely wipe all surface with 70% ethanol spray"
       warning "Do not spray #{disinfectant.bold} onto tablet or computer!"
-      check "Finally, spray outside of gloves with #{disinfectant.bold}."
+      # check "Finally, spray outside of gloves with #{disinfectant.bold}."
     end
   end
 
@@ -683,9 +683,11 @@ module OLALib
       note '<b>PPE is required</b>'
       note display_svg(img2, 0.2)
       check 'Put on lab coat'
-      check 'Put on two layers of gloves.'
+      check "Put on #{(area && area == PRE_PCR) ? 'layers of ' : ''}gloves."
       bullet 'Make sure to use tight gloves. Tight gloves reduce the chance of the gloves getting caught on the tubes when closing their lids.'
-      bullet 'Change your outer layer of gloves after touching any common space surface to reduce contamination (such as a refrigerator door handle).'
+      if area && area == PRE_PCR
+        bullet 'Change outer layer of gloves after handling infectious sample and before touching surfaces outside of the BSC (such as a refrigerator door handle).'
+      end
     end
   end
 
