@@ -204,8 +204,6 @@ class Protocol
         check "Retrieve package #{unit.bold}"
       end
       check "Place #{pluralizer('package', gops.length)} on the bench in the #{AREA.bold} area."
-      check 'Remove the <b>outside layer</b> of gloves (since you just touched the door knob).'
-      check 'Put on a new outside layer of gloves.'
     end
   end
 
