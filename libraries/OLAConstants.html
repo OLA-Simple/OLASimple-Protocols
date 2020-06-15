@@ -921,7 +921,7 @@ $(document).ready(function() {
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://ola_image_processing:5000/api/processimage</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://ola_image_processing:5000/api/processstrips</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
         <dt id="PATIENT_KEY-constant" class="">PATIENT_KEY =
           <div class="docstring">
@@ -1432,12 +1432,12 @@ $(document).ready(function() {
         <dt id="WASTE_PRE-constant" class="">WASTE_PRE =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>biohazard waste 1 (red bag in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PRE_PCR-constant" title="OLAConstants::PRE_PCR (constant)">PRE_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>biohazard waste (red bag in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PRE_PCR-constant" title="OLAConstants::PRE_PCR (constant)">PRE_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
         <dt id="WASTE_POST-constant" class="">WASTE_POST =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>biohazard waste 2 (red bag in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>biohazard waste (red bag in the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
         <dt id="BENCH_PRE-constant" class="">BENCH_PRE =
           
@@ -1499,15 +1499,20 @@ $(document).ready(function() {
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> P1000</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
+        <dt id="WIPE-constant" class="">WIPE =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Paper towel</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
         <dt id="WIPE_PRE-constant" class="">WIPE_PRE =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>KimWipe (from the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PRE_PCR-constant" title="OLAConstants::PRE_PCR (constant)">PRE_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='const'><span class='object_link'><a href="#WIPE-constant" title="OLAConstants::WIPE (constant)">WIPE</a></span></span></pre></dd>
       
         <dt id="WIPE_POST-constant" class="">WIPE_POST =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>KimWipe (from the </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#POST_PCR-constant" title="OLAConstants::POST_PCR (constant)">POST_PCR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> area)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='const'><span class='object_link'><a href="#WIPE-constant" title="OLAConstants::WIPE (constant)">WIPE</a></span></span></pre></dd>
       
         <dt id="CENTRIFUGE_VERB-constant" class="">CENTRIFUGE_VERB =
           <div class="docstring">
@@ -1637,7 +1642,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-166
 167
 168
 169
@@ -1650,10 +1654,11 @@ $(document).ready(function() {
 176
 177
 178
-179</pre>
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 167</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_explicit_retrieve'>explicit_retrieve</span>
   <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_retrieve'>retrieve</span> <span class='label'>interactive:</span> <span class='kw'>false</span>
@@ -1689,7 +1694,6 @@ $(document).ready(function() {
       <pre class="lines">
 
 
-153
 154
 155
 156
@@ -1700,10 +1704,11 @@ $(document).ready(function() {
 161
 162
 163
-164</pre>
+164
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'OLAConstants.rb', line 154</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_map_temporary_from_input'>map_temporary_from_input</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_outputs'>outputs</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_outputs'>outputs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_outputs'>outputs</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
