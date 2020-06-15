@@ -7,7 +7,7 @@ module OLAConstants
   # TECHNICAL (SHOULD NOT NEED TO CHANGE)
   ##########################################
 
-  OLA_IP_API_URL = "http://ola_image_processing:5000/api/processimage" # URL of OLASimple strip image processing service 
+  OLA_IP_API_URL = "http://ola_image_processing:5000/api/processstrips" # URL of OLASimple strip image processing service 
 
   ##########################################
   # DATA ASSOCIATION KEYS (DO NOT CHANGE)
@@ -126,8 +126,8 @@ module OLAConstants
   ]
   TRASH_PRE = "trash (in the #{PRE_PCR} area)"
   TRASH_POST = "trash (in the #{POST_PCR} area)"
-  WASTE_PRE = "biohazard waste 1 (red bag in the #{PRE_PCR} area)"
-  WASTE_POST = "biohazard waste 2 (red bag in the #{POST_PCR} area)"
+  WASTE_PRE = "biohazard waste (red bag in the #{PRE_PCR} area)"
+  WASTE_POST = "biohazard waste (red bag in the #{POST_PCR} area)"
   BENCH_PRE = "bench 1 (in the #{PRE_PCR} area)"
   BENCH_POST = "bench 2 (in the #{POST_PCR} area)"
   PACKAGE_PRE = "package (#{PRE_PCR})"
@@ -140,8 +140,9 @@ module OLAConstants
   P200_POST = "#{POST_PCR} P200"
   P1000_PRE = "#{PRE_PCR} P1000"
   P1000_POST = "#{POST_PCR} P1000"
-  WIPE_PRE = "KimWipe (from the #{PRE_PCR} area)"
-  WIPE_POST = "KimWipe (from the #{POST_PCR} area)"
+  WIPE = "Paper towel"
+  WIPE_PRE = WIPE
+  WIPE_POST = WIPE
 
   # verbs
   CENTRIFUGE_VERB = "centrifuge" # or spin?
