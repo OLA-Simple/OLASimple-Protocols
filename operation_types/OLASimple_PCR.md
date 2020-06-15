@@ -232,8 +232,6 @@ class Protocol
       gops.each do |unit, _ops|
         check 'Take package ' "#{unit.bold}" ' from fridge.'
         check 'Place package ' "#{unit.bold}" ' on the bench.'
-        check 'Remove the <b>outside layer</b> of gloves (since you just touched the door knob).'
-        check 'Put on a new outside layer of gloves.'
       end
     end
   end
