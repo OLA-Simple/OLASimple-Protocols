@@ -406,10 +406,11 @@ class Protocol
   # helper method for simple incubations
   def incubate(samples, time)
     show do
-      title 'Incubate Sample Solutions'
+      title 'Incubate Sample Lysis Solutions'
       note "Let <b>#{samples.to_sentence}</b> incubate for <b>#{time}</b> at room temperature."
       check "Set a timer for <b>#{time}</b>"
       note 'Do not proceed until time has elapsed.'
+      note '<iframe width="560" height="315" src="https://www.youtube.com/embed/zdl52lDRH1U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' 
     end
   end
 
