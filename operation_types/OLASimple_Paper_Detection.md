@@ -98,7 +98,7 @@ class Protocol
     'a spray bottle of 10% v/v bleach',
     'a spray bottle of 70% v/v ethanol',
     'a timer',
-    'nitrile gloves'
+    'gloves'
   ].freeze
 
   POSITIVE = 'positive'
@@ -147,8 +147,8 @@ class Protocol
 
     discard_things(sorted_ops.running)
     clean_area(AREA)
-    conclusion sorted_ops
     wash_self
+    conclusion sorted_ops
     accept_comments
     { 'Ok' => 1 }
   end
@@ -253,7 +253,7 @@ class Protocol
       to = ops.first.ref('stop')
       show do
         raw transfer_title_proc(STOP_VOLUME, from, to)
-        check "Centrifuge tube #{to} for 5 seconds to pull down powder."
+        check "Centrifuge tubes #{to} and #{from} for 5 seconds to pull reagents."
         check "Set a #{P200_POST} pipette to <b>[0 3 6]</b>. Add #{STOP_VOLUME}uL from #{from.bold} into tube #{to.bold}"
         tubeA = make_tube(opentube, DILUENT_A, ops.first.tube_label('diluent A'), 'medium')
         tubeS = make_tube(opentube, STOP_MIX, ops.first.tube_label('stop'), 'powder')
@@ -269,14 +269,18 @@ class Protocol
     end
   end
 
-  def wait_for_pcr(_myops)
+  def wait_for_pcr(myops)
     show do
       title 'Wait for thermocycler to finish'
 
       note "The thermocycler containing the #{LIGATION_SAMPLE.pluralize(5)} needs to complete before continuing"
       check "Check the #{THERMOCYCLER} to see if the samples are done."
-      bullet 'If the cycle is at "hold at 4C" then it is done. If it is done, hit CANCEL followed by YES. If not, continue waiting.'
-      note 'Else, if your ligation sample has been stored, retrieve from M20, 4th shelf down, green box.'
+      note 'If the cycle is at "hold at 4C" then it is done. If it is done, hit CANCEL followed by YES. If not, continue waiting.'
+      note 'Else, if your ligation sample has been stored, retrieve from freezer.'
+      note "You need the following samples: "
+      myops.each do |op|
+        bullet "#{op.input_refs(INPUT)[0].bold} to #{op.input_refs(INPUT)[-1].bold}"
+      end
       warning "Do not proceed until the #{THERMOCYCLER} is finished."
     end
   end
@@ -391,7 +395,7 @@ class Protocol
 
   def display_detection_strip_diagram
     show do
-      title "Review detection #{STRIP} diagram"
+      title "Review #{STRIP} diagram"
       note 'In the next steps you will be adding ligation mixtures followed by the gold solutions to the detection strips.'
       note 'You will pipette into the <b>Port</b>. After pipetting, you should see the <b>Reading Window</b> become wet after a few minutes.'
       warning 'Do not add liquid directly to the <b>Reading Window</b>'
@@ -407,7 +411,7 @@ class Protocol
       note "Wait for the #{THERMOCYCLER} containing your samples to finish. "
       bullet "If the #{THERMOCYCLER} beeps, it is done. If not, continue waiting."
       warning "Once the #{THERMOCYCLER} finishes, <b>IMMEDIATELY</b> continue to the next step."
-      check "Take all #{pluralizer('sample', myops.length * PREV_COMPONENTS.length)} from the #{THERMOCYCLER}."
+      check "Take #{pluralizer('sample', myops.length * PREV_COMPONENTS.length)} from the #{THERMOCYCLER}."
       check "Vortex #{'sample'.pluralize(PREV_COMPONENTS.length)} for 5 seconds to mix."
       check "Centrifuge #{'sample'.pluralize(PREV_COMPONENTS.length)} for 5 seconds to pull down liquid"
       check "Place on rack in the #{POST_PCR.bold} area."
@@ -431,20 +435,19 @@ class Protocol
         to_name = "#{op.temporary[:output_unit]}-#{op.temporary[:output_sample]}"
         svg_both = display_panel_and_tubes(kit, panel_unit, tube_unit, PREV_COMPONENTS, sample, COLORS).translate!(50).scale!(0.8)
         p = proc do
-          title "Arrange #{STRIPS} and tubes" # for sample 1?
-          note "Place the detection #{STRIPS} #{to_name} and #{LIGATION_SAMPLE.pluralize(PREV_COMPONENTS.length)} #{from_name} as shown in the picture:"
+          title "Arrange #{STRIPS} and tubes for sample #{op.temporary[:input_sample]}" # for sample 1?
+          note "Place the #{STRIPS} #{to_name} and #{LIGATION_SAMPLE.pluralize(PREV_COMPONENTS.length)} #{from_name} as shown in the picture:"
           note 'Scan in IDS of objects for confirmation.'
         end
         content = ShowBlock.new(self).run(&p)
         pre_transfer_validation_with_multiple_tries(from_name, to_name, svg_both, content_override: content)
 
         show do
-          title "For each colored tube, add #{SAMPLE_TO_STRIP_VOLUME}uL of #{LIGATION_SAMPLE} to the sample port of each #{STRIP}."
+          title "From each colored tube, add #{SAMPLE_TO_STRIP_VOLUME}uL of #{LIGATION_SAMPLE} to the corresponding sample port of each #{STRIP}."
           unless timer_set
             warning '<h2>Complicated Step! Take note of all instructions before beginning transfers.</h2>'
             note 'Set a 5 minute timer after adding ligation sample to <b>FIRST</b> strip at the SAMPLE PORT.'
           end
-          note '<b>Immediately</b> click OK when finished adding ligation sample to LAST strip at the sample port.'
           note '<hr>'
           timer_set = true
           #   check "Set a 5 minute timer" unless set_timer
