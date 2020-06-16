@@ -234,6 +234,7 @@ class Protocol
         'P1000 pipette and filter tips',
         'P200 pipette and filter tips',
         'P20 pipette and filter tips',
+        'gloves',
         'Pipette controller and 10mL serological pipette',
         'Vortex mixer',
         'Minifuge',
