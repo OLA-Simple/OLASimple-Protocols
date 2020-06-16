@@ -84,7 +84,7 @@ class Protocol
   LIGATION_VOLUME = PACK_HASH['Ligation Mix Rehydration Volume'] # volume to rehydrate ligation mix
   SAMPLE_VOLUME = PACK_HASH['PCR to Ligation Mix Volume'] # volume of pcr product to ligation mix
   MATERIALS = [
-    'nitrile gloves (wear tight gloves to reduce contamination risk)',
+    'gloves (wear tight gloves to reduce contamination risk)',
     'P200 pipette and filtered tips',
     'P2 pipette and filtered tips',
     'a spray bottle of 10% v/v bleach',
@@ -202,7 +202,7 @@ class Protocol
       gops.each do |unit, _ops|
         check "Retrieve #{PACKAGE_POST} #{unit.bold}"
       end
-      check "Place #{pluralizer(PACKAGE_POST, gops.length)} on the #{BENCH_POST} in the #{AREA.bold}."
+      check "Place #{pluralizer(PACKAGE_POST, gops.length)} on the #{BENCH_POST}."
     end
   end
 
@@ -259,7 +259,7 @@ class Protocol
     labels = ops.map { |op| op.temporary[:label_string] }
     diluentALabels = ops.map { |op| op.ref('diluent A') }.uniq
     show do
-      title 'Centrifuge samples for 5 seconds to pull down reagents'
+      title 'Centrifuge Diluent A and Ligation tubes for 5 seconds to pull down reagents'
       note 'Put the tag side of the rack toward the center of the centrifuge'
       check "Centrifuge #{(labels + diluentALabels).to_sentence.bold} for 5 seconds."
     end
@@ -311,7 +311,7 @@ class Protocol
             note "In this step we will be adding #{LIGATION_VOLUME}uL of #{DILUENT_A} #{from} into #{pluralizer('tube', COMPONENTS.length)} "
             "of the colored strip of tubes labeled <b>#{labels[0]} to #{labels[-1]}</b>"
             note "Set a #{P200_POST} pipette to [0 2 4]."
-            note "Using add #{LIGATION_VOLUME}uL from #{DILUENT_A} #{from} into each of the #{COMPONENTS.length} tubes."
+            note "Using #{P200_POST} add #{LIGATION_VOLUME}uL from #{DILUENT_A} #{from} into each of the #{COMPONENTS.length} tubes."
             warning 'Only open one of the ligation tubes at a time.'
 
             ligation_tubes = display_ligation_tubes(*op.output_tokens(OUTPUT), COLORS).translate!(0, -20)
@@ -405,7 +405,7 @@ class Protocol
           # All transfers at once...
           show do
             raw transfer_title_proc(SAMPLE_VOLUME, from, op.temporary[:label_string])
-            warning 'Change of pipette tip between tubes'
+            warning 'Change pipette tip between tubes'
             check "Using a P2 pipette set to [1 2 0]."
             note "Add #{SAMPLE_VOLUME}uL from #{from.bold} into each of #{op.temporary[:label_string].bold}. Only open one ligation tube at a time."
 
