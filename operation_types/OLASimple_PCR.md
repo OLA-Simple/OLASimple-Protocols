@@ -86,17 +86,16 @@ class Protocol
 
   component_to_name_hash = {
     'diluent A' => 'Diluent A',
-    'sample tube' => 'PCR sample'
+    'sample tube' => 'PCR tube'
   }
 
   MATERIALS = [
     'P200 pipette and filtered tips',
     'P20 pipette and filtered tips',
     'a timer',
-    'nitrile gloves (wear tight gloves to reduce contamination risk)',
+    'gloves (wear tight gloves to reduce contamination risk)',
     'pre-PCR rack',
     'a balancing tube (on rack)',
-    'biohazard waste (red bag)',
     'vortex',
     'centrifuge'
   ].freeze
@@ -227,7 +226,7 @@ class Protocol
     # TODO: remove all references to 4C fridge and replace with refridgerator
     gops = group_packages(myops)
     show do
-      title "Take #{PCR_PKG_NAME.pluralize(gops.length)} from the #{FRIDGE_PRE} and place on the #{BENCH_PRE} in the #{AREA}"
+      title "Take #{PCR_PKG_NAME.pluralize(gops.length)} from the #{FRIDGE_PRE} and place on the #{BENCH_PRE}"
       # check "Take the following from the #{FRIDGE} and place #{pluralizer(PACKAGE, gops.length)} on the #{BENCH}"
       gops.each do |unit, _ops|
         check 'Take package ' "#{unit.bold}" ' from fridge.'
@@ -325,7 +324,7 @@ class Protocol
       show do
         raw transfer_title_proc(PCR_MIX_VOLUME, from, tos.to_sentence)
         # title "Add #{PCR_MIX_VOLUME}uL from #{DILUENT_A} #{from.bold} to #{PCR_SAMPLE} #{to.bold}"
-        note "#{DILUENT_A} will be used to dissolve the powder in the #{PCR_SAMPLE}s."
+        note "#{DILUENT_A} will be used to dissolve the PCR mix in the #{PCR_SAMPLE}s."
         note "Use a #{P200_PRE} pipette and set it to <b>[0 4 0]</b>."
         note 'Avoid touching the inside of the lid, as this could cause contamination. '
         tos.each do |to|
@@ -339,7 +338,7 @@ class Protocol
     end
 
     labels = myops.map { |op| ref(op.output(OUTPUT).item) }
-    vortex_and_centrifuge_helper('sample',
+    vortex_and_centrifuge_helper('tubes',
                                  labels,
                                  VORTEX_TIME, CENTRIFUGE_TIME,
                                  'to mix.', 'to pull down liquid', AREA, mynote = nil)
@@ -406,7 +405,7 @@ class Protocol
       title 'Run PCR'
       check 'Close all the lids of the pipette tip boxes and pre-PCR rack'
       check "Take only the PCR tubes (#{sample_refs.to_sentence}) with you"
-      check 'Place the PCR samples in the assigned thermocycler, close, and tighten the lid'
+      check 'Place the PCR tubes in the assigned thermocycler, close, and tighten the lid'
       check "Select the program named #{PCR_CYCLE} under OS"
       check "Hit #{'Run'.quote} and #{'OK to 50uL'.quote}"
       table t
@@ -427,9 +426,9 @@ class Protocol
     all_refs = temp_items + item_refs
 
     show do
-      title "Discard items into the #{WASTE_PRE}"
+      title "Discard items into the #{WASTE_POST}"
 
-      note "Discard the following items into the #{WASTE_PRE}"
+      note "Discard the following items into the #{WASTE_POST}"
       all_refs.each { |r| bullet r }
     end
     # clean_area AREA
