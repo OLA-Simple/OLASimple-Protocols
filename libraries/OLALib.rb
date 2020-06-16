@@ -246,8 +246,13 @@ module OLALib
 
   # TODO: add error handling to this function, since function could fail if api service disconnected
   def make_calls_from_image(image_upload)
-    res = post_file(OLA_IP_API_URL, 'file', image_upload)
-    JSON.parse(res.body)['results']
+    response = post_file(OLA_IP_API_URL, 'file', image_upload)
+    results = JSON.parse(response.body)['results']
+    if results.blank?
+      raise 'Automatic Visual Call failed. Missing or unprocessible image.'
+    else
+      return results
+    end
   end
 
   #######################################
@@ -600,7 +605,7 @@ module OLALib
     show do
       title "Vortex and #{CENTRIFUGE_VERB} #{sample_identifier.pluralize(num)}"
       note mynote unless mynote.nil?
-      warning "Close #{pluralizer('tube cap', sample_labels.length)}."
+      warning "Close tube caps."
       # note "Using #{sample_identifier.pluralize(num)} #{sample_labels.join(', ').bold}:"
       raw vortex_proc(sample_identifier, sample_labels, vortex_time, vortex_reason)
       raw centrifuge_proc(sample_identifier, sample_labels, spin_time, spin_reason, area)
@@ -630,8 +635,8 @@ module OLALib
       disinfectant = '10% bleach'
       title "Wipe down #{area} with #{disinfectant.bold}."
       note "Now you will wipe down your #{area} space and equipment with #{disinfectant.bold}."
-      check "Spray #{disinfectant.bold} onto a #{WIPE_PRE} and clean off pipettes and pipette tip boxes."
-      check "Spray #{disinfectant.bold} onto a #{WIPE_PRE} and wipe down the bench surface."
+      check "Spray #{disinfectant.bold} onto a #{WIPE} and clean off pipettes and pipette tip boxes."
+      check "Spray #{disinfectant.bold} onto a #{WIPE} and wipe down the bench surface."
       # check "Spray some #{disinfectant.bold} on a #{WIPE}, gently wipe down keyboard and mouse of this computer/tablet."
       warning "Do not spray 10% bleach directly onto tablet, computer, barcode scanner or centrifuge!"
       # check "Finally, spray outside of gloves with #{disinfectant.bold}."
@@ -641,8 +646,8 @@ module OLALib
       disinfectant = '70% ethanol'
       title "Wipe down #{area} with #{disinfectant.bold}."
       note "Now you will wipe down your #{area} space and equipment with #{disinfectant.bold}."
-      check "Spray #{disinfectant.bold} onto a #{WIPE_PRE} and clean off pipettes and pipette tip boxes."
-      check "Spray #{disinfectant.bold} onto a #{WIPE_PRE} and wipe down the bench surface."
+      check "Spray #{disinfectant.bold} onto a #{WIPE} and clean off pipettes and pipette tip boxes."
+      check "Spray #{disinfectant.bold} onto a #{WIPE} and wipe down the bench surface."
       note "Bleach residues can inhibit the assay. Make sure to completely wipe all surface with 70% ethanol spray"
       warning "Do not spray #{disinfectant.bold} onto tablet or computer!"
       # check "Finally, spray outside of gloves with #{disinfectant.bold}."
@@ -765,6 +770,7 @@ module OLALib
       uploads = upload_ids.map { |u_id| Upload.find(u_id) }
     end
     upload = uploads.first
+    raise 'Expected file uploads, but there were none!' if upload.nil?
     op.temporary[save_key] = upload unless save_key.nil?
     op.temporary["#{save_key}_id".to_sym] = upload.id unless save_key.nil?
     upload
