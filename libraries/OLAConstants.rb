@@ -98,7 +98,7 @@ module OLAConstants
 
   # kit samples
   CELL_LYSATE = "cell lysate" # what to call the input samples (cell lysates)
-  PCR_SAMPLE = "PCR sample" # what to call the tubes for the PCR protocol
+  PCR_SAMPLE = "PCR tube" # what to call the tubes for the PCR protocol
   LIGATION_SAMPLE = "ligation sample"
 
   # equipment
@@ -127,9 +127,9 @@ module OLAConstants
   TRASH_PRE = "trash (in the #{PRE_PCR} area)"
   TRASH_POST = "trash (in the #{POST_PCR} area)"
   WASTE_PRE = "biohazard waste (red bag in the #{PRE_PCR} area)"
-  WASTE_POST = "biohazard waste (red bag in the #{POST_PCR} area)"
-  BENCH_PRE = "bench 1 (in the #{PRE_PCR} area)"
-  BENCH_POST = "bench 2 (in the #{POST_PCR} area)"
+  WASTE_POST = "temporary waste container in the hood"
+  BENCH_PRE = "bench in the #{PRE_PCR} area"
+  BENCH_POST = "bench in the #{POST_PCR} area"
   PACKAGE_PRE = "package (#{PRE_PCR})"
   PACKAGE_POST = "package (#{POST_PCR})"
   FRIDGE_PRE = "fridge"
