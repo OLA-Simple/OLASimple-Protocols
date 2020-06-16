@@ -160,6 +160,7 @@ class Protocol
         'P200 pipette and filter tips',
         'P20 pipette and filter tips',
         'Pipette controller and 10mL serological pipette',
+        'gloves',
         'Vortex mixer',
         'Minifuge',
         'Cold tube rack',
